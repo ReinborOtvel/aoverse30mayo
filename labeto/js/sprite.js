@@ -4,6 +4,7 @@ export default class Sprite {
         this.imagen = this.main.loadImage(url);
         this.ancho = ancho;
         this.alto = alto;
+        this.abajo0 = this.imagen.get(0, 0, this.ancho, this.alto);
         this.animaciones = {
             quieto: [this.imagen.get(0, 0, this.ancho, this.alto)],
         };

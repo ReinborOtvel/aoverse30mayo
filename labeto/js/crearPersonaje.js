@@ -33,7 +33,7 @@ export default class CrearPersonaje {
                 arma: rango(0, 6),
             };
             this.personaje = {
-                cabeza: new Sprite(this.main, `assets/personajeCabeza${this.estadisticas.cabeza}.png`, 17, 17),
+                cabeza: new Sprite(this.main, `assets/personajeCabeza${this.estadisticas.cabeza}.png`, 50, 50),
                 armadura: new Sprite(this.main, `assets/personajeArmadura${this.estadisticas.armadura}.png`, 25, 45),
                 arma: new Sprite(this.main, `assets/personajeArma${this.estadisticas.arma}.png`, 25, 45),
             };
@@ -55,6 +55,7 @@ export default class CrearPersonaje {
         this.main.image(this.personaje.cabeza.animaciones["abajo"][0], 0, 0, 500, 500);
         this.main.image(this.personaje.armadura.animaciones["abajo"][0], 0, 0, 500, 500);
         this.main.image(this.personaje.arma.animaciones["abajo"][0], 0, 0, 500, 500);
+        this.main.image(this.personaje.arma.abajo0, 0, 0, 500, 500);
     }
     dibujarTextos() {
         this.main.textAlign(this.main.CENTER);
