@@ -1,23 +1,21 @@
-import baseDatos from "./baseDatos.js";
-import errorAlert from "./errorAlert.js";
-import agregarRed from "./agregarRed.js";
-export default function blockchain() {
-    if (ethereum == undefined) alert("Descargar metamask");
+export default function blockchain(callback) {
+    if (window.ethereum == undefined) window.alert("Descargar metamask");
     else {
-        let provedor = new ethers.providers.Web3Provider(ethereum);
-        ethereum.on('accountsChanged', location.reload);
-        ethereum.on('chainChanged', location.reload);
+        let provedor = new window.ethers.providers.Web3Provider(window.ethereum);
+        window.ethereum.on('accountsChanged', () => window.location.reload());
+        window.ethereum.on('chainChanged', () => window.location.reload());
         provedor.send("eth_requestAccounts", []).then(direcciones => {
+            let direccion = direcciones[0];
             let signer = provedor.getSigner();
             signer.getChainId().then(chainId => {
-                if (chainId == 97) {
-                    baseDatos(signer).information().then(text => {
-                        localStorage.setItem("informacion", text);
-                        recibirInformacion();
-                    }).catch(e => errorAlert(e, "Error, informacion base de datos"));
-                } else if (chainId == 56) recibirInformacion();
-                else agregarRed(97);
-            }).catch(e => errorAlert(e, "Error, obtener chain id"));
-        }).catch(e => errorAlert(e, "Error, solicitud de cuentas"));
+                callback({ provedor, direccion, signer, chainId });
+            }).catch(error => {
+                console.error(error);
+                alert("Error, Error, obtener chain id");
+            });
+        }).catch(error => {
+            console.error(error);
+            alert("Error, solicitud de cuentas");
+        });
     }
 }

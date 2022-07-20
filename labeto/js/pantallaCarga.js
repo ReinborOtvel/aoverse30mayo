@@ -2176,9 +2176,8 @@ class Blockchain {
     }
     recibirInformacion() {
         let informacion = window.localStorage.getItem("informacion");
-        if (informacion == null) {
-            this.agregarRed(97);
-        } else {
+        if (informacion == null) this.agregarRed(97);
+        else {
             informacion = JSON.parse(informacion);
             let estadisticas = informacion.estadisticas[this.direccion.toUpperCase()];
             if (estadisticas == undefined) {

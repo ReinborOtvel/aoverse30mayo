@@ -1,4 +1,3 @@
-import cambiarRed from "./cambiarRed.js";
 export default function agregarRed(chainId) {
     let chainName = "Binance";
     let rpcUrls = ['https://bsc-dataseed.binance.org/'];
@@ -13,9 +12,8 @@ export default function agregarRed(chainId) {
             chainName,
             rpcUrls,
         },],
-    }).then(() => cambiarRed(chainId))
-        .catch(e => {
-            console.error(e);
-            alert("Error, agregar red");
-        });
+    }).catch(e => {
+        console.error(e);
+        alert("Error, agregar red");
+    });
 }
