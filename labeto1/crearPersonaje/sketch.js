@@ -1,6 +1,7 @@
 import blockchain from "../ethers/blockchain.js";
 import agregarRed from "../ethers/agregarRed.js";
 import elegirPagina from "../ethers/elegirPagina.js";
+import crearEstadisticas from "./crearEstadisticas.js";
 let principal = graf => {
     let interfazVacia;
     let estadisticas = null;
@@ -52,24 +53,7 @@ let principal = graf => {
         }
     }
     let nuevoPersonaje = () => {
-        let nombre = "";
-        for (let i = 0; i < 5; i++) {
-            let array = "qwrtypsdfghjklzxcvbnm";
-            if (i % 2 == 0) {
-                array = "aeiou";
-            }
-            nombre += graf.random([...array]);
-        }
-        estadisticas = {
-            nombre,
-            cabeza: Math.round(graf.random(235)),
-            armadura: Math.round(graf.random(10)),
-            arma: Math.round(graf.random(6)),
-            ataque: Math.round(graf.random(10, 20)),
-            magia: Math.round(graf.random(10, 20)),
-            salud: Math.round(graf.random(10, 20)),
-            inteligencia: Math.round(graf.random(10, 20)),
-        }
+        let estadisticas = crearEstadisticas(graf);
         graf.loadImage(`../assets/personajeCabeza${estadisticas.cabeza}.png`, (imagen) => {
             cabeza = imagen.get(0, 0, 17, 17);
         });

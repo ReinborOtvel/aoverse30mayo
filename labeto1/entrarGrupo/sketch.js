@@ -69,6 +69,7 @@ let principal = graf => {
                 baseDatos(signer).set(JSON.stringify(informacion)).then(() => {
                     alert("No cierres la pagina, guardando base de datos");
                     setTimeout(() => {
+                        console.log("reload");
                         window.location.reload();
                     }, 10000);
                 }).catch((error) => {
@@ -85,6 +86,7 @@ elegirPagina((pagina) => {
         blockchain(({ provedor, direccion, signer, chainId }) => {
             direccionMayuscula = direccion.toUpperCase();
             informacion = JSON.parse(window.localStorage.getItem("informacion"));
+            estadisticas=JSON.parse(window.localStorage.getItem("estadisticas"));
             informacion.estadisticas[direccionMayuscula] = estadisticas;
             for (let lider in informacion.grupo) {
                 if (informacion.lider[direccionMayuscula] == undefined) {
