@@ -1,25 +1,33 @@
-import elegirPagina from "../ethers/elegirPagina.js";
-let principal = herramienta => {
-    let imgs = [];
-    let indice = 0;
-    herramienta.setup = () => {
-        herramienta.createCanvas(640, 360);
-        herramienta.frameRate(30);
+let estructura = new Estructura();
+estructura.imagenes = [];
+estructura.indice = 0;
+let metamask = new Metamask(() => {
+    metamask.elegirPagina((pagina) => {
+        estructura.pagina = pagina;
+        new p5(principal);
+    });
+});
+let principal = (motor) => {
+    motor.setup = () => {
+        estructura.setup();
     }
-    herramienta.preload = () => {
-        for (let i = 0; i < 8; i++)
-            imgs[i] = herramienta.loadImage(`../assets/pantallaCarga${i}.png`);
+    motor.preload = () => {
+        estructura.preload(motor);
+        for (let indice = 0; indice < 8; indice++) {
+            let src = `../assets/pantallaCarga${indice}.png`;
+            estructura.imagenes[indice] = motor.loadImage(src);
+        }
         setInterval(() => {
-            if (indice < imgs.length - 1) indice++;
-            if (indice == imgs.length / 2) {
-                elegirPagina((pagina) => {
-                    window.location.href = window.location.href.replace("pantallaCarga", pagina);
-                });
+            let ultimoIndice = estructura.imagenes.length - 1;
+            if (estructura.indice < ultimoIndice) {
+                estructura.indice++;
+                return;
             }
-        }, 1500);
+            window.location.href = window.location.href.replace("pantallaCarga", estructura.pagina);
+        }, 2000);
     }
-    herramienta.draw = () => {
-        herramienta.image(imgs[indice], 0, 0, 640, 360);
+    motor.draw = () => {
+        estructura.draw();
+        motor.image(estructura.imagenes[estructura.indice], 0, 0, 640, 360);
     }
 }
-new p5(principal);

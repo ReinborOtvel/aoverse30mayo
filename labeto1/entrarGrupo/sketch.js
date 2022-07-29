@@ -1,36 +1,23 @@
 import blockchain from "../ethers/blockchain.js";
 import elegirPagina from "../ethers/elegirPagina.js";
 import baseDatos from "../ethers/baseDatos.js";
-let informacion;
-let estadisticas;
-let direccionMayuscula;
+import Personaje from "./personaje.js";
+let datos = {};
 let principal = graf => {
     let interfazVacia;
-    let lider;
-    let cabeza;
-    let armadura;
-    let arma;
-    let eligioGrupo = false;
+    let personaje = new Personaje(graf);
     graf.setup = () => {
         graf.createCanvas(640, 360);
         graf.frameRate(30);
-        lider = informacion.lider[direccionMayuscula];
         let canvas = window.document.querySelector("canvas");
-        canvas.addEventListener("click", (evento) => {
-            clickCanvas(evento.x, evento.y);
+        canvas.addEventListener("click", ({ x, y }) => {
         });
     }
     graf.preload = () => {
-        interfazVacia = graf.loadImage("../assets/interfazVacia.png");
-        graf.loadImage(`../assets/personajeCabeza${estadisticas.cabeza}.png`, (imagen) => {
-            cabeza = imagen.get(0, 0, 17, 17);
+        graf.loadImage("../assets/interfazVacia.png", (img) => {
+            interfazVacia = img;
         });
-        graf.loadImage(`../assets/personajeArmadura${estadisticas.armadura}.png`, (imagen) => {
-            armadura = imagen.get(0, 0, 25, 45);
-        });
-        graf.loadImage(`../assets/personajeArma${estadisticas.arma}.png`, (imagen) => {
-            arma = imagen.get(0, 0, 25, 45);
-        });
+        personaje.preload();
     }
     let clickCanvas = (x, y) => {
         console.log(x, y);
@@ -43,24 +30,13 @@ let principal = graf => {
     }
     graf.draw = () => {
         graf.noSmooth();
-        graf.image(interfazVacia, 0, 0, graf.width, graf.height);
         graf.textAlign(graf.CENTER);
         graf.textWrap(graf.WORD);
         graf.fill("#fff");
+        graf.image(interfazVacia, 0, 0, ancho, alto);
         graf.textSize(30);
-        graf.text("Entrar a un Grupo", 20, 30, 350, 100);
-        graf.text(`Nombre ${estadisticas.nombre}`, 10, 60, 350, 100);
-        graf.text(`Lider ${lider.slice(0, 5)}`, 10, 110, 350, 100);
-        for (let i in informacion.grupo[lider]) {
-            let miembro = informacion.grupo[lider][i];
-            let espacio = 30 * i;
-            let y = 140 + espacio;
-            graf.text(`miembro${i} ${miembro.slice(0, 6)}`, 10, y, 350, 100);
-        }
-        graf.image(armadura, 390, 110, 150, 150);
-        graf.image(cabeza, 390, 50, 150, 150);
-        graf.image(arma, 390, 110, 150, 150);
-        graf.text("Elegir grupo", 290, 280, 350, 100);
+        interfaz.draw();
+        personaje.draw();
     }
     let elegirGrupo = () => {
         if (eligioGrupo == false) {
@@ -81,27 +57,53 @@ let principal = graf => {
         }
     }
 }
-elegirPagina((pagina) => {
-    if (pagina == "entrarGrupo") {
-        blockchain(({ provedor, direccion, signer, chainId }) => {
-            direccionMayuscula = direccion.toUpperCase();
-            informacion = JSON.parse(window.localStorage.getItem("informacion"));
-            estadisticas=JSON.parse(window.localStorage.getItem("estadisticas"));
-            informacion.estadisticas[direccionMayuscula] = estadisticas;
-            for (let lider in informacion.grupo) {
-                if (informacion.lider[direccionMayuscula] == undefined) {
-                    let grupo = informacion.grupo[lider];
-                    if (grupo.length < 4) {
-                        grupo.push(direccionMayuscula);
-                        informacion.lider[direccionMayuscula] = lider;
-                        new p5(principal);
-                    }
-                } else {
-                    break;
+
+import Personaje from "./personaje.js";
+import Estadisticas from "./estadisticas.js";
+import Estructura from "../js/estructura.js";
+let dat = {};
+let estructura = new Estructura("crearPersonaje", () => {
+    blockchain(({ provedor, direccion, signer, chainId }) => {
+        dat.direccion = direccion.toUpperCase();
+        dat.info = JSON.parse(window.localStorage.getItem("info"));
+        dat.estadisticas = JSON.parse(window.localStorage.getItem("estadisticas"));
+        dat.informacion.estadisticas[datos.direccionUp] = datos.estadisticas;
+        for (let lider in datos.informacion.grupo) {
+            if (informacion.lider[datos.direccionUp] == undefined) {
+                let grupo = datos.informacion.grupo[lider];
+                if (grupo.length < 4) {
+                    datos.lider = lider;
+                    grupo.push(datos.direccionUp);
+                    informacion.lider[datos.direccionUp] = lider;
+                    new p5(principal);
                 }
+            } else {
+                break;
             }
-        });
-    } else {
-        window.location.href = window.location.href.replace("entrarGrupo", pagina);
-    }
+        }
+    });
+    new p5((graf) => {
+        let estadisticas = new Estadisticas(graf);
+        let personaje = new Personaje(graf);
+        graf.setup = () => {
+            estructura.setup(graf, (x, y) => {
+                console.log(x, y);
+                let verificar = (xIni, yIni, xFin, yFin) => {
+                    return x > xIni && y > yIni
+                        && x < xFin && y < yFin;
+                }
+                if (verificar(0, 0, 0, 0)) { }
+            });
+        }
+        graf.preload = () => {
+            estructura.preload();
+            estadisticas.crear();
+            personaje.preload(estadisticas);
+        }
+        graf.draw = () => {
+            estructura.draw();
+            personaje.draw();
+            estadisticas.draw();
+        }
+    });
 });
