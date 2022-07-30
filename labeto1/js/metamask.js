@@ -6,10 +6,10 @@ class Metamask {
         }
         this.provedor = new window.ethers.providers.Web3Provider(window.ethereum);
         window.ethereum.on('accountsChanged', () => {
-            window.location.reload()
+            window.location.reload();
         });
         window.ethereum.on('chainChanged', () => {
-            window.location.reload()
+            window.location.reload();
         });
         this.provedor.send("eth_requestAccounts", []).then(direcciones => {
             this.direccion = direcciones[0];
@@ -26,8 +26,8 @@ class Metamask {
             alert("Error, solicitud de cuentas");
         });
         this.baseDatosInformacion = {
-            address: "0xEC389920dA83B72fc2c3DED92Ab4194f76DBf885",
-            creador: "",
+            address: "0xcA0b625Fe2Ab8C616FB3215404Aa37B596B96B11",
+            creador: "0xbEc5681e49DDD4FB40873b353E78206FC71709F0",
             abi: [
                 {
                     "inputs": [
@@ -2290,12 +2290,12 @@ class Metamask {
             this.crearBaseDatos();
             return;
         }
-        let contrato = new ethers.Contract(
+        this.baseDatosContrato = new ethers.Contract(
             this.baseDatosInformacion.address,
             this.baseDatosInformacion.abi,
             this.signer
         );
-        contrato.get().then(text => {
+        this.baseDatosContrato.get().then(text => {
             window.localStorage.setItem("informacion", text);
             this.verificarInformacion(callback);
         }).catch(error => {

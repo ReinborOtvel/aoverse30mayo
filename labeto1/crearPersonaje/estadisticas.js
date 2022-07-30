@@ -1,12 +1,11 @@
-export default class Estadisticas {
-    constructor(graf) {
-        this.graf;
+class Estadisticas {
+    constructor() {
         this.vocales = "aeiou";
         this.letras = "qwrtypsdfghjklzxcvbnm";
     }
     crear() {
         let rango = (minimo, maximo) => {
-            return Math.round(this.graf.random(minimo, maximo));
+            return Math.round(random(minimo, maximo));
         }
         this.nombre = "";
         for (let i = 0; i < 5; i++) {
@@ -27,13 +26,13 @@ export default class Estadisticas {
         this.inteligencia = rango(10, 20);
     }
     draw() {
-        graf.text("Crear Personaje", 10, 30, 280, 100);
-        graf.text(`Nombre ${this.nombre}`, 10, 70, 300, 100);
-        graf.text(`Ataque ${this.ataque}`, 10, 110, 280, 100);
-        graf.text(`Magia ${this.magia}`, 10, 150, 280, 100);
-        graf.text(`Salud ${this.salud}`, 10, 190, 280, 100);
-        graf.text(`Inteligencia ${this.inteligencia}`, 10, 230, 280, 100);
-        graf.text(`Nuevas Estadisticas`, 10, 290, 350, 100);
-        graf.text(`Crear Personaje`, 280, 40, 350, 100);
+        text("Personaje / 0.01 BNB", 30, 50);
+        text(`Nombre ${this.nombre}`, 30, 80);
+        text(`Ataque ${this.ataque}`, 30, 110);
+        text(`Magia ${this.magia}`, 30, 140);
+        text(`Salud ${this.salud}`, 30, 170);
+        text(`Inteligencia ${this.inteligencia}`, 30, 200);
+        text(`Nuevas Estadisticas`, 30, 250);
+        text(`Crear Personaje`, 30, 290);
     }
 }
