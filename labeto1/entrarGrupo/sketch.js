@@ -1,4 +1,5 @@
 let estructura = new Estructura();
+let estadisticas = JSON.parse(window.localStorage.getItem("estadisticas"));
 let metamask = new Metamask(() => {
     metamask.elegirPagina((pagina) => {
         estructura.pagina = pagina;
@@ -12,15 +13,9 @@ let metamask = new Metamask(() => {
             estructura.lider = lider;
             if (estructura.informacion.lider[direccionMayuscula] == undefined) {
                 if (estructura.informacion.grupo[estructura.lider].length <= 5) {
-                    estructura.informacion.estadisticas[direccionMayuscula] = JSON.parse(window.localStorage.getItem("estadisticas"));
+                    estructura.informacion.estadisticas[direccionMayuscula] = estructura.estadisticas;
                     estructura.informacion.grupo[direccionMayuscula] = [];
                     estructura.informacion.grupo[estructura.lider].push(direccionMayuscula);
-                    estructura.informacion.grupo[estructura.lider].push(direccionMayuscula);
-
-                    estructura.informacion.grupo[estructura.lider].push(direccionMayuscula);
-                    estructura.informacion.grupo[estructura.lider].push(direccionMayuscula);
-                    estructura.informacion.grupo[estructura.lider].push(direccionMayuscula);
-
                     estructura.grupo = estructura.informacion.grupo[estructura.lider];
                     estructura.informacion.lider[direccionMayuscula] = estructura.lider;
                 }
@@ -37,6 +32,7 @@ let metamask = new Metamask(() => {
 });
 function preload() {
     estructura.preload();
+    personaje.preload(estructura.estadisticas);
 }
 function setup() {
     estructura.setup((x, y, verificarClick) => {
@@ -65,5 +61,6 @@ function draw() {
         let y = 120 + (i * 30);
         text(`Miembro${i} ${miembro.slice(0, 5)}`, 30, y);
     }
-    text("Entrar al grupo", 30, 250)
+    text("Entrar al grupo", 30, 290);
+    estructura.personaje.draw();
 }
