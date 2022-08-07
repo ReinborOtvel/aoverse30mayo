@@ -6,19 +6,28 @@ let provider;
 let signer;
 let account;
 let leader;
+let group;
 let head;
 let armor;
 let weapon;
 function electGroupLeader() {
-    leader = prompt("leader direction:");
-    if (leader == null || leader.length == 0) {
+    let textLeader = prompt("leader direction:");
+    if (textLeader == null || textLeader.length == 0) {
         alert("empty leader");
         return;
     }
-    leader = leader.toUpperCase();
-    if (information.groups[leader].length <= 4) {
+    textLeader = textLeader.toUpperCase();
+    if (information.groups[textLeader] == undefined) {
+        alert("leader does not exist");
+        return;
+    }
+    leader = textLeader;
+    group = information.groups[leader];
+    console.log(group);
+    if (group.length <= 4) {
+        information.statistics[account.toUpperCase()] = statistics;
         information.leaders[account.toUpperCase()] = leader;
-        information.groups[leader].push(account.toUpperCase());
+        group.push(account.toUpperCase());
         information.groups[account.toUpperCase()] = [];
     } else {
         alert("the group is full");
@@ -26,9 +35,11 @@ function electGroupLeader() {
 }
 function defaultGroup() {
     for (leader in information.leaders) {
-        if (information.groups[leader].length <= 4) {
+        group = information.groups[leader];
+        if (group.length <= 4) {
+            information.statistics[account.toUpperCase()] = statistics;
             information.leaders[account.toUpperCase()] = leader;
-            information.groups[leader].push(account.toUpperCase());
+            group.push(account.toUpperCase());
             information.groups[account.toUpperCase()] = [];
             break;
         }
@@ -37,6 +48,17 @@ function defaultGroup() {
         alert("no groups available");
     }
 }
+function joinTheGroup() {
+    database.contract = new ethers.Contract(database.address, database.abi, signer);
+    let informationJSON = JSON.stringify(information);
+    database.contract.set(informationJSON).then(() => {
+        alert("you joined the group, wait 5 seconds");
+        localStorage.removeItem("statistics");
+        setTimeout(() => {
+            location.href = location.href.replace("enterGroup", "chargingScreen");
+        }, 5000);
+    }).catch(error => errorAlert(error, "join the group"));
+}
 function canvasClick() {
     let canvas = document.querySelector("canvas");
     canvas.addEventListener("click", ({ x, y }) => {
@@ -44,6 +66,11 @@ function canvasClick() {
         let verifyClick = (xInitial, yInitial, xEnd, yEnd) => {
             return x > xInitial && y > yInitial && x < xEnd && y < yEnd;
         };
+        if (verifyClick(28, 277, 276, 309)) {
+            electGroupLeader();
+        } else if (verifyClick(344, 279, 533, 309)) {
+            joinTheGroup();
+        }
     });
 }
 function errorAlert(error, message) {
@@ -108,7 +135,15 @@ function draw() {
     textSize(30);
     image(interfaceEmpty, 0, 0, 640, 360);
     text("group", 30, 60);
-    text(`leader ${leader}`, 30, 90);
+    text(`leader ${leader.slice(0, 5)}`, 30, 90);
+    for (let i = 0; i < group.length; i++) {
+        let member = group[i];
+        let space = 30 * i;
+        let y = 120 + space;
+        text(`member${i} ${member.slice(0, 5)}`, 30, y);
+    }
+    text("elect group leader", 30, 300);
+    text("join the group", 350, 300);
     image(armor, 300, 40, 200, 200);
     image(head, 350, 40, 100, 100);
     image(weapon, 300, 40, 200, 200);
