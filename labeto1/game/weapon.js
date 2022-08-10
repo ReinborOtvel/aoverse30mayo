@@ -3,6 +3,9 @@ class Weapon {
     constructor(metamask, character) {
         this.metamask = metamask;
         this.character = character;
+    }
+    setup() {
+        this.maximumSprite = 0;
         this.sprite = 0;
         this.width = 25;
         this.height = 45;

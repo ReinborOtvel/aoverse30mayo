@@ -1,23 +1,29 @@
 "use strict";
 let metamask = new Metamask();
 let character = new Character(metamask);
+let uploadedImages = false;
 function preload() {
-    noLoop();
-    metamask.start(() => {
+    metamask.preload(() => {
         character.preload(() => {
-            loop();
+            uploadedImages = true;
         });
     });
 }
 function setup() {
     createCanvas(640, 360);
     frameRate(30);
+    character.setup();
 }
 function draw() {
+    if (uploadedImages == false) {
+        return;
+    }
     noSmooth();
     character.draw();
 }
 function keyPressed() {
-    console.log(keyCode);
     character.keyPressed();
+}
+function keyReleased() {
+    character.keyReleased();
 }

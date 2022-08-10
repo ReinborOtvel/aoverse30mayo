@@ -3,11 +3,12 @@ class Head {
     constructor(metamask, character) {
         this.metamask = metamask;
         this.character = character;
+    }
+    setup() {
         this.width = 17;
         this.height = 17;
     }
     preload(callback) {
-        console.log(this.metamask.statistics)
         loadImage(`../assets/player/head/${this.metamask.statistics.head}.png`, img => {
             let parameters = ["down", "right", "left", "right"];
             for (let iParameters in parameters) {
