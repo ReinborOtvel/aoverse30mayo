@@ -4,23 +4,9 @@ class Character {
     this.metamask = metamask;
     this.endOfCreation = true;
   }
-  part(name, width, height, callback) {
-    let index = this.statistics[name];
-    let url = `../assets/player/${name}/${index}.png`;
-    loadImage(url, img => {
-      this[name] = img.get(0, 0, width, height);
-      callback();
-    });
-  }
   preload(callback) {
     this.new();
-    this.part("head", 17, 17, () => {
-      this.part("armor", 25, 45, () => {
-        this.part("weapon", 25, 45, () => {
-          callback();
-        })
-      })
-    });
+    this.player = new Player({ x: 300, y: 50, width: 100, height: 100 }, callback);
   }
   draw() {
     text(`name ${this.name}`, 30, 90);
@@ -28,9 +14,7 @@ class Character {
     text(`endurance ${this.statistics.endurance}`, 30, 150);
     text(`health ${this.statistics.health}`, 30, 180);
     text(`speed ${this.statistics.speed}`, 30, 210);
-    image(this.armor, 300, 40, 200, 200);
-    image(this.head, 350, 40, 100, 100);
-    image(this.weapon, 300, 40, 200, 200);
+    this.player.draw();
   }
   save() {
     storeItem("statistics", JSON.stringify(this.statistics));
