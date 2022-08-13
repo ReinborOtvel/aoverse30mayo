@@ -1,10 +1,10 @@
 "use strict";
-let metamask = new Metamask();
-let character = new Character(metamask);
+let metamask;
+let character;
 let uploadedImages = false;
 function preload() {
-    metamask.preload(() => {
-        character.preload(() => {
+    metamask = new Metamask(() => {
+        character = new Character(() => {
             uploadedImages = true;
         });
     });
@@ -12,18 +12,17 @@ function preload() {
 function setup() {
     createCanvas(640, 360);
     frameRate(30);
-    character.setup();
 }
 function draw() {
     if (uploadedImages == false) {
         return;
     }
     noSmooth();
-    character.draw();
+    character.graphics.draw();
 }
 function keyPressed() {
-    character.keyPressed();
+    character.map.keyPressed();
 }
 function keyReleased() {
-    character.keyReleased();
+    character.map.keyReleased();
 }

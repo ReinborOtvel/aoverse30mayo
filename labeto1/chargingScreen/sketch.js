@@ -4,7 +4,8 @@ let loadingScreens = [];
 let element = 1;
 function preload() {
     for (let i = 0; i <= 7; i++) {
-        loadImage(`../assets/loadingScreens/${i}.png`, img => {
+        let url = sourceImages.loadingScreens.replace("${index}", i + 1);
+        loadImage(url, img => {
             loadingScreens[i] = img;
         });
     }

@@ -9,13 +9,12 @@ class Metamask {
             },],
         }).catch(() => alert("error, change network to binance testnet"));
     }
-    preload(callback) {
+    constructor(callback) {
         if (navigator.onLine == false) {
             alert("no internet");
         } else if (window.ethereum == undefined) {
             alert("download Metamask");
         } else {
-            this.information = JSON.parse(getItem("information"));
             this.provider = new ethers.providers.Web3Provider(ethereum);
             ethereum.on('accountsChanged', () => location.reload());
             ethereum.on('chainChanged', () => location.reload());
@@ -24,6 +23,7 @@ class Metamask {
                 this.signer = this.provider.getSigner();
                 this.signer.getChainId().then(chainId => {
                     if (chainId == 97) {
+                        this.information = JSON.parse(getItem("information"));
                         this.statistics = this.information.statistics[this.account.toUpperCase()];
                         callback();
                     } else {
