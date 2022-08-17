@@ -1,6 +1,6 @@
 import Image from "./image.js";
-export default function AnimationsVertical(imageParameters, { width, height, parameters, readyAnimations }) {
-  imageParameters.readyImage = image => {
+export default function AnimationsVertical(src, { width, height, parameters, readyAnimations }) {
+  loadImage(src, image => {
     let animations = {};
     for (let name in parameters) {
       let { numberImages, indexY } = parameters[name];
@@ -11,6 +11,5 @@ export default function AnimationsVertical(imageParameters, { width, height, par
       }
     }
     readyAnimations(animations);
-  };
-  Image(imageParameters);
+  });
 }

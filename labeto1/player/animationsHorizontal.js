@@ -1,6 +1,5 @@
-import Image from "./image.js";
-export default function AnimationsHorizontal(imageParameters, { width, height, parameters, readyAnimations }) {
-  imageParameters.readyImage = image => {
+export default function AnimationsHorizontal(src, { width, height, parameters, readyAnimations }) {
+  loadImage(src, image => {
     let animations = {};
     for (let name in parameters) {
       let { numberImages, indexX } = parameters[name];
@@ -11,6 +10,5 @@ export default function AnimationsHorizontal(imageParameters, { width, height, p
       }
     }
     readyAnimations(animations);
-  };
-  Image(imageParameters);
+  });
 }

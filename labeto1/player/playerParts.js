@@ -2,19 +2,18 @@ import PlayerHead from "./playerHead.js";
 import PlayerArmor from "./playerArmor.js";
 import PlayerWeapon from "./playerWeapon.js";
 export default function PlayerParts(statistics, callback) {
-  PlayerHead({ index: statistics.head }, {
-    readyAnimations: head => {
-      PlayerArmor({ index: statistics.armor }, {
-        readyAnimations: armor => {
-          PlayerWeapon({ index: statistics.weapon }, {
-            readyAnimations: weapon => {
-              callback({ head, armor, weapon });
-            }
-          });
-        }
-      });
-    }
-  });
-
-
+  let animations = {};
+  let callbackWeapon = weapon => {
+    animations.weapon = weapon;
+    callback(animations);
+  }
+  let callbackArmor = armor => {
+    animations.armor = armor;
+    PlayerWeapon({ index: statistics.weapon }, { readyAnimations: callbackWeapon, });
+  }
+  let callbackHead = head => {
+    animations.head = head;
+    PlayerArmor({ index: statistics.armor }, { readyAnimations: callbackArmor, });
+  }
+  PlayerHead({ index: statistics.head }, { readyAnimations: callbackHead, });
 }
