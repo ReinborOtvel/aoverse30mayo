@@ -1,7 +1,7 @@
 "use strict";
 import BinanceTestnet from "./binanceTestnet.js";
 export default function VerifyInformation() {
-  let text = getItem("information");
+  let text = gameData.p5.getItem("information");
   if (text == null) {
     BinanceTestnet();
   } else {
@@ -9,14 +9,14 @@ export default function VerifyInformation() {
     let account = gameData.account.toUpperCase();
     let statistics = information.statistics[account];
     if (statistics == undefined) {
-      statistics = getItem("statistics");
+      statistics = gameData.p5.getItem("statistics");
       if (statistics == null) {
-        gameData.preload("createCharacter");
+        gameData.newPage("createCharacter");
       } else {
-        gameData.preload("enterGroup");
+        gameData.newPage("enterGroup");
       }
     } else {
-      gameData.preload("game");
+      gameData.newPage("game");
     }
   }
 }

@@ -6,13 +6,13 @@ export default function StatisticsRandom() {
     if (i % 2 == 0) {
       characters = "qwrtypsdfghjklzxcvbnm";
     }
-    name += gameData.p5.random(characters);
+    name += gameData.p5.random([...characters]);
   }
   let range = (a, b) => Math.round(gameData.p5.random(a, b));
   return {
     name,
     head: range(1, 236),
-    armor: range(1, 373),
+    armor: range(1, 350),
     weapon: range(1, 130),
     strength: range(20, 100),
     endurance: range(20, 100),

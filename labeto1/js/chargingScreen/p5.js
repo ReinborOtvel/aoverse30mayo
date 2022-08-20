@@ -1,16 +1,30 @@
+import StartMetamask from "../metamask/start.js";
 export default {
   preload() {
-    gameData.chargingScreen = [];
-    for (let i = 1; i <= 14; i++) {
-      let src = `./Graficos/chargingScreen/${i}.jpg`;
-      gameData.p5.loadImage(src, img => {
-        gameData.chargingScreen[i] = img;
+    gameData.chargingScreens = [];
+    for (let index = 1; index <= 14; index++) {
+      let src = `./Graficos/chargingScreens/${index}.jpg`;
+      gameData.p5.loadImage(src, chargingScreen => {
+        gameData.chargingScreens[index] = chargingScreen;
+        if (index == 14) {
+          gameData.canDraw = true;
+        }
       });
     }
   },
+  setup() {
+    gameData.index = 1;
+    setInterval(() => {
+      if (gameData.index < 14) {
+        gameData.index++;
+      }
+      if (gameData.index == 2) {
+        StartMetamask();
+      }
+    }, 2000);
+  },
   draw() {
-    for (let i = 1; i <= 14; i++) {
-      gameData.loadImage(gameData.chargingScreen[i], 0, 0, 640, 360);
-    }
+    let chargingScreen = gameData.chargingScreens[gameData.index];
+    gameData.p5.image(chargingScreen, 0, 0, 640, 360);
   }
 };

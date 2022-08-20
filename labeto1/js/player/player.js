@@ -14,8 +14,10 @@ export default class Player {
   }
   draw() {
     let { x, y, width, height } = this.transform;
-    image(this.head[this.animation][0], x, y, width, height);
-    image(this.armor[this.animation][0], x, y, width, height);
-    image(this.weapon[this.animation][0], x, y, width, height);;
+    let head = { width: width / 2, height: height / 2, };
+    head.x = x + head.width / 2;
+    gameData.p5.image(this.armor[this.animation][0], x, y, width, height);
+    gameData.p5.image(this.head[this.animation][0], head.x, y, head.width, head.height);
+    gameData.p5.image(this.weapon[this.animation][0], x, y, width, height);;
   }
 }
