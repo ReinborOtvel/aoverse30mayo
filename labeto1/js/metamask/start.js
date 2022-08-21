@@ -15,6 +15,7 @@ export default function StartMetamask() {
       ethereum.on('accountsChanged', () => location.reload());
       ethereum.on('chainChanged', () => location.reload());
       gameData.signer.getChainId().then(chainId => {
+        gameData.chainId = chainId;
         switch (chainId) {
           case 97: GetInformation(); break;
           case 56: VerifyInformation(); break;
