@@ -1,11 +1,10 @@
 import Button from "../utils/button.js";
-export default function () {
-  let _this = gameData.chargingScreens;
-  let chargingScreen = _this.chargingScreens[_this.index];
-  if (chargingScreen != undefined) {
-    gameData.graphicsEngine.image(chargingScreen, 0, 0, 640, 360);
+export default function (gameData) {
+  let image = gameData.pageData.images[gameData.pageData.index];
+  if (image != undefined) {
+    gameData.graphicsEngine.image(image, 0, 0, 640, 360);
   }
-  if (_this.clickMetamask == false) {
-    Button(50, 280, 430, 50, "click to connect with metamask");
+  if (gameData.pageData.clickMetamask == false) {
+    Button(gameData, 50, 280, 430, 50, "click to connect with metamask");
   }
 }

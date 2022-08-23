@@ -1,3 +1,6 @@
+"use strict";
+import ChargingScreensDraw from "../js/chargingScreens/draw.js";
+import CreateCharacterDraw from "../js/createCharacter/draw.js";
 export default function (gameData) {
     gameData.graphicsEngine.noSmooth();
     gameData.graphicsEngine.textAlign(gameData.graphicsEngine.LEFT);
@@ -5,9 +8,9 @@ export default function (gameData) {
     gameData.graphicsEngine.fill("#fff");
     gameData.graphicsEngine.textSize(30);
     switch (gameData.namePage) {
-        case "chargingScreen": ChargingScreen.draw(); break;
-        case "createCharacter": CreateCharacter.draw(); break;
-        case "enterGroup": EnterGroup.draw(); break;
-        case "game": Game.draw(); break;
+        case "chargingScreen": ChargingScreensDraw(gameData); break;
+        case "createCharacter": CreateCharacterDraw(gameData); break;
+        case "enterGroup": EnterGroupDraw(gameData); break;
+        case "game": GameDraw(gameData); break;
     }
 }

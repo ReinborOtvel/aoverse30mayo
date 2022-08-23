@@ -1,6 +1,6 @@
-export default function (x, y, width, height, text) {
-    gameData.p5.fill("#000");
-    gameData.p5.rect(x, y, width, height, 10);
-    gameData.p5.fill("#fff");
-    gameData.p5.text(text, x + 10, y + 30);
+export default function (gameData, x, y, width, height, text) {
+    gameData.graphicsEngine.fill("#000");
+    gameData.graphicsEngine.rect(x, y, width, height, 10);
+    gameData.graphicsEngine.fill("#fff");
+    gameData.graphicsEngine.text(text, x + 10, y + 30);
 }

@@ -1,22 +1,24 @@
 "use strict";
-import BinanceTestnet from "./binanceTestnet.js";
-export default function () {
-  let text = gameData.p5.getItem("information");
+import Testnet from "./testnet.js";
+import Page from "../../main/newPage.js";
+export default function (gameData) {
+  let text = gameData.graphicsEngine.getItem("information");
   if (text == null) {
-    BinanceTestnet();
+    Testnet();
   } else {
     let information = JSON.parse(text);
-    let account = gameData.account.toUpperCase();
+    let account = gameData.metamask.account.toUpperCase();
     let statistics = information.statistics[account];
     if (statistics == undefined) {
-      statistics = gameData.p5.getItem("statistics");
+      statistics = gameData.graphicsEngine.getItem("statistics");
       if (statistics == null) {
-        gameData.newPage("createCharacter");
+        gameData.namePage = "createCharacter";
       } else {
-        gameData.newPage("enterGroup");
+        gameData.namePage = "enterGroup";
       }
     } else {
-      gameData.newPage("game");
+      gameData.namePage = "game";
     }
+    Page(gameData);
   }
 }

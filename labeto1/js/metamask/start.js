@@ -1,27 +1,31 @@
 "use strict";
-import GetInformation from "./getInformation.js";
-import VerifyInformation from "./verifyInformation.js";
-import BinanceTestnet from "./binanceTestnet.js";
-export default function () {
+import Get from "./getInformation.js";
+import Verify from "./verifyInformation.js";
+import Testnet from "./testnet.js";
+export default function (gameData) {
   if (navigator.onLine == false) {
     alert("no internet");
   } else if (window.ethereum == undefined) {
     alert("download Metamask");
   } else {
-    gameData.provider = new ethers.providers.Web3Provider(ethereum);
-    gameData.provider.send("eth_requestAccounts", []).then(accounts => {
-      gameData.account = accounts[0];
-      gameData.signer = gameData.provider.getSigner();
+    gameData.metamask = {};
+    gameData.metamask.provider = new ethers.providers.Web3Provider(ethereum);
+    gameData.metamask.provider.send("eth_requestAccounts", []).then(accounts => {
+      gameData.metamask.account = accounts[0];
+      gameData.metamask.signer = gameData.metamask.provider.getSigner();
       ethereum.on('accountsChanged', () => location.reload());
       ethereum.on('chainChanged', () => location.reload());
-      gameData.signer.getChainId().then(chainId => {
-        gameData.chainId = chainId;
+      gameData.metamask.signer.getChainId().then(chainId => {
+        gameData.metamask.chainId = chainId;
         switch (chainId) {
-          case 97: GetInformation(); break;
-          case 56: VerifyInformation(); break;
-          default: BinanceTestnet(); break;
+          case 97: Get(gameData); break;
+          case 56: Verify(gameData); break;
+          default: Testnet(gameData); break;
         }
-      }).catch(() => alert("error, chain id"));
+      }).catch((error) => {
+        console.error(error);
+        alert("error, chain id");
+      });
     }).catch(() => alert("error, accounts"));
   }
 }

@@ -1,3 +1,4 @@
+"use strict";
 import NewPage from "./newPage.js";
 import Click from "./click.js";
 export default function (gameData) {
