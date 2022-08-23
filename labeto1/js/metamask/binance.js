@@ -1,4 +1,4 @@
-export default function Binance() {
+export default function () {
   ethereum.request({
     method: 'wallet_addEthereumChain',
     params: [{

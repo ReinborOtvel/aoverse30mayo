@@ -2,7 +2,7 @@
 import database from "./database.js";
 import StatisticsRandom from "../player/statisticsRandom.js";
 import Binance from "../metamask/binance.js";
-export default function CreateDatabase() {
+export default function () {
   if (gameData.chainId == 56) {
     let information = { statistics: {}, leaders: {}, groups: {} };
     let creator = database.creator.toUpperCase();

@@ -1,5 +1,5 @@
 "use strict";
-class Character {
+export default class {
   constructor(metamask) {
     this.metamask = metamask;
   }

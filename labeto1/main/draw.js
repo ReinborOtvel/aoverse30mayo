@@ -1,4 +1,4 @@
-export default function Draw(gameData) {
+export default function (gameData) {
     gameData.graphicsEngine.noSmooth();
     gameData.graphicsEngine.textAlign(gameData.graphicsEngine.LEFT);
     gameData.graphicsEngine.textWrap(gameData.graphicsEngine.WORD);

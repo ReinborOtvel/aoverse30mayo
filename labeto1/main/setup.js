@@ -1,6 +1,6 @@
 import NewPage from "./newPage.js";
 import Click from "./click.js";
-export default function Setup(gameData) {
+export default function (gameData) {
     gameData.namePage = "chargingScreen";
     NewPage(gameData);
     gameData.canvas = document.querySelector("canvas");

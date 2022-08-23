@@ -1,4 +1,4 @@
-export default function Button(x, y, width, height, text) {
+export default function (x, y, width, height, text) {
     gameData.p5.fill("#000");
     gameData.p5.rect(x, y, width, height, 10);
     gameData.p5.fill("#fff");

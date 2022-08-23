@@ -1,6 +1,6 @@
 "use strict";
 import BinanceTestnet from "./binanceTestnet.js";
-export default function VerifyInformation() {
+export default function () {
   let text = gameData.p5.getItem("information");
   if (text == null) {
     BinanceTestnet();

@@ -1,6 +1,6 @@
 "use strict";
 import database from "../metamask/database.js";
-export default function CreateCharacter() {
+export default function () {
   ethereum.request({
     method: 'eth_sendTransaction',
     params: [{

@@ -1,5 +1,5 @@
 "use strict";
-export default function BinanceTestnet() {
+export default function () {
   ethereum.request({
     method: 'wallet_addEthereumChain',
     params: [{

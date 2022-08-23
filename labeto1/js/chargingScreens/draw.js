@@ -1,5 +1,5 @@
 import Button from "../utils/button.js";
-export default function Draw() {
+export default function () {
   let _this = gameData.chargingScreens;
   let chargingScreen = _this.chargingScreens[_this.index];
   if (chargingScreen != undefined) {

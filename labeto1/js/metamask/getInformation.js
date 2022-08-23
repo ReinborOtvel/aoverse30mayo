@@ -2,7 +2,7 @@
 import database from "./database.js";
 import VerifyInformation from "./verifyInformation.js";
 import CreateDatabase from "./createDatabase.js";
-export default function GetInformation() {
+export default function () {
   if (database.address == "") {
     CreateDatabase();
   } else {

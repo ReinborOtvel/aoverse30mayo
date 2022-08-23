@@ -1,4 +1,4 @@
-export default function Setup(gameData) {
+export default function (gameData) {
   gameData.chargingScreens = {
     index: 1,
     chargingScreens: [],

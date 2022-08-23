@@ -22,7 +22,7 @@ class Click {
     }
   }
 }
-class Scene {
+export default class {
   constructor(metamask) {
     this.metamask = metamask;
     this.click = new Click(metamask);

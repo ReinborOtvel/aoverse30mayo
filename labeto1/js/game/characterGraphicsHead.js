@@ -1,5 +1,5 @@
 "use strict";
-class CharacterGraphicsHead {
+export default class {
     constructor(callback) {
         let index = metamask.statistics.head;
         let url = `../assets/player/head/${index}.png`;

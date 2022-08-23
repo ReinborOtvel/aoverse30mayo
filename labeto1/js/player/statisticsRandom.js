@@ -1,5 +1,5 @@
 "use strict";
-export default function StatisticsRandom() {
+export default function () {
   let name = "";
   for (let i = 0; i <= 5; i++) {
     let characters = "aeiou";

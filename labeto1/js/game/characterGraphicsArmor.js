@@ -1,5 +1,5 @@
 "use strict";
-class CharacterGraphicsArmor {
+export default class {
   constructor(callback) {
     this.sprite = 0;
     this.maximumSprite = 0;

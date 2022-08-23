@@ -1,4 +1,5 @@
-class Metamask {
+"use strict";
+export default class {
     changeNetworkToBinanceTestnet() {
         ethereum.request({
             method: 'wallet_addEthereumChain',

@@ -1,5 +1,5 @@
 "use strict";
-class CharacterGraphics {
+export default class {
   changeAnimation() {
     this.armor.changeAnimation();
     this.weapon.changeAnimation();

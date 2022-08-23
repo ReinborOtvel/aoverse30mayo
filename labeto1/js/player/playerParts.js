@@ -2,7 +2,7 @@
 import PlayerHead from "./playerHead.js";
 import PlayerArmor from "./playerArmor.js";
 import PlayerWeapon from "./playerWeapon.js";
-export default function PlayerParts(statistics, callback) {
+export default function (statistics, callback) {
   let animations = {};
   let callbackWeapon = weapon => {
     animations.weapon = weapon;

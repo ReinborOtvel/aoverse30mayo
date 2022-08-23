@@ -1,6 +1,6 @@
 "use strict";
 import PlayerParts from "./playerParts.js";
-export default class Player {
+export default class {
   constructor(transform, statistics, preload) {
     this.transform = transform;
     this.statistics = statistics;

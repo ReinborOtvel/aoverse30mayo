@@ -1,5 +1,5 @@
 "use strict";
-export default function AnimationsHorizontal(src, { width, height, parameters, readyAnimations }) {
+export default function (src, { width, height, parameters, readyAnimations }) {
   gameData.p5.loadImage(src, image => {
     let animations = {};
     for (let name in parameters) {

@@ -1,5 +1,5 @@
 "use strict";
-class CharacterGraphicsWeapon {
+export default class {
     animation() {
         switch (character.graphics.animation) {
             case "up":

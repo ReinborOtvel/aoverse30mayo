@@ -1,7 +1,7 @@
 
 "use strict";
 import AnimationsHorizontal from "./animationsHorizontal.js";
-export default function PlayerHead(index, animationParameters) {
+export default function (index, animationParameters) {
   let src = `../Graficos/player/head/${index}.png`;
   animationParameters.width = 17;
   animationParameters.height = 17;

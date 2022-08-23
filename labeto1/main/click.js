@@ -1,4 +1,4 @@
-export default function Click(gameData) {
+export default function (gameData) {
     switch (gameData.namePage) {
         case "chargingScreen": ChargingScreen.click(); break;
         case "createCharacter": CreateCharacter.click(); break;

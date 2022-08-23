@@ -1,6 +1,6 @@
 "use strict";
 import AnimationsVertical from "./animationsVertical.js";
-export default function PlayerWeapon(index, animationParameters) {
+export default function (index, animationParameters) {
   let src = `../Graficos/player/weapon/${index}.png`;
   animationParameters.width = 25;
   animationParameters.height = 45;

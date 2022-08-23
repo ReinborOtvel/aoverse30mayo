@@ -1,5 +1,5 @@
 "use strict";
-class Metamask {
+export default class {
   constructor() {
     this.savedInformation = false;
   }

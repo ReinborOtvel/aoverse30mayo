@@ -2,7 +2,7 @@
 import GetInformation from "./getInformation.js";
 import VerifyInformation from "./verifyInformation.js";
 import BinanceTestnet from "./binanceTestnet.js";
-export default function StartMetamask() {
+export default function () {
   if (navigator.onLine == false) {
     alert("no internet");
   } else if (window.ethereum == undefined) {
