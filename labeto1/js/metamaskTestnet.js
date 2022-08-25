@@ -7,5 +7,8 @@ export default function () {
       chainName: "binance testnet",
       rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
     },],
-  }).catch(() => alert("error, change network to binance testnet"));
+  }).catch(error => {
+    console.error(error);
+    alert("error, change network to binance testnet");
+  });
 }

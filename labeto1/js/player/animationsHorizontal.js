@@ -1,6 +1,6 @@
 "use strict";
 export default function (src, { width, height, parameters, readyAnimations }) {
-  gameData.p5.loadImage(src, image => {
+  engine.loadImage(src, image => {
     let animations = {};
     for (let name in parameters) {
       let { numberImages, indexX } = parameters[name];

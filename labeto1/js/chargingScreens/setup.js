@@ -1,18 +1,16 @@
-export default function (gameData) {
-  gameData.pageData = {
-    index: 1,
-    images: [],
-    clickMetamask: false
-  };
+export default function () {
+  page.index = 1;
+  page.images = [];
+  page.metamask = false;
   for (let index = 1; index <= 14; index++) {
     let src = `./Graficos/chargingScreens/${index}.jpg`;
-    gameData.pageData.images[index] = gameData.graphicsEngine.loadImage(src);
+    page.images[index] = engine.loadImage(src);
   }
   setInterval(() => {
-    if (gameData.pageData.index < 14) {
-      gameData.pageData.index++;
+    if (page.index < 14) {
+      page.index++;
     } else {
-      gameData.pageData.index = 0;
+      page.index = 0;
     }
   }, 2000);
 }

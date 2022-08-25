@@ -1,18 +1,20 @@
 "use strict";
-import database from "../metamask/database.js";
+import info from "../database/information.js";
 export default function () {
   ethereum.request({
     method: 'eth_sendTransaction',
     params: [{
-      from: gameData.account,
-      to: database.creator,
-      value: ethers.utils.parseEther(database.ticket)._hex,
+      from: data.account,
+      to: info.creator,
+      value: ethers.utils.parseEther(info.ticket)._hex,
       chainId: ethers.utils.hexValue(56),
     }],
   }).then(() => {
-    gameData.p5.storeItem("statistics", JSON.stringify(gameData.player.statistics));
+    let statistics = JSON.stringify(page.player.statistics);
+    engine.storeItem("statistics", statistics);
     location.reload();
   }).catch(() => {
     alert("error, create character");
+    page.transaction = false;
   });
 }

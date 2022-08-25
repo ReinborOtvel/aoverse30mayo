@@ -6,9 +6,9 @@ export default function () {
     if (i % 2 == 0) {
       characters = "qwrtypsdfghjklzxcvbnm";
     }
-    name += gameData.p5.random([...characters]);
+    name += engine.random([...characters]);
   }
-  let range = (a, b) => Math.round(gameData.p5.random(a, b));
+  let range = (a, b) => Math.round(engine.random(a, b));
   return {
     name,
     head: range(1, 236),

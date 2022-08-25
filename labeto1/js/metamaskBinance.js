@@ -6,5 +6,8 @@ export default function () {
       chainName: "binance",
       rpcUrls: ['https://bsc-dataseed.binance.org/'],
     },],
-  }).catch(() => alert("error, change network to binance"));
+  }).catch(error => {
+    console.error(error);
+    alert("error, change network to binance");
+  });
 }
