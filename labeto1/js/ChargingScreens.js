@@ -1,4 +1,5 @@
 "use strict";
+import textBackground from "./textBackground.js";
 export default class {
     setup() {
         this.index = 1;
@@ -19,7 +20,7 @@ export default class {
     click() {
         if (this.metamask == false) {
             this.metamask = true;
-            Metamask();
+            data.metamask.start();
         }
     }
     draw() {
@@ -28,7 +29,7 @@ export default class {
             engine.image(image, 0, 0, 640, 360);
         }
         if (this.metamask == false) {
-            TextBackground(50, 280, " click to connect with metamask ");
+            textBackground(50, 280, " click to connect with metamask ");
         }
     }
 }

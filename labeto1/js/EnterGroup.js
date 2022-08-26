@@ -1,22 +1,17 @@
 "use strict";
 export default class {
     setup() {
-        if (data.chainId != 97) {
-            Testnet();
-            return;
-        }
         this.interfaceEmpty = engine.loadImage("./Graficos/Interfaces/empty.png");
         this.account = data.account.toUpperCase();
-        for (let leader in data.info.groups) {
-            if (data.info.groups[leader].length >= 5) {
-                continue;
+        for (let leader in data.information.groups) {
+            if (data.information.groups[leader].length < 5) {
+                data.info.statistics[this.account] = data.statistics;
+                this.leader = leader;
+                data.info.leaders[this.account] = leader;
+                data.info.groups[leader].push(this.account);
+                data.info.groups[this.account] = [];
+                break;
             }
-            data.info.statistics[this.account] = data.statistics;
-            this.leader = leader;
-            data.info.leaders[this.account] = leader;
-            data.info.groups[leader].push(this.account);
-            data.info.groups[this.account] = [];
-            break;
         }
         if (this.leader == undefined) {
             alert("not groups");

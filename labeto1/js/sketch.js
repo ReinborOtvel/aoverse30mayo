@@ -3,10 +3,12 @@ import ChargingScreens from "./ChargingScreens.js";
 import CreateCharacter from "./CreateCharacter.js";
 import EnterGroup from "./EnterGroup.js";
 import Game from "./Game.js";
+import Metamask from "./Metamask.js";
 class Data {
     constructor() {
         new p5(engine => {
             window.engine = engine;
+            this.metamask = new Metamask();
             engine.setup = () => this.setup();
             engine.draw = () => this.draw();
         });
@@ -33,6 +35,7 @@ class Data {
             case "enterGroup": window.page = new EnterGroup(); break;
             case "game": window.page = new Game(); break;
         }
+        page.setup();
     }
     clickEvent() {
         this.canvas.addEventListener("click", ({ pageX, pageY }) => {
