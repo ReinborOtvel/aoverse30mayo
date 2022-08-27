@@ -4,6 +4,23 @@ export default class {
     start() {
         if (navigator.onLine == false) {
             alert(" no internet ");
+            data.account = engine.getItem("account");
+            if (data.account != null) {
+                data.information = engine.getItem("information");
+                if (data.information != null) {
+                    data.information = JSON.parse(data.information);
+                    data.statistics = data.information.statistics[data.account.toUpperCase()];
+                    if (data.statistics != undefined) {
+                        data.page("game", 20);
+                    } else {
+                        alert("you're not on a team");
+                    }
+                } else {
+                    alert("no database backup");
+                }
+            } else {
+                alert("no account connected");
+            }
         } else if (window.ethereum == undefined) {
             alert(" download metamask ");
         } else {
@@ -22,6 +39,7 @@ export default class {
         data.provider = new ethers.providers.Web3Provider(ethereum);
         data.provider.send("eth_requestAccounts", []).then(accounts => {
             data.account = accounts[0];
+            engine.storeItem("account", data.account);
             callback();
         }).catch(error => {
             console.error(error);

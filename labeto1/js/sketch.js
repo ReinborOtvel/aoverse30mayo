@@ -20,10 +20,6 @@ class Data {
     }
     draw() {
         engine.noSmooth();
-        engine.textAlign(engine.LEFT);
-        engine.textWrap(engine.WORD);
-        engine.fill("#fff");
-        engine.textSize(30);
         page.draw();
     }
     page(namePage, fps) {

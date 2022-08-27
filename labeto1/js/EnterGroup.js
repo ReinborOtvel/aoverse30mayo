@@ -2,6 +2,7 @@
 import verifyClick from "./verifyClick.js";
 import Player from "./Player.js";
 import textBackground from "./textBackground.js";
+import text from "./text.js";
 export default class {
     setup() {
         this.interfaceEmpty = engine.loadImage("./Graficos/Interfaces/empty.png");
@@ -17,12 +18,11 @@ export default class {
                 break;
             }
         }
-        this.player = new Player({ x: 80, y: 235, width: 90, height: 90, }, data.statistics);
+        this.player = new Player({ x: 450, y: 30, width: 100, height: 100, }, data.statistics);
         if (this.leader == undefined) {
             alert("not groups");
         } else {
-            this.leaderPlayer = new Player({ x: 360, y: 30, width: 150, height: 150, },
-                data.information.statistics[this.leader]);
+            this.leaderPlayer = new Player({ x: 300, y: 30, width: 100, height: 100, }, data.information.statistics[this.leader]);
         }
     }
     click() {
@@ -39,21 +39,23 @@ export default class {
     }
     draw() {
         engine.image(this.interfaceEmpty, 0, 0, 640, 360);
-        engine.text("team", 50, 55);
-        textBackground(50, 250, "  join the group");
         this.player.draw();
+        text(`${data.statistics.name} ${data.account.slice(0, 5)}`, 50, 70, 30);
+        textBackground(50, 280, "  join the group");
         if (this.leader != undefined) {
             for (let i = 0; i < data.information.groups[this.leader].length; i++) {
                 let member = data.information.groups[this.leader][i];
                 let y = 25 * i;
-                y += 80;
-                engine.text(`member${i + 1} ${member.slice(0, 5)}`, 50, y);
+                y += 140;
+                text(`member${i + 1} ${member.slice(0, 5)}`, 50, y, 25);
             }
             this.leaderPlayer.draw();
             let statisticsLeader = this.leaderPlayer.statistics;
-            engine.text(`leader ${this.leader.slice(0, 5)}`, 50, 210);
-            engine.text(`name ${statisticsLeader.name}`, 50, 235);
-            engine.text(`strength ${statisticsLeader.strength}`, 50, 260);
+            engine.text(`leader ${this.leader.slice(0, 5)}`, 50, 110);
+            engine.text(`name ${statisticsLeader.name}`, 310, 200);
+            engine.text(`strength ${statisticsLeader.strength}`, 310, 230);
+            engine.text(`endurance ${statisticsLeader.endurance}`, 310, 260);
+            //engine.text(` statisticsLeader.name, 410, 390);
         }
     }
 }
