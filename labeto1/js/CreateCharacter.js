@@ -12,14 +12,17 @@ export default class {
     this.newCharacter();
   }
   newCharacter() {
-    if (this.player == undefined || this.player.load == true) {
-      this.player = new Player({ x: 300, y: 45, width: 250, height: 250, }, statisticsRandom());
+    if (this.player == undefined || data.canDraw == true) {
+      data.canDraw = false;
+      this.player = new Player({ x: 300, y: 45, width: 250, height: 250, }, statisticsRandom(), () => {
+        data.canDraw = true;
+      });
     }
   }
   click() {
     if (verifyClick(58, 240, 231, 275)) {
       this.newCharacter();
-    } else if (verifyClick(58, 288, 261, 325)) {
+    } else if (verifyClick(49, 279, 250, 316)) {
       this.createCharacter();
     }
   }
@@ -55,8 +58,8 @@ export default class {
     engine.image(this.interfaceEmpty, 0, 0, 640, 360);
     text("character", 50, 50, 25);
     this.drawStatistics();
-    textBackground(" new character", 50, 230, 170, 25);
-    textBackground(" create character", 50, 280, 200, 25);
+    textBackground(" new character", 50, 230, 170, 35, 25);
+    textBackground(" create character", 50, 280, 200, 35, 25);
     this.player.draw();
   }
 }

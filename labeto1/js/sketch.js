@@ -1,9 +1,12 @@
 "use strict";
 import ChargingScreens from "./ChargingScreens.js";
 import CreateCharacter from "./CreateCharacter.js";
+import SelectLeader from "./SelectLeader.js";
 import EnterGroup from "./EnterGroup.js";
 import Game from "./Game.js";
 import Metamask from "./Metamask.js";
+import textBackground from "./textBackground.js";
+import rect from "./rect.js";
 class Data {
     constructor() {
         new p5(engine => {
@@ -17,17 +20,25 @@ class Data {
         this.page("chargingScreens", 1);
         this.canvas = document.querySelector("canvas");
         this.clickEvent();
+        this.canDraw = true;
     }
     draw() {
-        engine.noSmooth();
-        page.draw();
+        if (this.canDraw == true) {
+            engine.noSmooth();
+            page.draw();
+        } else {
+            rect(0, 0, 640, 360, "#D525EA");
+            textBackground("  loading", 100, 100, 440, 160, 100);
+        }
     }
     page(namePage, fps) {
+        this.canDraw = false;
         engine.createCanvas(640, 360);
         engine.frameRate(fps);
         switch (namePage) {
             case "chargingScreens": window.page = new ChargingScreens(); break;
             case "createCharacter": window.page = new CreateCharacter(); break;
+            case "selectLeader": window.page = new SelectLeader(); break;
             case "enterGroup": window.page = new EnterGroup(); break;
             case "game": window.page = new Game(); break;
         }
@@ -35,9 +46,11 @@ class Data {
     }
     clickEvent() {
         this.canvas.addEventListener("click", ({ pageX, pageY }) => {
-            data.click = { x: pageX, y: pageY };
-            console.log(data.click);
-            page.click();
+            if (this.canDraw == true) {
+                data.click = { x: pageX, y: pageY };
+                console.log(data.click);
+                page.click();
+            }
         });
     }
 }
