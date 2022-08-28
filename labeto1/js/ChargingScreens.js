@@ -29,7 +29,7 @@ export default class {
             engine.image(image, 0, 0, 640, 360);
         }
         if (this.metamask == false) {
-            textBackground(50, 280, " click to connect with metamask ");
+            textBackground(" click to connect with metamask", 50, 280, 430, 30);
         }
     }
 }

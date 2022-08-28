@@ -3,43 +3,32 @@ import databaseInformation from "./databaseInformation.js";
 export default class {
     start() {
         if (navigator.onLine == false) {
-            alert(" no internet ");
-            data.account = engine.getItem("account");
-            if (data.account != null) {
-                data.information = engine.getItem("information");
-                if (data.information != null) {
-                    data.information = JSON.parse(data.information);
-                    data.statistics = data.information.statistics[data.account.toUpperCase()];
-                    if (data.statistics != undefined) {
-                        data.page("game", 20);
-                    } else {
-                        alert("you're not on a team");
-                    }
-                } else {
-                    alert("no database backup");
-                }
-            } else {
-                alert("no account connected");
-            }
+            this.noInternet();
         } else if (window.ethereum == undefined) {
             alert(" download metamask ");
         } else {
             this.getAccount(() => {
                 this.getChainId(() => {
-                    if (data.chainId == 97) {
-                        this.verify();
-                    } else {
-                        this.testnet(() => location.reload());
-                    }
+                    this.load();
                 });
             });
+        }
+    }
+    noInternet() {
+        data.account = localStorage.getItem("account");
+        data.information = JSON.parse(localStorage.getItem("information"));
+        if (data.account == null || data.information == null) {
+            alert("no internet");
+        } else {
+            data.statistics = data.information.statistics[data.account.toUpperCase()];
+            data.page("game", 20);
         }
     }
     getAccount(callback) {
         data.provider = new ethers.providers.Web3Provider(ethereum);
         data.provider.send("eth_requestAccounts", []).then(accounts => {
             data.account = accounts[0];
-            engine.storeItem("account", data.account);
+            localStorage.setItem("account", data.account);
             callback();
         }).catch(error => {
             console.error(error);
@@ -76,14 +65,17 @@ export default class {
             this.createDatabase();
         } else {
             data.database = new ethers.Contract(databaseInformation.address, databaseInformation.abi, data.signer);
-            data.database.get().then(text => {
-                engine.storeItem("information", text);
-                callback();
-            }).catch(error => {
-                console.error(error);
-                alert("error, database information");
-            });
+            callback();
         }
+    }
+    getInformation(callback) {
+        data.database.get().then(text => {
+            localStorage.setItem("information", text);
+            callback();
+        }).catch(error => {
+            console.error(error);
+            alert("error, database information");
+        });
     }
     binance(callback) {
         ethereum.request({
@@ -115,25 +107,43 @@ export default class {
             alert("error, change network to binance testnet");
         });
     }
-    verify() {
-        this.database(() => {
-            data.information = JSON.parse(engine.getItem("information"));
-            let account = data.account.toUpperCase();
-            data.statistics = data.information.statistics[account];
-            if (data.statistics == undefined) {
-                data.statistics = engine.getItem("statistics");
-                if (data.statistics == null) {
-                    this.binance(() => {
-                        data.page("createCharacter", 1);
-                    });
-                } else {
-                    data.statistics = JSON.parse(data.statistics);
-                    data.page("enterGroup", 1);
-                }
-            } else {
-                data.page("game", 20);
+    date(callback) {
+        let date = new Date();
+        let old = localStorage.getItem("date")
+        if (old == null) callback(true);
+        else {
+            old = new Date(old);
+            let get = old.getDay() == date.getDay() && old.getHours() == date.getHours();
+            callback(!get);
+        }
+    }
+    load() {
+        this.date(get => {
+            if (data.chainId == 97) {
+                this.database(() => {
+                    if (get == true) {
+                        this.getInformation(() => {
+                            localStorage.setItem("date", new Date());
+                            this.verify();
+                        });
+                    } else this.verify();
+                })
+            } else if (get == true) this.testnet(() => location.reload());
+            else {
+                this.verify();
             }
         });
+    }
+    verify() {
+        data.information = JSON.parse(localStorage.getItem("information"));
+        data.statistics = data.information.statistics[data.account.toUpperCase()];
+        let statistics = JSON.parse(localStorage.getItem("statistics"));
+        if (data.statistics != undefined) this.testnet(() => data.page("game", 20));
+        else if (statistics == null) this.binance(() => data.page("createCharacter", 1));
+        else {
+            data.statistics = statistics;
+            this.testnet(() => data.page("enterGroup", 1));
+        }
     }
 
 }

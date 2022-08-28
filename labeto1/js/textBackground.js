@@ -1,8 +1,7 @@
 "use strict";
 import text from "./text.js";
-export default function (x, y, _text) {
-    let width = _text.length * 14;
+export default function (_text, x, y, width, size) {
     engine.fill("#000");
-    engine.rect(x, y, width, 40);
-    text(_text, x, y + 30, 30);
+    engine.rect(x, y, width, size + 10);
+    text(_text, x, y + size, size);
 }

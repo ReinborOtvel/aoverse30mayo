@@ -18,19 +18,13 @@ export default class {
                 break;
             }
         }
-        this.player = new Player({ x: 450, y: 30, width: 100, height: 100, }, data.statistics);
-        if (this.leader == undefined) {
-            alert("not groups");
-        } else {
-            this.leaderPlayer = new Player({ x: 300, y: 30, width: 100, height: 100, }, data.information.statistics[this.leader]);
-        }
+        this.leaderPlayer = new Player({ x: 300, y: 30, width: 150, height: 150, }, data.information.statistics[this.leader]);
+        this.player = new Player({ x: 300, y: 180, width: 150, height: 150, }, data.statistics);
     }
     click() {
-        console.log(data.click);
-        if (verifyClick(57, 287, 282, 330)) {
+        if (verifyClick(57, 260, 257, 301)) {
             data.database.set(JSON.stringify(data.information)).then(() => {
-                setTimeout(() => location.reload(), 5000);
-                alert("wait five seconds");
+                alert("you joined the group");
             }).catch(error => {
                 console.error(error);
                 alert("error, set database");
@@ -39,23 +33,22 @@ export default class {
     }
     draw() {
         engine.image(this.interfaceEmpty, 0, 0, 640, 360);
-        this.player.draw();
-        text(`${data.statistics.name} ${data.account.slice(0, 5)}`, 50, 70, 30);
-        textBackground(50, 280, "  join the group");
+        text("team", 50, 80, 30);
         if (this.leader != undefined) {
             for (let i = 0; i < data.information.groups[this.leader].length; i++) {
                 let member = data.information.groups[this.leader][i];
-                let y = 25 * i;
-                y += 140;
-                text(`member${i + 1} ${member.slice(0, 5)}`, 50, y, 25);
+                let y = 30 * i;
+                y += 110;
+                text(`member${i + 1} ${member.slice(0, 5)}`, 50, y, 30);
             }
+            textBackground(" join the group", 50, 250, 200, 30);
             this.leaderPlayer.draw();
-            let statisticsLeader = this.leaderPlayer.statistics;
-            engine.text(`leader ${this.leader.slice(0, 5)}`, 50, 110);
-            engine.text(`name ${statisticsLeader.name}`, 310, 200);
-            engine.text(`strength ${statisticsLeader.strength}`, 310, 230);
-            engine.text(`endurance ${statisticsLeader.endurance}`, 310, 260);
-            //engine.text(` statisticsLeader.name, 410, 390);
+            text("leader", 450, 100, 30);
+            text(this.leader.slice(0, 5), 450, 130, 30);
+            text(this.leaderPlayer.statistics.name, 450, 160, 30);
         }
+        this.player.draw();
+        text(data.account.slice(0, 5), 450, 250, 30);
+        text(this.player.statistics.name, 450, 280, 30);
     }
 }

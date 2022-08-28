@@ -4,6 +4,7 @@ import statisticsRandom from "./statisticsRandom.js";
 import databaseInformation from "./databaseInformation.js";
 import Player from "./Player.js";
 import textBackground from "./textBackground.js";
+import text from "./text.js";
 export default class {
   setup() {
     this.interfaceEmpty = engine.loadImage("./Graficos/Interfaces/empty.png");
@@ -12,13 +13,13 @@ export default class {
   }
   newCharacter() {
     if (this.player == undefined || this.player.load == true) {
-      this.player = new Player({ x: 300, y: 70, width: 150, height: 150, }, statisticsRandom());
+      this.player = new Player({ x: 300, y: 45, width: 250, height: 250, }, statisticsRandom());
     }
   }
   click() {
-    if (verifyClick(50, 280, 260, 320)) {
+    if (verifyClick(58, 240, 231, 275)) {
       this.newCharacter();
-    } else if (verifyClick(300, 280, 550, 320)) {
+    } else if (verifyClick(58, 288, 261, 325)) {
       this.createCharacter();
     }
   }
@@ -34,28 +35,28 @@ export default class {
           chainId: ethers.utils.hexValue(56),
         }],
       }).then(() => {
-        engine.storeItem("statistics", JSON.stringify(this.player.statistics));
+        localStorage.setItem("statistics", JSON.stringify(this.player.statistics));
         location.reload();
       }).catch(() => {
-        alert("error, create character");
         this.transaction = false;
+        alert("error, create character");
       });
     }
   }
   drawStatistics() {
     let statistics = this.player.statistics;
-    engine.text(`name ${statistics.name}`, 30, 90);
-    engine.text(`strength ${statistics.strength}`, 30, 120);
-    engine.text(`endurance ${statistics.endurance}`, 30, 150);
-    engine.text(`health ${statistics.health}`, 30, 180);
-    engine.text(`speed ${statistics.speed}`, 30, 210);
+    text(`name ${statistics.name}`, 50, 80, 25);
+    text(`strength ${statistics.strength}`, 50, 110, 25);
+    text(`endurance ${statistics.endurance}`, 50, 140, 25);
+    text(`health ${statistics.health}`, 50, 170, 25);
+    text(`speed ${statistics.speed}`, 50, 200, 25);
   }
   draw() {
     engine.image(this.interfaceEmpty, 0, 0, 640, 360);
-    engine.text("character", 30, 60);
-    textBackground(40, 270, " new character ");
-    textBackground(290, 270, " create character ");
+    text("character", 50, 50, 25);
     this.drawStatistics();
+    textBackground(" new character", 50, 230, 170, 25);
+    textBackground(" create character", 50, 280, 200, 25);
     this.player.draw();
   }
 }

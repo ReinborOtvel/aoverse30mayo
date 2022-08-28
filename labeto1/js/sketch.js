@@ -36,6 +36,7 @@ class Data {
     clickEvent() {
         this.canvas.addEventListener("click", ({ pageX, pageY }) => {
             data.click = { x: pageX, y: pageY };
+            console.log(data.click);
             page.click();
         });
     }
