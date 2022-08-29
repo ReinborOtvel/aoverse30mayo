@@ -15,7 +15,7 @@ export default class {
         if (this.leaderAccount != account.owner) {
           alert("leader not found");
           this.randomLeader();
-        } else if (account.group.length >= 5) {
+        } else if (account.group != undefined && account.group.length >= 5) {
           alert("full group");
           this.randomLeader();
         } else {

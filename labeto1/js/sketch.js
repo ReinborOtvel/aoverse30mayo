@@ -5,7 +5,7 @@ import SelectLeader from "./SelectLeader.js";
 import EnterGroup from "./EnterGroup.js";
 import Game from "./Game.js";
 import Metamask from "./Metamask.js";
-import textBackground from "./textBackground.js";
+import text from "./text.js";
 import rect from "./rect.js";
 class Data {
     constructor() {
@@ -27,8 +27,8 @@ class Data {
             engine.noSmooth();
             page.draw();
         } else {
-            rect(0, 0, 640, 360, "#D525EA");
-            textBackground("  loading", 100, 100, 440, 160, 100);
+            rect(0, 0, 640, 360, "#000");
+            text("loading", 100, 200, 100);
         }
     }
     page(namePage, fps) {
