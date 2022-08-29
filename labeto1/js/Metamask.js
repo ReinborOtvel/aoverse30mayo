@@ -36,9 +36,8 @@ export default class {
         });
     }
     createDatabase() {
-        let statistics = JSON.stringify(statisticsRandom());
         let factory = new ethers.ContractFactory(databaseInformation.abi, databaseInformation.bytecode, data.signer);
-        factory.deploy(databaseInformation.creator, statistics).then(contract => {
+        factory.deploy().then(contract => {
             console.log(contract);
         }).catch(error => {
             console.error(error);
@@ -93,8 +92,8 @@ export default class {
         }
     }
     verify() {
-        data.database.createdCharacter(data.account).then(_created => {
-            if (_created == true) {
+        data.database.allAccounts().then(_accounts => {
+            if (_accounts.contains(data.account) == true) {
                 data.page("game", 20);
             } else {
                 data.statistics = JSON.parse(localStorage.getItem("statistics"));

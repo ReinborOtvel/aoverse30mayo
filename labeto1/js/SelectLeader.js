@@ -10,26 +10,10 @@ export default class {
   }
   assignLeaderPlayer() {
     let transform = { x: 370, y: 170, width: 150, height: 150 };
-    data.database.indexAccounts(this.leaderAccount).then(index => {
-      data.database.accounts(index).then(account => {
-        if (this.leaderAccount != account.owner) {
-          alert("leader not found");
-          this.randomLeader();
-        } else if (account.group != undefined && account.group.length >= 5) {
-          alert("full group");
-          this.randomLeader();
-        } else {
-          let statistics = JSON.parse(account.statistics);
-          this.leaderPlayer = new Player(transform, statistics, () => {
-            data.canDraw = true;
-          });
-        }
-      });
-    }).catch(error => {
-      console.error(error);
-      alert("error, leader account");
-      this.randomLeader();
-    })
+    let statistics = JSON.parse(account.statistics);
+    this.leaderPlayer = new Player(transform, statistics, () => {
+      data.canDraw = true;
+    });
   }
   randomLeader() {
     data.canDraw = false;
@@ -38,24 +22,24 @@ export default class {
   }
   assignLeaders() {
     this.leaders = [];
-    data.database.accountsLength().then(length => {
-      let indexAccounts = 0;
-      let nextGroup = () => {
-        if (indexAccounts < length) {
-          data.database.accounts(indexAccounts).then(account => {
-            if (account.group == undefined) {
-              this.leaders.push(account.owner);
-            } else if (account.group.length < 5) {
-              this.leaders.push(account.owner);
+    data.database.allAccounts().then(_accounts => {
+      data.database.allLeaders().then(_leaders => {
+        let membership = {};
+        for (let i = 0; i < _accounts.length; i++) {
+          membership[_accounts[i]] = 0;
+          for (let j = 0; j < _leaders.length; j++) {
+            if (_accounts[i] == _leaders[j]) {
+              membership[_accounts[i]]++;
             }
-            nextGroup();
-          });
-        } else {
-          this.randomLeader();
+          }
         }
-        indexAccounts++;
-      }
-      nextGroup();
+        for (let leader in membership) {
+          if (membership[leader] < 4) {
+            this.leaders.push(leader);
+          }
+        }
+        this.randomLeader();
+      });
     });
   }
   click() {
