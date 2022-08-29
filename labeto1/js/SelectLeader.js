@@ -1,6 +1,5 @@
 "use strict";
 import text from "./text.js";
-import textBackground from "./textBackground.js";
 import Player from "./Player.js";
 import verifyClick from "./verifyClick.js";
 export default class {
@@ -9,10 +8,19 @@ export default class {
     this.assignLeaders();
   }
   assignLeaderPlayer() {
-    let transform = { x: 370, y: 170, width: 150, height: 150 };
-    let statistics = JSON.parse(account.statistics);
-    this.leaderPlayer = new Player(transform, statistics, () => {
-      data.canDraw = true;
+    data.database.allAccounts().then(_accounts => {
+      let index = _accounts.indexOf(this.leaderAccount);
+      if (index == -1) {
+        alert("leader not found");
+        this.randomLeader();
+      } else {
+        data.database.statistics(index).then(_statistics => {
+          let transform = { x: 370, y: 170, width: 150, height: 150 };
+          this.leaderPlayer = new Player(transform, JSON.parse(_statistics), () => {
+            data.canDraw = true;
+          });
+        })
+      }
     });
   }
   randomLeader() {
@@ -23,19 +31,17 @@ export default class {
   assignLeaders() {
     this.leaders = [];
     data.database.allAccounts().then(_accounts => {
+      this.membership = {};
+      for (let account of _accounts) {
+        this.membership[account] = 0;
+      }
       data.database.allLeaders().then(_leaders => {
-        let membership = {};
-        for (let i = 0; i < _accounts.length; i++) {
-          membership[_accounts[i]] = 0;
-          for (let j = 0; j < _leaders.length; j++) {
-            if (_accounts[i] == _leaders[j]) {
-              membership[_accounts[i]]++;
-            }
-          }
+        for (let leader of _leaders) {
+          this.membership[leader]++;
         }
-        for (let leader in membership) {
-          if (membership[leader] < 4) {
-            this.leaders.push(leader);
+        for (let account in this.membership) {
+          if (this.membership[account] < 5) {
+            this.leaders.push(account);
           }
         }
         this.randomLeader();
@@ -56,29 +62,26 @@ export default class {
   }
   draw() {
     engine.image(this.interfaceEmpty, 0, 0, 640, 360);
-    text("groups available", 50, 50, 30);
+    text(`total leaders ${this.leaders.length}`, 50, 50, 30);
+    text("leaders - members", 50, 90, 30);
     for (let i = 0; i <= 5; i++) {
       let leader = this.leaders[i];
       if (leader == undefined) {
         break;
-      } else {
-        let y = 30 * i;
-        y += 90;
-        let _text = `leader${i + 1} ${leader.slice(0, 5)}`;
-        if (i == 5) {
-          _text = `total leaders ${this.leaders.length}`;
-        }
-        text(_text, 50, y, 30);
       }
+      let y = 30 * i;
+      y += 120;
+      let _text = `${leader.slice(0, 6)} - ${this.membership[leader]}`;
+      text(_text, 50, y, 30);
     }
     textBackground(" random leader", 350, 30, 210, 40, 30);
     textBackground("   write leader", 350, 90, 210, 40, 30);
     if (this.leaderAccount != undefined) {
-      text(`leader ${this.leaderAccount.slice(0, 5)}`, 350, 165, 30);
+      text(`leader ${this.leaderAccount.slice(0, 7)}`, 350, 165, 30);
     }
     if (this.leaderPlayer != undefined) {
       this.leaderPlayer.draw();
     }
-    textBackground(" watch members", 50, 280, 230, 40, 30);
+    textBackground("   join group", 50, 280, 230, 40, 30);
   }
 }

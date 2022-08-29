@@ -1,5 +1,6 @@
 "use strict";
-import textBackground from "./textBackground.js";
+import text from "./text.js";
+import rect from "./rect.js";
 export default class {
     setup() {
         this.index = 1;
@@ -29,7 +30,8 @@ export default class {
             engine.image(image, 0, 0, 640, 360);
         }
         if (this.metamask == false) {
-            textBackground(" click to connect with metamask", 50, 280, 430, 40, 30);
+            rect(50, 295, 505, 45, "#000");
+            text(" click to connect with metamask", 50, 325, 35);
         }
     }
 }

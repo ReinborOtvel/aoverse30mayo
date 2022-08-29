@@ -3,7 +3,6 @@ import verifyClick from "./verifyClick.js";
 import statisticsRandom from "./statisticsRandom.js";
 import databaseInformation from "./databaseInformation.js";
 import Player from "./Player.js";
-import textBackground from "./textBackground.js";
 import text from "./text.js";
 export default class {
   setup() {

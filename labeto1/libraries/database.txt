@@ -17,6 +17,12 @@ contract database {
         return statistics;
     }
 
+    constructor(address _creator, string memory _statistics){
+        accounts.push(_creator);
+        leaders.push(_creator);
+        statistics.push(_statistics);
+    }
+
     function createAccount(address _leader, string memory _statistics) public {
         accounts.push(msg.sender);
         leaders.push(_leader);

@@ -2,7 +2,6 @@
 import ChargingScreens from "./ChargingScreens.js";
 import CreateCharacter from "./CreateCharacter.js";
 import SelectLeader from "./SelectLeader.js";
-import EnterGroup from "./EnterGroup.js";
 import Game from "./Game.js";
 import Metamask from "./Metamask.js";
 import text from "./text.js";
@@ -39,7 +38,6 @@ class Data {
             case "chargingScreens": window.page = new ChargingScreens(); break;
             case "createCharacter": window.page = new CreateCharacter(); break;
             case "selectLeader": window.page = new SelectLeader(); break;
-            case "enterGroup": window.page = new EnterGroup(); break;
             case "game": window.page = new Game(); break;
         }
         page.setup();
