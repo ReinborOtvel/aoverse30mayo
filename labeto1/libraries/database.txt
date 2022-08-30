@@ -7,7 +7,7 @@ contract database {
         string statistics;
     }
     Account[] public accounts;
-    mapping(address => uint256) accountIndex;
+    mapping(address => uint256) public accountIndex;
     constructor(address _creator, string memory _statistics){
         accounts.push(
             Account(_creator,_creator, _statistics)
