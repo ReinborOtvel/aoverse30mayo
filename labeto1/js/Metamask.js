@@ -93,6 +93,7 @@ export default class {
         }
     }
     verify() {
+        data.database
         data.database.allAccounts().then(_accounts => {
             let createdCharacter = false;
             for (let i in _accounts) {

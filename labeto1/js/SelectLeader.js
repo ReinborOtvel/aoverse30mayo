@@ -46,7 +46,7 @@ export default class {
         for (let leader of _leaders) {
           this.membership[leader.toUpperCase()]++;
         }
-        for (let account in this.membership) {
+        for (let account of _accounts) {
           if (this.membership[account.toUpperCase()] < 5) {
             this.leaders.push(account);
           }

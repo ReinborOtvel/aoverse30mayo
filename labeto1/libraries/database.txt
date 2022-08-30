@@ -1,31 +1,25 @@
 // SPDX-License-Identifier:null
 pragma solidity 0.8.7;
 contract database {
-    address[] public accounts;
-    address[] public leaders;
-    string[] public statistics;
-
-    function allAccounts() public view returns(address[] memory) {
-        return accounts;
+    struct Account {
+        address owner;
+        address leader;
+        string statistics;
     }
-
-    function allLeaders() public view returns(address[] memory) {
-        return leaders;
-    }
-
-    function allStatistics() public view returns(string[] memory) {
-        return statistics;
-    }
-
+    Account[] public accounts;
+    mapping(address => uint256) accountIndex;
     constructor(address _creator, string memory _statistics){
-        accounts.push(_creator);
-        leaders.push(_creator);
-        statistics.push(_statistics);
+        accounts.push(
+            Account(_creator,_creator, _statistics)
+        );
     }
-
     function createAccount(address _leader, string memory _statistics) public {
-        accounts.push(msg.sender);
-        leaders.push(_leader);
-        statistics.push(_statistics);
+        accountIndex[msg.sender]=accounts.length;
+        accounts.push(
+            Account(msg.sender,_leader, _statistics)
+        );
+    }
+    function allAccounts() public view returns(Account[] memory) {
+        return accounts;
     }
 }
