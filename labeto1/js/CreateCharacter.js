@@ -3,6 +3,7 @@ import verifyClick from "./verifyClick.js";
 import statisticsRandom from "./statisticsRandom.js";
 import databaseInformation from "./databaseInformation.js";
 import Player from "./Player.js";
+import rect from "./rect.js";
 import text from "./text.js";
 export default class {
   setup() {
@@ -19,9 +20,9 @@ export default class {
     }
   }
   click() {
-    if (verifyClick(58, 240, 231, 275)) {
+    if (verifyClick(49, 229, 220, 266)) {
       this.newCharacter();
-    } else if (verifyClick(49, 279, 250, 316)) {
+    } else if (verifyClick(49, 280, 220, 316)) {
       this.createCharacter();
     }
   }
@@ -57,8 +58,10 @@ export default class {
     engine.image(this.interfaceEmpty, 0, 0, 640, 360);
     text("character", 50, 50, 25);
     this.drawStatistics();
-    textBackground(" new character", 50, 230, 170, 35, 25);
-    textBackground(" create character", 50, 280, 200, 35, 25);
+    rect(50, 230, 170, 35, "#000");
+    text(" new character", 50, 255, 25);
+    rect(50, 280, 170, 35, "#000");
+    text(" new character", 50, 305, 25);
     this.player.draw();
   }
 }
