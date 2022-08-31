@@ -5,6 +5,7 @@ import SelectLeader from "./SelectLeader.js";
 import Game from "./Game.js";
 import DatabaseChanges from "./DatabaseChanges.js";
 import Metamask from "./Metamask.js";
+import Mouse from "./Mouse.js";
 import text from "./text.js";
 import rect from "./rect.js";
 class Data {
@@ -12,6 +13,7 @@ class Data {
         new p5(engine => {
             window.engine = engine;
             this.metamask = new Metamask();
+            this.mouse = new Mouse();
             engine.setup = () => this.setup();
             engine.draw = () => this.draw();
         });
@@ -30,6 +32,7 @@ class Data {
             rect(0, 0, 640, 360, "#000");
             text("loading", 100, 200, 100);
         }
+        this.mouse.draw();
     }
     page(namePage, fps) {
         this.canDraw = false;
@@ -47,6 +50,7 @@ class Data {
     clickEvent() {
         this.canvas.addEventListener("click", ({ pageX, pageY }) => {
             if (this.canDraw == true) {
+                engine.requestPointerLock();
                 data.click = { x: pageX, y: pageY };
                 console.log(data.click);
                 page.click();
