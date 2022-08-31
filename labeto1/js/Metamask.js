@@ -93,22 +93,19 @@ export default class {
         }
     }
     verify() {
-        data.database.accountIndex(data.account).then(_index => {
-            data.database.accounts(_index).then(_account => {
-                let owner = _account.owner.toUpperCase();
-                let account = data.account.toUpperCase();
-                console.log(owner, account);
-                if (owner == account) {
-                    data.page("game", 20);
+        data.database.getAccount(data.account).then(_account => {
+            let owner = _account.owner.toUpperCase();
+            let account = data.account.toUpperCase();
+            if (owner == account) {
+                data.page("game", 20);
+            } else {
+                data.statistics = JSON.parse(localStorage.getItem("statistics"));
+                if (data.statistics == null) {
+                    this.binance(() => data.page("createCharacter", 1));
                 } else {
-                    data.statistics = JSON.parse(localStorage.getItem("statistics"));
-                    if (data.statistics == null) {
-                        this.binance(() => data.page("createCharacter", 1));
-                    } else {
-                        data.page("selectLeader", 1);
-                    }
+                    data.page("selectLeader", 1);
                 }
-            });
+            }
         });
     }
 

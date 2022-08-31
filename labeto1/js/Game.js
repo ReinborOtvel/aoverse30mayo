@@ -5,22 +5,16 @@ export default class {
     this.assignPlayer();
   }
   assignPlayer() {
-    data.database.allAccounts().then(_accounts => {
-      let createdCharacter = false;
-      for (let i in _accounts) {
-        let account = _accounts[i].toUpperCase();
-        let dataAccount = data.account.toUpperCase();
-        if (account == dataAccount) {
-          createdCharacter = true;
-          data.database.statistics(i).then(_statistics => {
-            let transform = { x: 150, y: 150, width: 50, height: 50 };
-            this.player = new Player(transform, JSON.parse(_statistics), () => {
-              data.canDraw = true;
-            });
-          });
-        }
-      }
-      if (createdCharacter == false) {
+    data.database.getAccount(data.account).then(_account => {
+      let owner = _account.owner.toUpperCase();
+      let account = data.account.toUpperCase();
+      if (owner == account) {
+        let transform = { x: 150, y: 150, width: 50, height: 50 };
+        let statistics = JSON.parse(_account.statistics);
+        this.player = new Player(transform, statistics, () => {
+          data.canDraw = true;
+        });
+      } else {
         alert("character not found");
       }
     });

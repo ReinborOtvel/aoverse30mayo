@@ -22,4 +22,8 @@ contract database {
     function allAccounts() public view returns(Account[] memory) {
         return accounts;
     }
+    function getAccount(address _account) public view returns(Account memory account) {
+        uint256 index = accountIndex[_account];
+        account = accounts[index];
+    }
 }

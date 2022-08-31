@@ -9,26 +9,24 @@ export default class {
     this.assignLeaders();
   }
   assignLeaderPlayer() {
-    data.database.allAccounts().then(_accounts => {
-      let accountCreated = false;
-      for (let i in _accounts) {
-        let account = _accounts[i].toUpperCase();
-        let leader = this.leaderAccount.toUpperCase();
-        if (account == leader) {
-          accountCreated = true;
-          data.database.statistics(i).then(_statistics => {
-            let transform = { x: 370, y: 180, width: 150, height: 150 };
-            this.leaderPlayer = new Player(transform, JSON.parse(_statistics), () => {
-              data.canDraw = true;
-            });
-          })
-        }
-      }
-      if (accountCreated == false) {
+    data.database.getAccount(this.leaderAccount).then(_account => {
+      let owner = _account.owner.toUpperCase();
+      let leader = this.leaderAccount.toUpperCase();
+      if (owner == leader) {
+        let transform = { x: 370, y: 180, width: 150, height: 150 };
+        let statistics = JSON.parse(_account.statistics);
+        this.leaderPlayer = new Player(transform, statistics, () => {
+          data.canDraw = true;
+        });
+      } else {
         alert("leader not found");
         this.randomLeader();
       }
-    });
+    }).catch(error => {
+      console.error(error);
+      alert("leader not found");
+      this.randomLeader();
+    })
   }
   randomLeader() {
     data.canDraw = false;
@@ -40,39 +38,48 @@ export default class {
     data.database.allAccounts().then(_accounts => {
       this.membership = {};
       for (let account of _accounts) {
-        this.membership[account.toUpperCase()] = 0;
+        let owner = account.owner.toUpperCase();
+        this.membership[owner] = 0;
       }
-      data.database.allLeaders().then(_leaders => {
-        for (let leader of _leaders) {
-          this.membership[leader.toUpperCase()]++;
-        }
-        for (let account of _accounts) {
-          if (this.membership[account.toUpperCase()] < 5) {
-            this.leaders.push(account);
+      for (let account of _accounts) {
+        let leader = account.leader.toUpperCase();
+        this.membership[leader]++;
+      }
+      for (let account of _accounts) {
+        let owner = account.owner.toUpperCase();
+        let user = data.account.toUpperCase();
+        if (owner != user) {
+          if (this.membership[owner] < 5) {
+            this.leaders.push(account.owner);
           }
         }
-        this.randomLeader();
-      });
+      }
+      this.randomLeader();
     });
+  }
+  writeLeader() {
+    data.canDraw = false;
+    this.leaderAccount = prompt("leader address");
+    this.assignLeaderPlayer();
+  }
+  joinGroup() {
+    let statistics = localStorage.getItem("statistics");
+    if (statistics == null) {
+      alert("character not found");
+    } else {
+      data.database.createAccount(this.leaderAccount, statistics).then(() => {
+        localStorage.removeItem("statistics");
+        data.page("databaseChanges", 1);
+      });
+    }
   }
   click() {
     if (verifyClick(349, 30, 560, 71)) {
       this.randomLeader();
     } else if (verifyClick(349, 89, 525, 130)) {
-      data.canDraw = false;
-      this.leaderAccount = prompt("leader address");
-      this.assignLeaderPlayer();
+      this.writeLeader();
     } else if (verifyClick(49, 280, 200, 321)) {
-      let statistics = localStorage.getItem("statistics");
-      if (statistics == null) {
-        alert("character not found");
-      } else {
-        console.log(this.leaderAccount, statistics);
-        data.database.createAccount(this.leaderAccount, statistics).then(() => {
-          localStorage.removeItem("statistics");
-          data.page("game", 20);
-        });
-      }
+      this.joinGroup();
     }
   }
   draw() {
@@ -86,7 +93,8 @@ export default class {
       }
       let y = 30 * i;
       y += 120;
-      let _text = `${leader.slice(0, 6)} - ${this.membership[leader]}`;
+      let membership = this.membership[leader.toUpperCase()];
+      let _text = `${leader.slice(0, 6)} - ${membership}`;
       text(_text, 50, y, 30);
     }
     rect(350, 30, 210, 40, "#000");

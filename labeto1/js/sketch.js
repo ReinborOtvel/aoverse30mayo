@@ -3,6 +3,7 @@ import ChargingScreens from "./ChargingScreens.js";
 import CreateCharacter from "./CreateCharacter.js";
 import SelectLeader from "./SelectLeader.js";
 import Game from "./Game.js";
+import DatabaseChanges from "./DatabaseChanges.js";
 import Metamask from "./Metamask.js";
 import text from "./text.js";
 import rect from "./rect.js";
@@ -16,7 +17,7 @@ class Data {
         });
     }
     setup() {
-        this.page("chargingScreens", 1);
+        this.page("databaseChanges", 1);
         this.canvas = document.querySelector("canvas");
         this.clickEvent();
         this.canDraw = true;
@@ -39,6 +40,7 @@ class Data {
             case "createCharacter": window.page = new CreateCharacter(); break;
             case "selectLeader": window.page = new SelectLeader(); break;
             case "game": window.page = new Game(); break;
+            case "databaseChanges": window.page = new DatabaseChanges(); break;
         }
         page.setup();
     }
