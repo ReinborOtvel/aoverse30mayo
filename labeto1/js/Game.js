@@ -1,7 +1,9 @@
 "use strict";
+import Village from "./Village.js";
 import Player from "./Player.js";
 export default class {
   setup() {
+    this.village = new Village();
     this.assignPlayer();
   }
   assignPlayer() {
@@ -20,6 +22,7 @@ export default class {
     });
   }
   draw() {
+    this.village.draw();
     this.player.draw();
   }
 }
