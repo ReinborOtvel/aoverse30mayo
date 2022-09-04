@@ -4,10 +4,10 @@ import statisticsRandom from "./statisticsRandom.js";
 import databaseInformation from "./databaseInformation.js";
 import Player from "./Player.js";
 import rect from "./rect.js";
+import textRect from "./textRect.js";
 import text from "./text.js";
 export default class {
   setup() {
-    this.interfaceEmpty = engine.loadImage("./Graficos/Interfaces/empty.png");
     this.transaction = false;
     this.newCharacter();
   }
@@ -20,9 +20,9 @@ export default class {
     }
   }
   click() {
-    if (verifyClick(49, 229, 220, 266)) {
+    if (verifyClick(49, 229, 260, 270)) {
       this.newCharacter();
-    } else if (verifyClick(49, 280, 220, 316)) {
+    } else if (verifyClick(49, 279, 291, 321)) {
       this.createCharacter();
     }
   }
@@ -47,21 +47,18 @@ export default class {
     }
   }
   drawStatistics() {
-    let statistics = this.player.statistics;
-    text(`name ${statistics.name}`, 50, 80, 25);
-    text(`strength ${statistics.strength}`, 50, 110, 25);
-    text(`endurance ${statistics.endurance}`, 50, 140, 25);
-    text(`health ${statistics.health}`, 50, 170, 25);
-    text(`speed ${statistics.speed}`, 50, 200, 25);
+    let { name, strength, endurance, health, speed } = this.player.statistics;
+    text(`name ${name}`, 50, 80, 25, "#fff");
+    text(`strength ${strength}`, 50, 110, 25, "#fff");
+    text(`endurance ${endurance}`, 50, 140, 25, "#fff");
+    text(`health ${health}`, 50, 170, 25, "#fff");
+    text(`speed ${speed}`, 50, 200, 25, "#fff");
   }
   draw() {
-    engine.image(this.interfaceEmpty, 0, 0, 640, 360);
-    text("character", 50, 50, 25);
+    text("character", 50, 50, 25, "#fff");
     this.drawStatistics();
-    rect(50, 230, 170, 35, "#000");
-    text(" new character", 50, 255, 25);
-    rect(50, 280, 170, 35, "#000");
-    text(" new character", 50, 305, 25);
+    textRect(" new character", 50, 230, 210);
+    textRect(" create character", 50, 280, 240);
     this.player.draw();
   }
 }

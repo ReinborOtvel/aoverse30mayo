@@ -17,18 +17,22 @@ class Data {
         });
     }
     setup() {
-        this.page("chargingScreens", 1);
+        this.interfaceEmpty = engine.loadImage("./Graficos/chargingScreens/empty.png");
         this.canvas = document.querySelector("canvas");
         this.clickEvent();
-        this.canDraw = true;
+        this.keydownEvent();
+        this.keyupEvent();
+        this.page("selectLeader", 1);
     }
     draw() {
+        engine.image(this.interfaceEmpty, 0, 0, 640, 360);
         if (this.canDraw == true) {
             engine.noSmooth();
-            page.draw();
+            if (page.draw != undefined) {
+                page.draw();
+            }
         } else {
-            rect(0, 0, 640, 360, "#000");
-            text("loading", 100, 200, 100);
+            text("loading", 140, 200, 100, "#fff");
         }
     }
     page(namePage, fps) {
@@ -36,20 +40,46 @@ class Data {
         engine.createCanvas(640, 360);
         engine.frameRate(fps);
         switch (namePage) {
+            case "databaseChanges": window.page = new DatabaseChanges(); break;
             case "chargingScreens": window.page = new ChargingScreens(); break;
             case "createCharacter": window.page = new CreateCharacter(); break;
             case "selectLeader": window.page = new SelectLeader(); break;
             case "game": window.page = new Game(); break;
-            case "databaseChanges": window.page = new DatabaseChanges(); break;
         }
-        page.setup();
+        if (page.setup != undefined) {
+            page.setup();
+        }
     }
     clickEvent() {
         this.canvas.addEventListener("click", ({ pageX, pageY }) => {
             if (this.canDraw == true) {
                 data.click = { x: pageX, y: pageY };
                 console.log(data.click);
-                page.click();
+                if (page.click != undefined) {
+                    page.click();
+                }
+            }
+        });
+    }
+    keydownEvent() {
+        this.canvas.addEventListener("keydown", (event) => {
+            if (this.canDraw == true) {
+                data.keydown = event;
+                console.log(data.keydown);
+                if (page.keydown != undefined) {
+                    page.keydown();
+                }
+            }
+        });
+    }
+    keyupEvent() {
+        this.canvas.addEventListener("keyup", (event) => {
+            if (this.canDraw == true) {
+                data.keyup = event;
+                console.log(data.keyup);
+                if (page.keyup != undefined) {
+                    page.keyup();
+                }
             }
         });
     }

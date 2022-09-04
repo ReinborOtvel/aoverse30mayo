@@ -1,37 +1,32 @@
 "use strict";
 import text from "./text.js";
-import rect from "./rect.js";
 export default class {
     setup() {
         this.index = 1;
         this.images = [];
-        this.metamask = false;
-        for (let i = 1; i <= 14; i++) {
+        this.length = 14;
+        for (let i = this.index; i <= this.length; i++) {
             let src = `./Graficos/chargingScreens/${i}.jpg`;
             this.images[i] = engine.loadImage(src);
         }
-        setInterval(() => {
-            if (this.index < 14) {
+        let interval = setInterval(() => {
+            if (this.index < this.length) {
                 this.index++;
             } else {
-                this.index = 0;
+                clearInterval(interval);
+                data.metamask.start();
             }
         }, 2000);
+        data.canDraw = true;
     }
     click() {
-        if (this.metamask == false) {
-            this.metamask = true;
-            data.metamask.start();
-        }
+        this.index = this.length;
     }
     draw() {
         let image = this.images[this.index];
         if (image != undefined) {
             engine.image(image, 0, 0, 640, 360);
         }
-        if (this.metamask == false) {
-            rect(50, 295, 505, 45, "#000");
-            text(" click to connect with metamask", 50, 325, 35);
-        }
+        text("click to omit", 420, 330, 30, "#fff");
     }
 }

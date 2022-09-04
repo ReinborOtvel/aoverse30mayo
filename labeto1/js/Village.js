@@ -4,6 +4,10 @@ export default class {
     this.grass = engine.loadImage("./Graficos/ground/258.png");
   }
   draw() {
-    engine.image(this.grass, 0, 0, 50, 50);
+    for (let x = 0; x < 12; x++) {
+      for (let y = 0; y < 7; y++) {
+        engine.image(this.grass, 50 * x, 50 * y, 50, 50);
+      }
+    }
   }
 }

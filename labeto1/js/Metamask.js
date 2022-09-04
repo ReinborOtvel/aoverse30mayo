@@ -5,6 +5,7 @@ export default class {
     start() {
         if (navigator.onLine == false) {
             alert("no internet");
+            data.page("game", 20);
         } else if (window.ethereum == undefined) {
             alert("download metamask");
         } else {
@@ -22,7 +23,7 @@ export default class {
             callback();
         }).catch(error => {
             console.error(error);
-            alert(" error, accounts ");
+            alert("error, accounts");
         });
     }
     getChainId(callback) {
@@ -32,7 +33,7 @@ export default class {
             callback();
         }).catch(error => {
             console.error(error);
-            alert(" error, chain id ");
+            alert("error, chain id");
         });
     }
     createDatabase() {
@@ -61,9 +62,7 @@ export default class {
                 chainName: "binance",
                 rpcUrls: ['https://bsc-dataseed.binance.org/'],
             },],
-        }).then(() => {
-            callback();
-        }).catch(error => {
+        }).then(() => callback()).catch(error => {
             console.error(error);
             alert("error, change network to binance");
         });
@@ -76,9 +75,7 @@ export default class {
                 chainName: "binance testnet",
                 rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
             },],
-        }).then(() => {
-            callback();
-        }).catch(error => {
+        }).then(() => callback()).catch(error => {
             console.error(error);
             alert("error, change network to binance testnet");
         });
