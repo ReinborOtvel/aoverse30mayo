@@ -5,7 +5,6 @@ export default class {
     start() {
         if (navigator.onLine == false) {
             alert("no internet");
-            data.page("game", 20);
         } else if (window.ethereum == undefined) {
             alert("download metamask");
         } else {
@@ -84,7 +83,7 @@ export default class {
         if (data.chainId == 97) {
             this.database(() => {
                 this.verify();
-            })
+            });
         } else {
             this.testnet(() => location.reload());
         }

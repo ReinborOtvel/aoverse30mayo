@@ -3,10 +3,8 @@ import ChargingScreens from "./ChargingScreens.js";
 import CreateCharacter from "./CreateCharacter.js";
 import SelectLeader from "./SelectLeader.js";
 import Game from "./Game.js";
-import DatabaseChanges from "./DatabaseChanges.js";
 import Metamask from "./Metamask.js";
 import text from "./text.js";
-import rect from "./rect.js";
 class Data {
     constructor() {
         new p5(engine => {
@@ -22,7 +20,7 @@ class Data {
         this.clickEvent();
         this.keydownEvent();
         this.keyupEvent();
-        this.page("selectLeader", 1);
+        this.page("chargingScreens", 1);
     }
     draw() {
         engine.image(this.interfaceEmpty, 0, 0, 640, 360);
@@ -40,7 +38,6 @@ class Data {
         engine.createCanvas(640, 360);
         engine.frameRate(fps);
         switch (namePage) {
-            case "databaseChanges": window.page = new DatabaseChanges(); break;
             case "chargingScreens": window.page = new ChargingScreens(); break;
             case "createCharacter": window.page = new CreateCharacter(); break;
             case "selectLeader": window.page = new SelectLeader(); break;

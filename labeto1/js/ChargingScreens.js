@@ -9,18 +9,20 @@ export default class {
             let src = `./Graficos/chargingScreens/${i}.jpg`;
             this.images[i] = engine.loadImage(src);
         }
-        let interval = setInterval(() => {
+        this.interval = setInterval(() => {
             if (this.index < this.length) {
                 this.index++;
             } else {
-                clearInterval(interval);
+                clearInterval(this.interval);
                 data.metamask.start();
             }
-        }, 2000);
+        }, 1000);
         data.canDraw = true;
     }
     click() {
-        this.index = this.length;
+        if (this.index < this.length) {
+            this.index = this.length;
+        }
     }
     draw() {
         let image = this.images[this.index];

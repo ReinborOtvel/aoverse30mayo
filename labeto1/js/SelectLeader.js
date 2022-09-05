@@ -9,31 +9,25 @@ export default class {
     this.assignLeaders();
   }
   assignLeaderPlayer() {
-    if (data.database != undefined) {
-      data.database.getAccount(this.leaderAccount).then(_account => {
-        let owner = _account.owner.toUpperCase();
-        let leader = this.leaderAccount.toUpperCase();
-        if (owner == leader) {
-          let transform = { x: 370, y: 180, width: 150, height: 150 };
-          let statistics = JSON.parse(_account.statistics);
-          this.leaderPlayer = new Player(transform, statistics, () => {
-            data.canDraw = true;
-          });
-        } else {
-          alert("leader not found");
-          this.randomLeader();
-        }
-      }).catch(error => {
-        console.error(error);
+    data.database.getAccount(this.leaderAccount).then(_account => {
+      let owner = _account.owner.toUpperCase();
+      let leader = this.leaderAccount.toUpperCase();
+      if (owner == leader) {
+        let transform = { x: 370, y: 180, width: 150, height: 150 };
+        let statistics = JSON.parse(_account.statistics);
+        this.leaderPlayer = new Player(transform, statistics, () => {
+          data.canDraw = true;
+        });
+      } else {
         alert("leader not found");
         this.randomLeader();
-      });
-    } else {
-      let transform = { x: 370, y: 180, width: 150, height: 150 };
-      this.leaderPlayer = new Player(transform, statisticsRandom(), () => {
-        data.canDraw = true;
-      });
-    }
+      }
+    }).catch(error => {
+      console.error(error);
+      alert("leader not found");
+      this.randomLeader();
+    });
+
   }
   randomLeader() {
     data.canDraw = false;
@@ -42,34 +36,25 @@ export default class {
   }
   assignLeaders() {
     this.leaders = [];
-    if (data.database != undefined) {
-      data.database.allAccounts().then(_accounts => {
-        this.membership = {};
-        for (let account of _accounts) {
-          let owner = account.owner.toUpperCase();
-          this.membership[owner] = 0;
+    data.database.allAccounts().then(_accounts => {
+      this.membership = {};
+      for (let account of _accounts) {
+        let owner = account.owner.toUpperCase();
+        this.membership[owner] = 0;
+      }
+      for (let account of _accounts) {
+        let leader = account.leader.toUpperCase();
+        this.membership[leader]++;
+      }
+      let user = data.account.toUpperCase();
+      for (let account of _accounts) {
+        let owner = account.owner.toUpperCase();
+        if (owner != user && this.membership[owner] < 5) {
+          this.leaders.push(account.owner);
         }
-        for (let account of _accounts) {
-          let leader = account.leader.toUpperCase();
-          this.membership[leader]++;
-        }
-        let user = data.account.toUpperCase();
-        for (let account of _accounts) {
-          let owner = account.owner.toUpperCase();
-          if (owner != user && this.membership[owner] < 5) {
-            this.leaders.push(account.owner);
-          }
-        }
-        this.randomLeader();
-      });
-    } else {
-      for (let i = 0; i < 10; i++) {
-        let statistics = statisticsRandom();
-        let hash = ethers.utils.namehash(statistics.name);
-        this.leaders.push(hash);
       }
       this.randomLeader();
-    }
+    });
   }
   writeLeader() {
     data.canDraw = false;
@@ -83,7 +68,17 @@ export default class {
     } else {
       data.database.createAccount(this.leaderAccount, statistics).then(() => {
         localStorage.removeItem("statistics");
-        data.page("databaseChanges", 1);
+        let interval = setInterval(() => {
+          data.database.getAccount(data.account).then(_account => {
+            let owner = _account.owner.toUpperCase();
+            let account = data.account.toUpperCase();
+            if (owner == account) {
+              location.reload();
+            } else {
+              alert("wait 10 more seconds");
+            }
+          });
+        }, 10000);
       });
     }
   }
