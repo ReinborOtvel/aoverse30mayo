@@ -59,10 +59,9 @@ class Data {
         });
     }
     keydownEvent() {
-        this.canvas.addEventListener("keydown", (event) => {
+        document.addEventListener("keydown", ({ key }) => {
             if (this.canDraw == true) {
-                data.keydown = event;
-                console.log(data.keydown);
+                data.keydown = key;
                 if (page.keydown != undefined) {
                     page.keydown();
                 }
@@ -70,10 +69,9 @@ class Data {
         });
     }
     keyupEvent() {
-        this.canvas.addEventListener("keyup", (event) => {
+        document.addEventListener("keyup", ({ key }) => {
             if (this.canDraw == true) {
-                data.keyup = event;
-                console.log(data.keyup);
+                data.keyup = key;
                 if (page.keyup != undefined) {
                     page.keyup();
                 }
