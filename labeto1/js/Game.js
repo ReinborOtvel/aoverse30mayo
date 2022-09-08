@@ -1,6 +1,6 @@
 "use strict";
 import Village from "./Village.js";
-import PlayerControl from "./PlayerControl.js";
+import PlayerControl from "./player/Control.js";
 import statisticsRandom from "./statisticsRandom.js";
 export default class {
   setup() {

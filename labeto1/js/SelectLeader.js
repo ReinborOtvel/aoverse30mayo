@@ -1,7 +1,7 @@
 "use strict";
 import text from "./text.js";
 import rect from "./rect.js";
-import Player from "./Player.js";
+import Player from "./player/Parts.js";
 import verifyClick from "./verifyClick.js";
 import statisticsRandom from "./statisticsRandom.js";
 export default class {

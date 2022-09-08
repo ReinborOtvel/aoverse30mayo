@@ -4,33 +4,10 @@ export default class {
     this.sprite = 0;
     this.setTransform(transform);
     this.imgs = { down: [], up: [], left: [], right: [] };
-    let url = `./Graficos/player/armor/${index}.png`;
+    let url = `./Graficos/player/weapon/${index}.png`;
     engine.loadImage(url, img => {
       this.loadImg(img, callback);
     });
-    setInterval(() => {
-      this.nextSprite();
-    }, 200);
-  }
-  nextSprite() {
-    if (data.canDraw == true && this.canNextSprite == true) {
-      let length;
-      switch (this.animation) {
-        case "down":
-        case "up":
-          length = 6;
-          break;
-        case "left":
-        case "right":
-          length = 5;
-          break;
-      }
-      if (this.sprite < length) {
-        this.sprite++;
-      } else {
-        this.sprite = 0;
-      }
-    }
   }
   loadImg(img, callback) {
     let width = 25;
