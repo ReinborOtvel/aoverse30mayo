@@ -31,7 +31,7 @@ export default class {
         break;
     }
     if (this.yMove != 0 || this.xMove != 0) {
-      this.parts.nextIntervalSprite = true;
+      this.parts.canNextSprite(true);
     }
   }
   keyup() {
@@ -42,7 +42,7 @@ export default class {
       case "d": this.xMove = 0; break;
     }
     if (this.yMove == 0 && this.xMove == 0) {
-      this.parts.nextIntervalSprite = false;
+      this.parts.canNextSprite(false);
     }
   }
   move() {

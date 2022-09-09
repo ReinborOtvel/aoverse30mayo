@@ -4,8 +4,6 @@ import Weapon from "./Weapon.js";
 export default class {
   constructor(transform, statistics, callback) {
     this.statistics = statistics;
-    this.nextIntervalSprite = false;
-    this.sprite = 0;
     let { head, armor, weapon } = this.statistics;
     this.head = new Head(transform, head, () => {
       this.armor = new Armor(transform, armor, () => {
@@ -22,8 +20,12 @@ export default class {
   }
   animation(name) {
     this.head.animation = name;
-    this.armor.animation = name;
-    this.weapon.animation = name;
+    this.armor.newAnimation(name);
+    this.weapon.newAnimation(name);
+  }
+  canNextSprite(value) {
+    this.armor.canNextSprite = value;
+    this.weapon.canNextSprite = value;
   }
   draw() {
     this.armor.draw();

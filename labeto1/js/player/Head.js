@@ -2,7 +2,7 @@ export default class {
   constructor(transform, index, callback) {
     this.animation = "down";
     this.setTransform(transform);
-    this.imgs = [];
+    this.imgs = {};
     let url = `./Graficos/player/head/${index}.png`;
     engine.loadImage(url, img => {
       this.loadImg(img, callback);
@@ -11,10 +11,10 @@ export default class {
   loadImg(img, callback) {
     let width = 17;
     let height = 17;
-    this.imgs["down"] = img.get(0, 0, width, height);
-    this.imgs["right"] = img.get(1 * width, 0, width, height);
-    this.imgs["left"] = img.get(2 * width, 0, width, height);
-    this.imgs["up"] = img.get(3 * width, 0, width, height);
+    this.imgs.down = img.get(0, 0, width, height);
+    this.imgs.right = img.get(1 * width, 0, width, height);
+    this.imgs.left = img.get(2 * width, 0, width, height);
+    this.imgs.up = img.get(3 * width, 0, width, height);
     callback();
   }
   setTransform({ x, y, width, height }) {

@@ -1,6 +1,7 @@
 export default class {
   constructor(transform, index, callback) {
     this.animation = "down";
+    this.canNextSprite = false;
     this.sprite = 0;
     this.setTransform(transform);
     this.imgs = { down: [], up: [], left: [], right: [] };
@@ -8,17 +9,46 @@ export default class {
     engine.loadImage(url, img => {
       this.loadImg(img, callback);
     });
+    setInterval(() => {
+      this.nextSprite();
+    }, 200);
+  }
+  newAnimation(name) {
+    if (this.animation != name) {
+      this.sprite = 0;
+      this.animation = name;
+    }
+  }
+  nextSprite() {
+    if (data.canDraw == true && this.canNextSprite == true) {
+      let length;
+      switch (this.animation) {
+        case "down":
+        case "up":
+          length = 5;
+          break;
+        case "left":
+        case "right":
+          length = 4;
+          break;
+      }
+      if (this.sprite < length) {
+        this.sprite++;
+      } else {
+        this.sprite = 0;
+      }
+    }
   }
   loadImg(img, callback) {
     let width = 25;
     let height = 45;
     for (let i = 0; i < 6; i++) {
       let x = i * width;
-      this.imgs["down"][i] = img.get(x, 0, width, height);
-      this.imgs["up"][i] = img.get(x, height, width, height);
-      if (x < 5) {
-        this.imgs["left"][i] = img.get(x, 2 * height, width, height);
-        this.imgs["right"][i] = img.get(x, 3 * height, width, height);
+      this.imgs.down[i] = img.get(x, 0, width, height);
+      this.imgs.up[i] = img.get(x, height, width, height);
+      if (i < 5) {
+        this.imgs.left[i] = img.get(x, 2 * height, width, height);
+        this.imgs.right[i] = img.get(x, 3 * height, width, height);
       }
     }
     callback();
@@ -31,6 +61,8 @@ export default class {
   draw() {
     let { x, y, width, height } = this.transform;
     let img = this.imgs[this.animation][this.sprite];
-    engine.image(img, x, y, width, height);
+    if (img != undefined) {
+      engine.image(img, x, y, width, height);
+    }
   }
 }
