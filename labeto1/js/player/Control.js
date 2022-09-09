@@ -1,15 +1,34 @@
 "use strict";
 import text from "../text.js";
 import Parts from "./Parts.js";
+import verifyClick from "../verifyClick.js";
 export default class {
-  constructor(transform, statistics, callback) {
+  constructor(transform, statistics, map, callback) {
     this.transform = transform;
+    this.statistics = statistics;
+    this.map = map;
     this.parts = new Parts(transform, statistics, callback);
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 3;
   }
   click() {
+    if (verifyClick(56, 262, 85, 284)) {
+      this.yMove = -1;
+      this.parts.animation("up");
+    } else if (verifyClick(57, 321, 76, 343)) {
+      this.yMove = 1;
+      this.parts.animation("down");
+    } if (verifyClick(18, 293, 38, 312)) {
+      this.xMove = -1;
+      this.parts.animation("left");
+    } else if (verifyClick(97, 86, 117, 312)) {
+      this.xMove = 1;
+      this.parts.animation("right");
+    }
+    if (this.yMove != 0 || this.xMove != 0) {
+      this.parts.canNextSprite(true);
+    }
   }
   keydown() {
     switch (data.keydown) {
@@ -47,11 +66,17 @@ export default class {
   }
   move() {
     let { x, y } = this.transform;
-    x += this.xMove * this.speed;
-    y += this.yMove * this.speed;
-    this.transform.x = x;
-    this.transform.y = y;
-    this.parts.setTransform(this.transform);
+    let xSpeed = this.xMove * this.speed;
+    let ySpeed = this.yMove * this.speed;
+    if (xSpeed != 0 || ySpeed != 0) {
+      x += xSpeed;
+      y += ySpeed;
+      if (this.map.collision(x, y) == false) {
+        this.transform.x = x;
+        this.transform.y = y;
+        this.parts.setTransform(this.transform);
+      }
+    }
   }
   draw() {
     this.parts.draw();

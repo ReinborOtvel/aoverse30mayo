@@ -13,7 +13,7 @@ export default function () {
     name,
     head: range(1, 236),
     armor: range(1, 350),
-    weapon: range(1, 130),
+    weapon: range(1, 89),
     strength: range(20, 100),
     endurance: range(20, 100),
     health: range(20, 100),

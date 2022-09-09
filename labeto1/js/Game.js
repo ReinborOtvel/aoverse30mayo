@@ -4,11 +4,11 @@ import PlayerControl from "./player/Control.js";
 import statisticsRandom from "./statisticsRandom.js";
 export default class {
   setup() {
-    this.assignPlayer();
+    this.assignMap();
   }
   assignMap() {
     this.village = new Village(() => {
-      data.canDraw = true;
+      this.assignPlayer();
     });
   }
   assignPlayer() {
@@ -16,10 +16,10 @@ export default class {
       let owner = _account.owner.toUpperCase();
       let account = data.account.toUpperCase();
       if (owner == account) {
-        let transform = { x: 150, y: 150, width: 50, height: 50 };
+        let transform = { x: 200, y: 200, width: 50, height: 50 };
         let statistics = JSON.parse(_account.statistics);
-        this.player = new PlayerControl(transform, statistics, () => {
-          this.assignMap();
+        this.player = new PlayerControl(transform, statistics, this.village, () => {
+          data.canDraw = true;
         });
       } else {
         alert("character not found");
