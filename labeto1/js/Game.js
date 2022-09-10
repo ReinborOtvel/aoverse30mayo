@@ -1,13 +1,13 @@
 "use strict";
-import Village from "./Village.js";
+import Map from "./Map.js";
 import PlayerControl from "./player/Control.js";
-import statisticsRandom from "./statisticsRandom.js";
 export default class {
   setup() {
+    this.elements = [];
     this.assignMap();
   }
   assignMap() {
-    this.village = new Village(() => {
+    this.map = new Map(() => {
       this.assignPlayer();
     });
   }
@@ -18,7 +18,7 @@ export default class {
       if (owner == account) {
         let transform = { x: 200, y: 200, width: 50, height: 50 };
         let statistics = JSON.parse(_account.statistics);
-        this.player = new PlayerControl(transform, statistics, this.village, () => {
+        this.player = new PlayerControl(transform, statistics, () => {
           data.canDraw = true;
         });
       } else {
@@ -39,7 +39,7 @@ export default class {
     this.player.click();
   }
   draw() {
-    this.village.draw();
-    this.player.draw();
+    this.elements = [];
+    this.map.draw();
   }
 }

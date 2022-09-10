@@ -3,10 +3,9 @@ import text from "../text.js";
 import Parts from "./Parts.js";
 import verifyClick from "../verifyClick.js";
 export default class {
-  constructor(transform, statistics, map, callback) {
+  constructor(transform, statistics, callback) {
     this.transform = transform;
     this.statistics = statistics;
-    this.map = map;
     this.parts = new Parts(transform, statistics, callback);
     this.xMove = 0;
     this.yMove = 0;
@@ -62,6 +61,14 @@ export default class {
     }
     if (this.yMove == 0 && this.xMove == 0) {
       this.parts.canNextSprite(false);
+    } else if (this.yMove == -1) {
+      this.parts.animation("up");
+    } else if (this.yMove == 1) {
+      this.parts.animation("down");
+    } else if (this.xMove == -1) {
+      this.parts.animation("left");
+    } else if (this.xMove == 1) {
+      this.parts.animation("right");
     }
   }
   move() {
@@ -71,7 +78,7 @@ export default class {
     if (xSpeed != 0 || ySpeed != 0) {
       x += xSpeed;
       y += ySpeed;
-      if (this.map.collision(x, y) == false) {
+      if (page.map.collision(x, y) == false) {
         this.transform.x = x;
         this.transform.y = y;
         this.parts.setTransform(this.transform);

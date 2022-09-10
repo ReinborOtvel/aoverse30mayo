@@ -1,9 +1,10 @@
 export default class {
-  constructor(url, width, height, callback) {
+  constructor(url, width, height, court, callback) {
     this.width = width;
     this.height = height;
     engine.loadImage(url, img => {
-      this.img = img;
+      let { x, y, width, height } = court;
+      this.img = img.get(x, y, width, height);
       callback();
     });
   }

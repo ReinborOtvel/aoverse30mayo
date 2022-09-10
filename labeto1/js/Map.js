@@ -1,17 +1,34 @@
 "use strict";
 import Element from "./Element.js";
+import ElementCourt from "./ElementCourt.js";
 export default class {
   constructor(callback) {
-    this.grass = new Element("./Graficos/ground/258.png", 50, 50, () => {
-      this.portal = new Element("./Graficos/house/6.png", 200, 200, () => {
-        this.earth = new Element("./Graficos/ground/50.png", 50, 50, () => {
-          this.tree = new Element("./Graficos/nature/1.png", 100, 100, () => {
-            this.tree.court(0, 0, 300, 300);
-            callback();
-          });
+    this.earth = new Element("./Graficos/ground/50.png", 50, 50, () => {
+      this.tree = new ElementCourt("./Graficos/nature/1.png", 100, 100, [0, 0, 300, 300], () => {
+        this.bush = new Element("./Graficos/nature/7.png", 80, 80, () => {
+          callback();
         });
       });
     });
+  }
+  assignGrass() {
+    let url = "./Graficos/ground/258.png";
+    let transform = [0, 0, 50, 50];
+    this.grass = new Element(url, transform, () => {
+      this.assignPortal();
+    });
+  }
+  assignPortal() {
+    let url = "./Graficos/house/6.png";
+    let transform = [0, 0, 200, 200];
+    this.portal = new Element(url, transform, () => {
+      this.assignEarth();
+    })
+  }
+  assignEarth() {
+    let url = "./Graficos/ground/50.png";
+    let transform = [0, 0, 50, 50];
+    this.earth = new Element
   }
   collision(x, y) {
     let verifyCollision = (xInit, yInit, xEnd, yEnd) => {
@@ -50,5 +67,13 @@ export default class {
       this.tree.drawCut(0, 100 * x, 100);
     }
     this.portal.draw(250, 80);
+    for (let i = -1; i < 22; i++) {
+      let x = 30 * i;
+      this.bush.draw(x, 320);
+    }
+    for (let i = -1; i < 3; i++) {
+      let x = 30 * i;
+      this.bush.draw(x, 180);
+    }
   }
 }
