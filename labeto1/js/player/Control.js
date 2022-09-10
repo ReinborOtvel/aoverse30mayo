@@ -15,7 +15,7 @@ export default class {
     this.setParts();
     this.xMove = 0;
     this.yMove = 0;
-    this.speed = 3;
+    this.speed = 6;
   }
   setParts() {
     this.parts = new Parts(this.transform, this.statistics, this.fullLoad);

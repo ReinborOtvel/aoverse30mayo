@@ -33,6 +33,8 @@ export default class {
     this.transform.y = y;
     this.transform.width = width / 2;
     this.transform.height = height / 2;
+    this.transform.x -= this.transform.width;
+    this.transform.y -= this.transform.height;
     this.transform.x += this.transform.width / 2;
   }
   draw() {
