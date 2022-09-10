@@ -1,79 +1,65 @@
 "use strict";
 import Element from "./Element.js";
-import ElementCourt from "./ElementCourt.js";
 export default class {
-  constructor(callback) {
-    this.earth = new Element("./Graficos/ground/50.png", 50, 50, () => {
-      this.tree = new ElementCourt("./Graficos/nature/1.png", 100, 100, [0, 0, 300, 300], () => {
-        this.bush = new Element("./Graficos/nature/7.png", 80, 80, () => {
-          callback();
-        });
-      });
-    });
+  constructor(fullLoad) {
+    this.fullLoad = fullLoad;
+    this.assignGrass();
   }
   assignGrass() {
     let url = "./Graficos/ground/258.png";
-    let transform = [0, 0, 50, 50];
-    this.grass = new Element(url, transform, () => {
+    engine.loadImage(url, img => {
+      this.grass = img;
       this.assignPortal();
     });
   }
   assignPortal() {
     let url = "./Graficos/house/6.png";
-    let transform = [0, 0, 200, 200];
-    this.portal = new Element(url, transform, () => {
+    engine.loadImage(url, img => {
+      this.portal = img;
       this.assignEarth();
-    })
+    });
   }
   assignEarth() {
     let url = "./Graficos/ground/50.png";
-    let transform = [0, 0, 50, 50];
-    this.earth = new Element
+    engine.loadImage(url, img => {
+      this.earth = img;
+      this.assignTree();
+    });
+  }
+  assignTree() {
+    let url = "./Graficos/nature/1.png";
+    engine.loadImage(url, img => {
+      this.tree = img.get(0, 0, 300, 300);
+      this.assignBush();
+    });
+  }
+  assignBush() {
+    let url = "./Graficos/nature/7.png";
+    engine.loadImage(url, img => {
+      this.bush = img;
+      this.fullLoad();
+    });
   }
   collision(x, y) {
     let verifyCollision = (xInit, yInit, xEnd, yEnd) => {
       return x > xInit && y > yInit && x < xEnd && y < yEnd;
     }
+    let collisions = [
+      [-50, 0, 165, 165],
+      [137, 0, 392, 71],
+      [386, 0, 640, 167],
+      [154, 60, 200, 116],
+      [239, 60, 347, 191],
+    ];
     console.log(x, y);
-    if (verifyCollision(-50, 0, 165, 165)) {
-      return true;
-    } else if (verifyCollision(137, 0, 392, 71)) {
-      return true;
-    } else if (verifyCollision(386, 0, 640, 167)) {
-      return true;
-    } else if (verifyCollision(154, 60, 200, 116)) {
-      return true;
-    } else if (verifyCollision(239, 60, 347, 191)) {
-      return true;
+    for (let collision of collisions) {
+      if (verifyCollision(...collision) == true) {
+        return true;
+      }
     }
     return false;
   }
-  draw() {
-    for (let x = 0; x < 13; x++) {
-      for (let y = 0; y < 8; y++) {
-        this.grass.draw(50 * x, 50 * y);
-      }
-    }
-    for (let x = 0; x < 13; x++) {
-      this.earth.draw(50 * x, 50 * 5);
-      this.earth.draw(50 * x, 50 * 5.5);
-    }
-    for (let x = 0; x < 13; x++) {
-      this.tree.drawCut(0, 100 * x, 0);
-      if (x >= 2 && x < 4) {
-        continue;
-      }
-      this.tree.drawCut(0, (100 * x) + 50, 50);
-      this.tree.drawCut(0, 100 * x, 100);
-    }
-    this.portal.draw(250, 80);
-    for (let i = -1; i < 22; i++) {
-      let x = 30 * i;
-      this.bush.draw(x, 320);
-    }
-    for (let i = -1; i < 3; i++) {
-      let x = 30 * i;
-      this.bush.draw(x, 180);
-    }
+  element(type, x, y, width, height) {
+    return new Element(this[type], [x, y, width, height]);
   }
 }

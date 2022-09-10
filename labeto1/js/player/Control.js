@@ -3,85 +3,111 @@ import text from "../text.js";
 import Parts from "./Parts.js";
 import verifyClick from "../verifyClick.js";
 export default class {
-  constructor(transform, statistics, callback) {
-    this.transform = transform;
+  constructor(transform, statistics, map, fullLoad) {
+    this.transform = {};
+    this.transform.x = transform.x;
+    this.transform.y = transform.y;
+    this.transform.width = transform.width;
+    this.transform.height = transform.height;
     this.statistics = statistics;
-    this.parts = new Parts(transform, statistics, callback);
+    this.map = map;
+    this.fullLoad = fullLoad;
+    this.setParts();
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 3;
   }
+  setParts() {
+    this.parts = new Parts(this.transform, this.statistics, this.fullLoad);
+  }
   click() {
     if (verifyClick(56, 262, 85, 284)) {
       this.yMove = -1;
-      this.parts.animation("up");
-    } else if (verifyClick(57, 321, 76, 343)) {
+      this.parts.setAnimation("up");
+    }
+    else if (verifyClick(57, 321, 76, 343)) {
       this.yMove = 1;
-      this.parts.animation("down");
-    } if (verifyClick(18, 293, 38, 312)) {
+      this.parts.setAnimation("down");
+    }
+    if (verifyClick(18, 293, 38, 312)) {
       this.xMove = -1;
-      this.parts.animation("left");
-    } else if (verifyClick(97, 86, 117, 312)) {
+      this.parts.setAnimation("left");
+    }
+    else if (verifyClick(97, 86, 117, 312)) {
       this.xMove = 1;
-      this.parts.animation("right");
+      this.parts.setAnimation("right");
     }
     if (this.yMove != 0 || this.xMove != 0) {
-      this.parts.canNextSprite(true);
+      this.parts.setCanNextSprite(true);
     }
   }
   keydown() {
     switch (data.keydown) {
       case "w":
         this.yMove = -1;
-        this.parts.animation("up");
+        this.parts.setAnimation("up");
         break;
       case "s":
         this.yMove = 1;
-        this.parts.animation("down");
+        this.parts.setAnimation("down");
         break;
       case "a":
         this.xMove = -1;
-        this.parts.animation("left");
+        this.parts.setAnimation("left");
         break;
       case "d":
         this.xMove = 1;
-        this.parts.animation("right");
+        this.parts.setAnimation("right");
         break;
     }
     if (this.yMove != 0 || this.xMove != 0) {
-      this.parts.canNextSprite(true);
+      this.parts.setCanNextSprite(true);
     }
   }
   keyup() {
     switch (data.keyup) {
       case "w":
-      case "s": this.yMove = 0; break;
+      case "s":
+        this.yMove = 0;
+        break;
       case "a":
-      case "d": this.xMove = 0; break;
+      case "d":
+        this.xMove = 0;
+        break;
     }
     if (this.yMove == 0 && this.xMove == 0) {
-      this.parts.canNextSprite(false);
-    } else if (this.yMove == -1) {
-      this.parts.animation("up");
-    } else if (this.yMove == 1) {
-      this.parts.animation("down");
-    } else if (this.xMove == -1) {
-      this.parts.animation("left");
-    } else if (this.xMove == 1) {
-      this.parts.animation("right");
+      this.parts.setCanNextSprite(false);
+    }
+    else if (this.yMove == -1) {
+      this.parts.setAnimation("up");
+    }
+    else if (this.yMove == 1) {
+      this.parts.setAnimation("down");
+    }
+    else if (this.xMove == -1) {
+      this.parts.setAnimation("left");
+    }
+    else if (this.xMove == 1) {
+      this.parts.setAnimation("right");
     }
   }
+  setTransform(x, y, width, height) {
+    this.transform.x = x;
+    this.transform.y = y;
+    this.transform.width = width;
+    this.transform.height = height;
+    this.parts.setTransform(x, y, width, height);
+  }
   move() {
-    let { x, y } = this.transform;
+    let newX = this.transform.x;
+    let newY = this.transform.y;
     let xSpeed = this.xMove * this.speed;
     let ySpeed = this.yMove * this.speed;
     if (xSpeed != 0 || ySpeed != 0) {
-      x += xSpeed;
-      y += ySpeed;
-      if (page.map.collision(x, y) == false) {
-        this.transform.x = x;
-        this.transform.y = y;
-        this.parts.setTransform(this.transform);
+      newX += xSpeed;
+      newY += ySpeed;
+      if (this.map.collision(newX, newY) == false) {
+        this.setTransform(newX, newY, this.transform.width, this.transform.height);
       }
     }
   }
