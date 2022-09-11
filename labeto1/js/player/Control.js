@@ -4,15 +4,13 @@ import Parts from "./Parts.js";
 import verifyClick from "../verifyClick.js";
 export default class {
   constructor(transform, statistics, map, fullLoad) {
-    this.transform = {};
-    this.transform.x = transform.x;
-    this.transform.y = transform.y;
-    this.transform.width = transform.width;
-    this.transform.height = transform.height;
+    this.transform = transform;
     this.statistics = statistics;
     this.map = map;
     this.fullLoad = fullLoad;
     this.setParts();
+    this.x = 0;
+    this.y = 0;
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 6;
@@ -99,15 +97,16 @@ export default class {
     this.parts.setTransform(x, y, width, height);
   }
   move() {
-    let newX = this.transform.x;
-    let newY = this.transform.y;
+    let newX = this.x;
+    let newY = this.y;
     let xSpeed = this.xMove * this.speed;
     let ySpeed = this.yMove * this.speed;
     if (xSpeed != 0 || ySpeed != 0) {
       newX += xSpeed;
       newY += ySpeed;
       if (this.map.collision(newX, newY) == false) {
-        this.setTransform(newX, newY, this.transform.width, this.transform.height);
+        this.x = newX;
+        this.y = newY;
       }
     }
   }

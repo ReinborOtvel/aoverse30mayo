@@ -1,6 +1,7 @@
 "use strict";
 import Map from "./Map.js";
 import PlayerControl from "./player/Control.js";
+import rect from "./rect.js";
 export default class {
   setup() {
     this.assignMap();
@@ -15,7 +16,7 @@ export default class {
       let owner = _account.owner.toUpperCase();
       let account = data.account.toUpperCase();
       if (owner == account) {
-        let transform = { x: 200, y: 200, width: 50, height: 50 };
+        let transform = { x: 320, y: 180, width: 50, height: 50 };
         let statistics = JSON.parse(_account.statistics);
         let fullLoad = () => {
           data.canDraw = true;
@@ -39,17 +40,8 @@ export default class {
     this.player.click();
   }
   draw() {
-    this.map.draw();
+    rect(0, 0, 640, 360, "#000");
+    this.map.draw(this.player);
     this.player.draw();
-    if (this.player.transform.x > 640) {
-      let { y, width, height } = this.player.transform;
-      this.player.setTransform(0, y, width, height);
-      this.map.index++;
-    }
-    else if (this.player.transform.x < 0) {
-      let { y, width, height } = this.player.transform;
-      this.player.setTransform(640, y, width, height);
-      this.map.index--;
-    }
   }
 }

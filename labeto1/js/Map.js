@@ -2,62 +2,58 @@
 export default class {
   constructor(fullLoad) {
     this.fullLoad = fullLoad;
-    this.index = 2;
-    this.setImgs();
+    this.width = 4096;
+    this.height = 2880;
+    this.setImg();
   }
-  setImgs() {
-    this.imgs = [];
-    let i = 0;
-    let length = 2;
-    let nextImg = () => {
-      let url = `./Graficos/maps/${i}.png`;
-      engine.loadImage(url, img => {
-        this.imgs[i] = img;
-        i++;
-        if (i <= length) {
-          nextImg();
-        } else {
-          this.fullLoad();
-        }
-      });
-    }
-    nextImg();
+  setImg() {
+    let url = `./Graficos/map.jpg`;
+    engine.loadImage(url, img => {
+      this.img = img;
+      this.fullLoad();
+    });
   }
   collision(x, y) {
     let verifyCollision = (xInit, yInit, xEnd, yEnd) => {
       return x > xInit && y > yInit && x < xEnd && y < yEnd;
     }
     let collisions = [
-      [
-        [-50, -50, 218, 200],
-        [180, -50, 280, 105],
-        [236, -50, 670, 200],
-        [134, 190, 200, 242],
-        [242, 164, 308, 242],
-        [-50, 260, 660, 380],
-      ],
-      [
-        [-50, -50, 160, 200],
-        [200, -50, 660, 200],
-        [150, -50, 210, 130],
-        [-50, 260, 660, 380],
-      ],
-      [
-        [-50, -50, 168, 200],
-        [150, -50, 220, 128],
-        [206, -50, 680, 200],
-        [-50, 260, 680, 380],
-      ]
+      [60, 0, 330, 174],
+      [390, 18, 516, 150],
+      [552, 12, 678, 138],
+      [738, 54, 798, 114],
+      [738, 150, 798, 210],
+      [744, 402, 798, 450],
+      [738, 492, 798, 546],
+      [654, 492, 708, 552],
+      [450, 480, 636, 552],
+      [228, 480, 408, 552],
+      [18, 480, 204, 546],
+
+      [6, 810, 84, 930],
+      [90, 744, 270, 990],
+      [269, 810, 330, 936],
+      [360, 810, 438, 924],
+      [438, 744, 606, 990],
+      [624, 810, 702, 924],
+      [714, 810, 792, 930],
     ];
     console.log(x, y);
-    for (let collision of collisions[this.index]) {
+    if (x < 0 || y < 0 || x > this.width || y > this.height) {
+      return true;
+    }
+    for (let collision of collisions) {
       if (verifyCollision(...collision) == true) {
         return true;
       }
     }
     return false;
   }
-  draw() {
-    engine.image(this.imgs[this.index], 0, 0, 640, 360);
+  draw(player) {
+    let x = player.x * -1;
+    let y = player.y * -1;
+    x += 320;
+    y += 180;
+    engine.image(this.img, x, y, this.width, this.height);
   }
 }
