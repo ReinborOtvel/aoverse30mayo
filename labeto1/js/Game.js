@@ -3,7 +3,6 @@ import Map from "./Map.js";
 import PlayerControl from "./player/Control.js";
 export default class {
   setup() {
-    this.elements = [];
     this.assignMap();
   }
   assignMap() {

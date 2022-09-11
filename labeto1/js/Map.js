@@ -2,7 +2,7 @@
 export default class {
   constructor(fullLoad) {
     this.fullLoad = fullLoad;
-    this.index = 0;
+    this.index = 2;
     this.setImgs();
   }
   setImgs() {
@@ -43,7 +43,10 @@ export default class {
         [-50, 260, 660, 380],
       ],
       [
-
+        [-50, -50, 168, 200],
+        [150, -50, 220, 128],
+        [206, -50, 680, 200],
+        [-50, 260, 680, 380],
       ]
     ];
     console.log(x, y);
