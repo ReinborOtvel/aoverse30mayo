@@ -5,6 +5,8 @@ import SelectLeader from "./SelectLeader.js";
 import Game from "./Game.js";
 import Metamask from "./Metamask.js";
 import text from "./text.js";
+import porcentageWidth from "./porcentageWidth.js";
+import porcentageHeight from "./porcentageHeight.js";
 class Data {
   constructor() {
     new p5(engine => {
@@ -29,9 +31,9 @@ class Data {
     this.page("chargingScreens", 1);
   }
   draw() {
-    engine.image(this.interfaceEmpty, 0, 0, 640, 360);
+    engine.image(this.interfaceEmpty, 0, 0, engine.width, engine.height);
     if (this.canDraw == false) {
-      text("loading", 140, 200, 100, "#fff");
+      text("loading", 20, 40, 5, "#fff");
     } else {
       engine.noSmooth();
       if (page.draw != undefined) {
@@ -41,7 +43,7 @@ class Data {
   }
   page(namePage, fps) {
     this.canDraw = false;
-    engine.createCanvas(640, 360);
+    engine.createCanvas(852, 480);
     engine.frameRate(fps);
     switch (namePage) {
       case "chargingScreens": window.page = new ChargingScreens(); break;
@@ -57,6 +59,10 @@ class Data {
     this.canvas.addEventListener("click", ({ pageX, pageY }) => {
       if (this.canDraw == true) {
         data.click = { x: pageX, y: pageY };
+        data.click.x = data.click.x / porcentageWidth(1);
+        data.click.y = data.click.y / porcentageHeight(1);
+        data.click.x = parseInt(data.click.x);
+        data.click.y = parseInt(data.click.y);
         console.log(data.click);
         if (page.click != undefined) {
           page.click();

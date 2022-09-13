@@ -9,8 +9,8 @@ export default class {
     this.map = map;
     this.fullLoad = fullLoad;
     this.setParts();
-    this.x = 0;
-    this.y = 0;
+    this.x = 2024;
+    this.y = 1452;
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 6;
