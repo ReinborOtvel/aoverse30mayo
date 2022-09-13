@@ -33,7 +33,7 @@ class Data {
   draw() {
     engine.image(this.interfaceEmpty, 0, 0, engine.width, engine.height);
     if (this.canDraw == false) {
-      text("loading", 20, 40, 5, "#fff");
+      text("loading", 15, 60, 20, "#fff");
     } else {
       engine.noSmooth();
       if (page.draw != undefined) {

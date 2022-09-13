@@ -90,10 +90,7 @@ export default class {
     }
   }
   setTransform(x, y, width, height) {
-    this.transform.x = x;
-    this.transform.y = y;
-    this.transform.width = width;
-    this.transform.height = height;
+    this.transform = { x, y, width, height };
     this.parts.setTransform(x, y, width, height);
   }
   move() {
@@ -113,9 +110,9 @@ export default class {
   draw() {
     this.parts.draw();
     this.move();
-    text("a", 20, 310, 30, "#fff");
-    text("w", 60, 280, 30, "#fff");
-    text("s", 60, 340, 30, "#fff");
-    text("d", 100, 310, 30, "#fff");
+    text("a", 5, 90, 5, "#fff");
+    text("w", 10, 85, 5, "#fff");
+    text("s", 10, 95, 5, "#fff");
+    text("d", 15, 90, 5, "#fff");
   }
 }

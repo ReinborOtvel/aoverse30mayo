@@ -3,11 +3,7 @@ import Armor from "./Armor.js";
 import Weapon from "./Weapon.js";
 export default class {
   constructor(transform, statistics, fullLoad) {
-    this.transform = {};
-    this.transform.x = transform.x;
-    this.transform.y = transform.y;
-    this.transform.width = transform.width;
-    this.transform.height = transform.height;
+    this.transform = transform;
     this.statistics = statistics;
     this.fullLoad = fullLoad;
     this.animation = "down";
@@ -32,10 +28,7 @@ export default class {
     });
   }
   setTransform(x, y, width, height) {
-    this.transform.x = x;
-    this.transform.y = y;
-    this.transform.width = width;
-    this.transform.height = height;
+    this.transform = { x, y, width, height };
     this.armor.setTransform(x, y, width, height);
     this.head.setTransform(x, y, width, height);
     this.weapon.setTransform(x, y, width, height);

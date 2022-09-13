@@ -44,8 +44,8 @@ export default class {
   draw(player) {
     let x = player.x * -1;
     let y = player.y * -1;
-    x += player.transform.x;
-    y += player.transform.y;
+    x += engine.width / 2;
+    y += engine.height / 2;
     engine.image(this.img, x, y, this.width, this.height);
   }
 }

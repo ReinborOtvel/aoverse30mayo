@@ -16,7 +16,7 @@ export default class {
       let owner = _account.owner.toUpperCase();
       let account = data.account.toUpperCase();
       if (owner == account) {
-        let transform = { x: 426, y: 240, width: 50, height: 50 };
+        let transform = { x: 50, y: 50, width: 5, height: 10 };
         let statistics = JSON.parse(_account.statistics);
         let fullLoad = () => {
           data.canDraw = true;
