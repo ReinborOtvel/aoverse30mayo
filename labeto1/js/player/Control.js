@@ -3,6 +3,8 @@ import Parts from "./Parts.js";
 import Buttons from "./Buttons.js";
 import WheelMovement from "./WheelMovement.js";
 import Life from "./Life.js";
+import Hunger from "./Hunger.js";
+import Thirsty from "./Thirsty.js";
 export default class {
   constructor(transform, statistics, map, fullLoad) {
     this.transform = transform;
@@ -17,6 +19,8 @@ export default class {
     this.setParts();
     this.wheelMovement = new WheelMovement();
     this.life = new Life();
+    this.hunger = new Hunger();
+    this.thirsty = new Thirsty();
   }
   setParts() {
     this.parts = new Parts(this.transform, this.statistics, () => {
@@ -143,5 +147,7 @@ export default class {
     this.wheelMovement.draw();
     this.buttons.draw();
     this.life.draw();
+    this.hunger.draw();
+    this.thirsty.draw();
   }
 }
