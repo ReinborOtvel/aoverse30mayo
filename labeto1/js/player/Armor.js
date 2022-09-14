@@ -1,6 +1,4 @@
 "use strict";
-import porcentageWidth from "../porcentageWidth.js";
-import porcentageHeight from "../porcentageHeight.js";
 export default class {
   constructor(transform, index, fullLoad) {
     this.transform = transform;
@@ -42,12 +40,8 @@ export default class {
     this.transform.y -= this.transform.height / 2;
   }
   draw() {
-    let x = porcentageWidth(this.transform.x);
-    let y = porcentageHeight(this.transform.y);
-    let width = porcentageWidth(this.transform.width);
-    let height = porcentageHeight(this.transform.height);
     let img = this.imgs[this.animation][this.sprite];
-    engine.image(img, x, y, width, height);
+    utils.image(img, this.transform.x, this.transform.y, this.transform.width, this.transform.height);
   }
   setAnimation(name) {
     if (this.animation != name) {

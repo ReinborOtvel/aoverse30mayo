@@ -1,3 +1,4 @@
+"use strict";
 import Head from "./Head.js";
 import Armor from "./Armor.js";
 import Weapon from "./Weapon.js";
