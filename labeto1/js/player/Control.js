@@ -4,7 +4,9 @@ import Buttons from "./Buttons.js";
 import WheelMovement from "./WheelMovement.js";
 import Life from "./Life.js";
 import Hunger from "./Hunger.js";
-import Thirsty from "./Thirsty.js";
+import Skill from "./Skill.js";
+import Level from "./Level.js";
+import Inventory from "./Inventory.js";
 export default class {
   constructor(transform, statistics, map, fullLoad) {
     this.transform = transform;
@@ -16,17 +18,26 @@ export default class {
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 6;
-    this.setParts();
     this.wheelMovement = new WheelMovement();
     this.life = new Life();
     this.hunger = new Hunger();
-    this.thirsty = new Thirsty();
+    this.skill = new Skill();
+    this.level = new Level(this.statistics.name);
+    this.parts();
   }
-  setParts() {
+  inventory() {
+    this.inventory = new Inventory(() => {
+      this.fullLoad();
+    });
+  }
+  buttons() {
+    this.buttons = new Buttons(() => {
+      this.inventory();
+    });
+  }
+  parts() {
     this.parts = new Parts(this.transform, this.statistics, () => {
-      this.buttons = new Buttons(() => {
-        this.fullLoad();
-      });
+      this.buttons();
     });
   }
   changeMotion(x, y) {
@@ -86,13 +97,20 @@ export default class {
   touchEnded() {
     this.changeMotion(0, 0);
     if (utils.verifyClick(68, 74, 77, 87)) {
-      this.button = "x";
+      this.buttons.action("q");
     } else if (utils.verifyClick(78, 66, 87, 79)) {
-      this.button = "y";
+      this.buttons.action("e");
     } else if (utils.verifyClick(78, 82, 87, 95)) {
-      this.button = "a";
+      this.buttons.action("f");
     } else if (utils.verifyClick(88, 74, 97, 87)) {
-      this.button = "b";
+      this.buttons.action("r");
+    } else if (utils.verifyClick(90, 90, 98, 98)) {
+      this.inventory.action();
+    }
+    if (this.inventory.open == true) {
+      if (utils.verifyClick(80, 13, 87, 24)) {
+        this.inventory.action();
+      }
     }
   }
   keyTyped() {
@@ -121,6 +139,15 @@ export default class {
       case "d":
         this.changeMotion(0, this.yMove);
         break;
+      case "q":
+      case "e":
+      case "r":
+      case "f":
+        this.buttons.action(events.key);
+        break;
+      case "g":
+        this.inventory.action();
+        break;
     }
   }
   setTransform(x, y, width, height) {
@@ -148,6 +175,8 @@ export default class {
     this.buttons.draw();
     this.life.draw();
     this.hunger.draw();
-    this.thirsty.draw();
+    this.skill.draw();
+    this.level.draw();
+    this.inventory.draw();
   }
 }

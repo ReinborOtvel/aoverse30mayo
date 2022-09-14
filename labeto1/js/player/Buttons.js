@@ -2,20 +2,28 @@
 export default class {
   constructor(fullLoad) {
     this.fullLoad = fullLoad;
-    this.setImg();
-    this.x = 68;
-    this.y = 66;
-    this.width = 30;
-    this.height = 30;
+    this.buttons();
   }
-  setImg() {
+  buttons() {
     let url = "./Graficos/interface/buttons.png";
     engine.loadImage(url, img => {
-      this.img = img;
+      this.buttons = img;
       this.fullLoad();
     });
   }
+  action(key) {
+    switch (key) {
+      case "q":
+        break;
+      case "e":
+        break;
+      case "r":
+        break;
+      case "f":
+        break;
+    }
+  }
   draw() {
-    utils.image(this.img, this.x, this.y, this.width, this.height);
+    utils.image(this.buttons, 68, 66, 30, 30);
   }
 }
