@@ -18,17 +18,6 @@ export default class {
       return x > xInit && y > yInit && x < xEnd && y < yEnd;
     }
     let collisions = [
-      [-1, -1, 684, 168],
-      [732, 48, 804, 216],
-      [732, 396, 804, 546],
-      [-1, 480, 708, 552],
-      [-1, 744, 786, 1002],
-      [-1, 1188, 810, 1446],
-      [-1, 1650, 834, 1806],
-      [-1, 1734, 180, 2364],
-      [-1, 2298, 816, 2652],
-      [1872, 990, 3336, 1416],
-      [3630, -1, this.width, this.height + 1],
     ];
     console.log(x, y);
     if (x < 12 || y < 12 || x > this.width || y > this.height) {
