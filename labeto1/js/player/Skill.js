@@ -1,11 +1,35 @@
 "use strict";
 export default class {
   constructor() {
-    this.percentage = 100;
-    this.width = 17 / 100;
+    this.percentage = 5;
+    this.width = 35 / 100;
     setInterval(() => {
-      this.percentage -= 5;
-    }, 60000);
+      if (this.percentage >= 5) {
+        this.percentage -= 5;
+      }
+    }, 2000);
+  }
+  touchStarted() {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      if (this.percentage <= 95) {
+        this.percentage += 5;
+      }
+    }, 500);
+  }
+  touchEnded() {
+    clearInterval(this.interval);
+  }
+  keyTyped() {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      if (this.percentage <= 95) {
+        this.percentage += 5;
+      }
+    }, 500);
+  }
+  keyReleased() {
+    clearInterval(this.interval);
   }
   draw() {
     engine.noStroke();

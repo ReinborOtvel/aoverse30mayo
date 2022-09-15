@@ -3,10 +3,10 @@ import Parts from "./Parts.js";
 import Buttons from "./Buttons.js";
 import WheelMovement from "./WheelMovement.js";
 import Life from "./Life.js";
-import Hunger from "./Hunger.js";
 import Skill from "./Skill.js";
 import Level from "./Level.js";
 import Inventory from "./Inventory.js";
+import Aura from "./Aura.js";
 export default class {
   constructor(transform, statistics, map, fullLoad) {
     this.transform = transform;
@@ -20,14 +20,18 @@ export default class {
     this.speed = 6;
     this.wheelMovement = new WheelMovement();
     this.life = new Life();
-    this.hunger = new Hunger();
     this.skill = new Skill();
     this.level = new Level(this.statistics.name);
     this.parts();
   }
+  aura() {
+    this.aura = new Aura(this.transform, () => {
+      this.fullLoad();
+    });
+  }
   inventory() {
     this.inventory = new Inventory(() => {
-      this.fullLoad();
+      this.aura();
     });
   }
   buttons() {
@@ -67,6 +71,9 @@ export default class {
   }
   touchStarted() {
     this.touchMoved();
+    this.buttons.touchStarted();
+    this.aura.touchStarted();
+    this.skill.touchStarted();
   }
   touchMoved() {
     if (utils.verifyClick(4, 57, 9, 66)) {
@@ -96,22 +103,10 @@ export default class {
   }
   touchEnded() {
     this.changeMotion(0, 0);
-    if (utils.verifyClick(68, 74, 77, 87)) {
-      this.buttons.action("q");
-    } else if (utils.verifyClick(78, 66, 87, 79)) {
-      this.buttons.action("e");
-    } else if (utils.verifyClick(78, 82, 87, 95)) {
-      this.buttons.action("f");
-    } else if (utils.verifyClick(88, 74, 97, 87)) {
-      this.buttons.action("r");
-    } else if (utils.verifyClick(90, 90, 98, 98)) {
-      this.inventory.action();
-    }
-    if (this.inventory.open == true) {
-      if (utils.verifyClick(80, 13, 87, 24)) {
-        this.inventory.action();
-      }
-    }
+    this.buttons.touchEnded();
+    this.aura.touchEnded();
+    this.inventory.touchEnded();
+    this.skill.touchEnded();
   }
   keyTyped() {
     switch (events.key) {
@@ -128,6 +123,9 @@ export default class {
         this.changeMotion(1, this.yMove);
         break;
     }
+    this.aura.keyTyped();
+    this.buttons.keyTyped();
+    this.skill.keyTyped();
   }
   keyReleased() {
     switch (events.key) {
@@ -139,16 +137,11 @@ export default class {
       case "d":
         this.changeMotion(0, this.yMove);
         break;
-      case "q":
-      case "e":
-      case "r":
-      case "f":
-        this.buttons.action(events.key);
-        break;
-      case "g":
-        this.inventory.action();
-        break;
     }
+    this.aura.keyReleased();
+    this.inventory.keyReleased();
+    this.buttons.keyReleased();
+    this.skill.keyReleased();
   }
   setTransform(x, y, width, height) {
     this.transform = { x, y, width, height };
@@ -169,12 +162,13 @@ export default class {
     }
   }
   draw() {
+    this.aura.beforeDraw();
     this.parts.draw();
+    this.aura.foreDraw();
     this.move();
     this.wheelMovement.draw();
     this.buttons.draw();
     this.life.draw();
-    this.hunger.draw();
     this.skill.draw();
     this.level.draw();
     this.inventory.draw();
