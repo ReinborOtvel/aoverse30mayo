@@ -9,6 +9,11 @@ export default class {
     let url = `./Graficos/nature/${this.index}.png`;
     loadImage(url, img => {
       this.img = img;
-    })
+      this.fullLoad();
+    });
+  }
+  draw() {
+    let { x, y, width, height } = this.transform;
+    utils.image(this.img, x, y, width, height);
   }
 }
