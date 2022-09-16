@@ -12,19 +12,13 @@ class Data {
       engine.draw = this.draw;
     });
   }
-  background() {
-    let url = "./Graficos/interface/empty.png";
-    engine.loadImage(url, img => {
-      data.background = img;
-    });
-  }
   setup() {
-    data.background();
+    metamask.start();
     events.setup();
-    data.setPage("chargingScreens", 1);
+    data.setPage("", 1);
   }
   draw() {
-    utils.image(data.background, 0, 0, 100, 100);
+    utils.rect(0, 0, 100, 100, "#2B2B2B");
     if (data.canDraw == false) {
       utils.text("loading", 15, 60, 20, "#fff");
     } else {

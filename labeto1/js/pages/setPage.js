@@ -1,4 +1,3 @@
-import ChargingScreens from "./ChargingScreens.js";
 import CreateCharacter from "./CreateCharacter.js";
 import SelectLeader from "./SelectLeader.js";
 import Game from "./Game.js";
@@ -7,18 +6,17 @@ export default function (name, fps) {
   engine.createCanvas(852, 480);
   engine.frameRate(fps);
   switch (name) {
-    case "chargingScreens":
-      window.page = new ChargingScreens();
-      break;
     case "createCharacter":
       window.page = new CreateCharacter();
+      page.setup();
       break;
     case "selectLeader":
       window.page = new SelectLeader();
+      page.setup();
       break;
     case "game":
       window.page = new Game();
+      page.setup();
       break;
   }
-  page.setup();
 }
