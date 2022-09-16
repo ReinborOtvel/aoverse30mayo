@@ -5,11 +5,9 @@ export default class {
     this.transform = transform;
     this.statistics = statistics;
     this.fullLoad = fullLoad;
-    this.x = 2024;
-    this.y = 1452;
     this.xMove = 0;
     this.yMove = 0;
-    this.speed = 6;
+    this.speed = 1;
     this.parts();
   }
   parts() {
@@ -45,30 +43,7 @@ export default class {
     this.touchMoved();
   }
   touchMoved() {
-    if (utils.verifyClick(4, 57, 9, 66)) {
-      this.changeMotion(-1, -1);
-    }
-    else if (utils.verifyClick(12, 57, 17, 66)) {
-      this.changeMotion(0, -1);
-    }
-    else if (utils.verifyClick(20, 57, 25, 66)) {
-      this.changeMotion(1, -1);
-    }
-    else if (utils.verifyClick(20, 70, 25, 79)) {
-      this.changeMotion(1, 0);
-    }
-    else if (utils.verifyClick(20, 83, 25, 92)) {
-      this.changeMotion(1, 1);
-    }
-    else if (utils.verifyClick(12, 83, 17, 92)) {
-      this.changeMotion(0, 1);
-    }
-    else if (utils.verifyClick(4, 83, 9, 92)) {
-      this.changeMotion(-1, 1);
-    }
-    else if (utils.verifyClick(4, 70, 9, 79)) {
-      this.changeMotion(-1, 0);
-    }
+
   }
   touchEnded() {
     this.changeMotion(0, 0);
@@ -106,15 +81,13 @@ export default class {
     this.parts.setTransform(x, y, width, height);
   }
   move() {
-    let newX = this.x;
-    let newY = this.y;
     let xSpeed = this.xMove * this.speed;
     let ySpeed = this.yMove * this.speed;
     if (xSpeed != 0 || ySpeed != 0) {
-      newX += xSpeed;
-      newY += ySpeed;
-      this.x = newX;
-      this.y = newY;
+      let { x, y, width, height } = this.transform;
+      x += xSpeed;
+      y += ySpeed;
+      this.setTransform(x, y, width, height);
     }
   }
   draw() {
