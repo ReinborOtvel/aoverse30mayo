@@ -1,54 +1,26 @@
 "use strict";
 import Parts from "./Parts.js";
-import Buttons from "./Buttons.js";
-import WheelMovement from "./WheelMovement.js";
-import Life from "./Life.js";
-import Skill from "./Skill.js";
-import Level from "./Level.js";
-import Inventory from "./Inventory.js";
-import Aura from "./Aura.js";
 export default class {
-  constructor(transform, statistics, map, fullLoad) {
+  constructor(transform, statistics, fullLoad) {
     this.transform = transform;
     this.statistics = statistics;
-    this.map = map;
     this.fullLoad = fullLoad;
     this.x = 2024;
     this.y = 1452;
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 6;
-    this.wheelMovement = new WheelMovement();
-    this.life = new Life();
-    this.skill = new Skill();
-    this.level = new Level(this.statistics.name);
     this.parts();
-  }
-  aura() {
-    this.aura = new Aura(this.transform, () => {
-      this.fullLoad();
-    });
-  }
-  inventory() {
-    this.inventory = new Inventory(() => {
-      this.aura();
-    });
-  }
-  buttons() {
-    this.buttons = new Buttons(() => {
-      this.inventory();
-    });
   }
   parts() {
     this.parts = new Parts(this.transform, this.statistics, () => {
-      this.buttons();
+      this.fullLoad();
     });
   }
   changeMotion(x, y) {
     this.xMove = x;
     this.yMove = y;
     this.animationMove();
-    this.wheelMovement.position(this.xMove, this.yMove);
   }
   animationMove() {
     if (this.yMove == 0 && this.xMove == 0) {
@@ -71,9 +43,6 @@ export default class {
   }
   touchStarted() {
     this.touchMoved();
-    this.buttons.touchStarted();
-    this.aura.touchStarted();
-    this.skill.touchStarted();
   }
   touchMoved() {
     if (utils.verifyClick(4, 57, 9, 66)) {
@@ -103,10 +72,6 @@ export default class {
   }
   touchEnded() {
     this.changeMotion(0, 0);
-    this.buttons.touchEnded();
-    this.aura.touchEnded();
-    this.inventory.touchEnded();
-    this.skill.touchEnded();
   }
   keyTyped() {
     switch (events.key) {
@@ -123,9 +88,6 @@ export default class {
         this.changeMotion(1, this.yMove);
         break;
     }
-    this.aura.keyTyped();
-    this.buttons.keyTyped();
-    this.skill.keyTyped();
   }
   keyReleased() {
     switch (events.key) {
@@ -138,10 +100,6 @@ export default class {
         this.changeMotion(0, this.yMove);
         break;
     }
-    this.aura.keyReleased();
-    this.inventory.keyReleased();
-    this.buttons.keyReleased();
-    this.skill.keyReleased();
   }
   setTransform(x, y, width, height) {
     this.transform = { x, y, width, height };
@@ -155,22 +113,12 @@ export default class {
     if (xSpeed != 0 || ySpeed != 0) {
       newX += xSpeed;
       newY += ySpeed;
-      if (this.map.collision(newX, newY) == false) {
-        this.x = newX;
-        this.y = newY;
-      }
+      this.x = newX;
+      this.y = newY;
     }
   }
   draw() {
-    this.aura.beforeDraw();
     this.parts.draw();
-    this.aura.foreDraw();
     this.move();
-    this.wheelMovement.draw();
-    this.buttons.draw();
-    this.life.draw();
-    this.skill.draw();
-    this.level.draw();
-    this.inventory.draw();
   }
 }

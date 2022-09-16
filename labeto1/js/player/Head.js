@@ -10,7 +10,7 @@ export default class {
   }
   setImgs() {
     this.imgs = {};
-    let url = `./Graficos/player/head/${this.index}.png`;
+    let url = `./player/head/${this.index}.png`;
     engine.loadImage(url, img => {
       this.loadImg(img);
     });

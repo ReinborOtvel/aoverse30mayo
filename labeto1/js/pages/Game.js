@@ -1,23 +1,17 @@
 "use strict";
-import Map from "../map/Map.js";
 import Player from "../player/Control.js";
 export default class {
   setup() {
-    this.assignMap();
+    this.player();
   }
-  assignMap() {
-    this.map = new Map(() => {
-      this.assignPlayer();
-    });
-  }
-  assignPlayer() {
+  player() {
     metamask.database.getAccount(metamask.account).then(_account => {
       let owner = _account.owner.toUpperCase();
       let account = metamask.account.toUpperCase();
       if (owner == account) {
         let transform = { x: 50, y: 50, width: 5, height: 10 };
         let statistics = JSON.parse(_account.statistics);
-        this.player = new Player(transform, statistics, this.map, () => {
+        this.player = new Player(transform, statistics, () => {
           data.canDraw = true;
         });
       } else {
@@ -44,8 +38,6 @@ export default class {
     this.player.touchEnded();
   }
   draw() {
-    utils.rect(0, 0, 640, 360, "#000");
-    this.map.draw(this.player);
     this.player.draw();
   }
 }

@@ -15,7 +15,7 @@ export default class {
   }
   setImgs() {
     this.imgs = { down: [], up: [], left: [], right: [] };
-    let url = `./Graficos/player/weapon/${this.index}.png`;
+    let url = `./player/weapon/${this.index}.png`;
     engine.loadImage(url, img => {
       this.loadImg(img);
     });
