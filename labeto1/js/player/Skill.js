@@ -10,26 +10,32 @@ export default class {
     }, 2000);
   }
   touchStarted() {
-    clearInterval(this.interval);
-    this.interval = setInterval(() => {
-      if (this.percentage <= 95) {
-        this.percentage += 5;
-      }
-    }, 500);
+    if (utils.verifyClick(78, 60, 87, 74)) {
+      clearInterval(this.interval);
+      this.interval = setInterval(() => {
+        if (this.percentage <= 95) {
+          this.percentage += 5;
+        }
+      }, 500);
+    }
   }
   touchEnded() {
     clearInterval(this.interval);
   }
   keyTyped() {
-    clearInterval(this.interval);
-    this.interval = setInterval(() => {
-      if (this.percentage <= 95) {
-        this.percentage += 5;
-      }
-    }, 500);
+    if (events.key == "e") {
+      clearInterval(this.interval);
+      this.interval = setInterval(() => {
+        if (this.percentage <= 95) {
+          this.percentage += 5;
+        }
+      }, 500);
+    }
   }
   keyReleased() {
-    clearInterval(this.interval);
+    if (events.key == "e") {
+      clearInterval(this.interval);
+    }
   }
   draw() {
     engine.noStroke();

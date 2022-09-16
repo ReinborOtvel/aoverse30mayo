@@ -1,5 +1,5 @@
 "use strict";
-import Map from "../Map.js";
+import Map from "../map/Map.js";
 import Player from "../player/Control.js";
 export default class {
   setup() {
