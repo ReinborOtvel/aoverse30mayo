@@ -1,8 +1,14 @@
 "use strict";
 import Player from "../player/Control.js";
+import Map from "../Map.js";
 export default class {
   setup() {
-    this.player();
+    this.map();
+  }
+  map() {
+    this.map = new Map(() => {
+      this.player();
+    });
   }
   player() {
     metamask.database.getAccount(metamask.account).then(_account => {
@@ -38,6 +44,7 @@ export default class {
     this.player.touchEnded();
   }
   draw() {
+    this.map.draw();
     this.player.draw();
   }
 }
