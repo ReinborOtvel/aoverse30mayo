@@ -4,9 +4,26 @@ import Tree from "./Tree.js";
 export default class {
   constructor(fullLoad) {
     this.fullLoad = fullLoad;
-    this.soil = new Soil(() => {
-      this.tree = new Tree(this.fullLoad);
-    });
+    this.tree = new Tree(this);
+    this.soil = new Soil(this);
+    this.imgs();
+  }
+  imgs() {
+    let index = 1;
+    let length = 767;
+    this.imgs = {};
+    let nextImg = () => {
+      engine.loadImage(`./graphics/nature/${index}.png`, img => {
+        this.imgs[index] = img;
+        if (index >= length) {
+          this.fullLoad();
+        } else {
+          index++;
+          nextImg();
+        }
+      });
+    }
+    nextImg();
   }
   collision(x, y) {
     if (this.tree.collision(x, y) == true) {
