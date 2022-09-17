@@ -1,9 +1,10 @@
 "use strict";
 import Parts from "./Parts.js";
 export default class {
-  constructor(transform, statistics, fullLoad) {
+  constructor(transform, statistics, map, fullLoad) {
     this.transform = transform;
     this.statistics = statistics;
+    this.map = map;
     this.fullLoad = fullLoad;
     this.xMove = 0;
     this.yMove = 0;
@@ -87,7 +88,9 @@ export default class {
       let { x, y, width, height } = this.transform;
       x += xSpeed;
       y += ySpeed;
-      this.setTransform(x, y, width, height);
+      if (this.map.collision(x, y) == false) {
+        this.setTransform(x, y, width, height);
+      }
     }
   }
   draw() {
