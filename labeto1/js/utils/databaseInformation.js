@@ -1,6 +1,6 @@
 "use strict";
 export default {
-    address: "0xb40Ef5DE3cfE8d87326509191F7036cB531CE1cF",
+    address: "0xb5d3CFc2d19569c5cc75e2310d64123646d6a460",
     creator: "0xbEc5681e49DDD4FB40873b353E78206FC71709F0",
     ticket: "0.01",
     abi: [

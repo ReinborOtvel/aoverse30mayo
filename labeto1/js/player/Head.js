@@ -1,21 +1,14 @@
 "use strict";
 export default class {
-  constructor(transform, index, fullLoad) {
-    this.transform = transform;
+  constructor(x, y, width, height, index) {
+    this.transform = { x, y, width, height };
     this.index = index;
-    this.fullLoad = fullLoad;
     this.animation = "down";
-    this.setTransform(this.transform.x, this.transform.y, this.transform.width, this.transform.height);
-    this.setImgs();
+    this.imgs();
   }
-  setImgs() {
+  imgs(img) {
     this.imgs = {};
-    let url = `./player/head/${this.index}.png`;
-    engine.loadImage(url, img => {
-      this.loadImg(img);
-    });
-  }
-  loadImg(img) {
+    let img = engine.loadImage(`./player/head/${this.index}.png`);
     let width = 17;
     let animations = ["down", "right", "left", "up"];
     for (let i in animations) {
@@ -23,7 +16,6 @@ export default class {
       let x = i * width;
       this.imgs[animation] = img.get(x, 0, width, 17);
     }
-    this.fullLoad();
   }
   setTransform(x, y, width, height) {
     this.transform = { x, y, width: width / 2, height: height / 2 };

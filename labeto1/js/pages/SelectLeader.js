@@ -9,11 +9,8 @@ export default class {
       let owner = _account.owner.toUpperCase();
       let leader = this.leaderAccount.toUpperCase();
       if (owner == leader) {
-        let transform = { x: 65, y: 65, width: 25, height: 50 };
         let statistics = JSON.parse(_account.statistics);
-        this.leaderPlayer = new Player(transform, statistics, () => {
-          data.canDraw = true;
-        });
+        this.leaderPlayer = new Player(60, 65, 25, 50, statistics);
       } else {
         alert("leader not found");
         this.randomLeader();
@@ -26,7 +23,6 @@ export default class {
 
   }
   randomLeader() {
-    data.canDraw = false;
     this.leaderAccount = engine.random(this.leaders);
     this.assignLeaderPlayer();
   }
@@ -53,7 +49,6 @@ export default class {
     });
   }
   writeLeader() {
-    data.canDraw = false;
     this.leaderAccount = prompt("leader address");
     if (ethers.utils.isAddress(this.leaderAccount) == true) {
       this.assignLeaderPlayer();

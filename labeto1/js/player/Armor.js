@@ -1,38 +1,25 @@
 "use strict";
 export default class {
-  constructor(transform, index, fullLoad) {
+  constructor(transform, index) {
     this.transform = transform;
     this.index = index;
-    this.fullLoad = fullLoad;
     this.animation = "down";
     this.canNextSprite = false;
     this.sprite = 0;
-    this.setTransform(this.transform.x, this.transform.y, this.transform.width, this.transform.height);
-    this.setImgs();
-    setInterval(() => {
-      this.nextSprite();
-    }, 200);
-  }
-  setImgs() {
     this.imgs = { down: [], up: [], left: [], right: [] };
-    let url = `./player/armor/${this.index}.png`;
-    engine.loadImage(url, img => {
-      this.loadImg(img);
-    });
-  }
-  loadImg(img) {
+    let img = engine.loadImage(`./player/armor/${this.index}.png`);
     let width = 25;
     let height = 45;
     for (let i = 0; i < 6; i++) {
       let x = i * width;
       this.imgs.down[i] = img.get(x, 0, width, height);
       this.imgs.up[i] = img.get(x, height, width, height);
-      if (i < 5) {
-        this.imgs.left[i] = img.get(x, 2 * height, width, height);
-        this.imgs.right[i] = img.get(x, 3 * height, width, height);
-      }
     }
-    this.fullLoad();
+    for (let i = 0; i < 5; i++) {
+      let x = i * width;
+      this.imgs.left[i] = img.get(x, 2 * height, width, height);
+      this.imgs.right[i] = img.get(x, 3 * height, width, height);
+    }
   }
   setTransform(x, y, width, height) {
     this.transform = { x, y, width, height };
@@ -50,7 +37,7 @@ export default class {
     }
   }
   nextSprite() {
-    if (data.canDraw == true && this.canNextSprite == true) {
+    if (this.canNextSprite == true) {
       let length;
       switch (this.animation) {
         case "down":

@@ -6,14 +6,8 @@ export default class {
     this.newCharacter();
   }
   newCharacter() {
-    if (this.player == undefined || data.canDraw == true) {
-      data.canDraw = false;
-      let transform = { x: 70, y: 50, width: 40, height: 80, };
-      let statistics = utils.statisticsRandom();
-      this.player = new Player(transform, statistics, () => {
-        data.canDraw = true;
-      });
-    }
+    let statistics = utils.statisticsRandom();
+    this.player = new Player(70, 50, 40, 80, statistics);
   }
   touchEnded() {
     if (utils.verifyClick(6, 73, 37, 80)) {
@@ -52,9 +46,11 @@ export default class {
   }
   draw() {
     utils.text("character", 5, 15, 5, "#fff");
-    this.drawStatistics();
     utils.textRect(" new character", 5, 75, 34);
     utils.textRect(" create character", 5, 85, 39);
-    this.player.draw();
+    if (this.player != undefined) {
+      this.drawStatistics();
+      this.player.draw();
+    }
   }
 }

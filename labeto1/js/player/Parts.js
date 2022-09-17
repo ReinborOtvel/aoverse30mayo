@@ -3,30 +3,13 @@ import Head from "./Head.js";
 import Armor from "./Armor.js";
 import Weapon from "./Weapon.js";
 export default class {
-  constructor(transform, statistics, fullLoad) {
-    this.transform = transform;
+  constructor(x, y, width, height, statistics) {
+    this.transform = { x, y, width, height };
     this.statistics = statistics;
-    this.fullLoad = fullLoad;
+    this.head = new Head(x, y, width, height, this.statistics.head);
+    this.armor = new Armor(x, y, width, height, this.statistics.armor);
+    this.weapon = new Weapon(x, y, width, height, this.statistics.weapon);
     this.animation = "down";
-    this.setHead();
-  }
-  setHead() {
-    let index = this.statistics.head;
-    this.head = new Head(this.transform, index, () => {
-      this.setArmor();
-    });
-  }
-  setArmor() {
-    let index = this.statistics.armor;
-    this.armor = new Armor(this.transform, index, () => {
-      this.setWeapon();
-    });
-  }
-  setWeapon() {
-    let index = this.statistics.weapon;
-    this.weapon = new Weapon(this.transform, index, () => {
-      this.fullLoad();
-    });
   }
   setTransform(x, y, width, height) {
     this.transform = { x, y, width, height };

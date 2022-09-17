@@ -1,9 +1,8 @@
 "use strict";
 export default class {
-  constructor(transform, index, fullLoad) {
+  constructor(x, y, width, height, index) {
     this.transform = transform;
     this.index = index;
-    this.fullLoad = fullLoad;
     this.animation = "down";
     this.canNextSprite = false;
     this.sprite = 0;

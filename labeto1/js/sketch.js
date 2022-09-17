@@ -13,13 +13,9 @@ class Data {
       engine.draw = this.draw;
     });
   }
-  setCanvas(fps) {
-    data.canDraw = false;
+  setPage(name, fps) {
     engine.createCanvas(852, 480);
     engine.frameRate(fps);
-  }
-  setPage(name, fps) {
-    this.setCanvas(fps);
     switch (name) {
       case "createCharacter":
         window.page = new CreateCharacter();
@@ -36,14 +32,11 @@ class Data {
   setup() {
     metamask.start();
     events.setup();
-    data.setCanvas(1);
   }
   draw() {
     utils.rect(0, 0, 100, 100, "#2B2B2B");
-    if (data.canDraw == false) {
-      utils.text("loading", 15, 60, 20, "#fff");
-    } else {
-      engine.noSmooth();
+    engine.noSmooth();
+    if (window.page != undefined) {
       page.draw();
     }
   }
