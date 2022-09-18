@@ -1,35 +1,25 @@
 "use strict";
-import Parts from "./Parts.js";
 export default class {
-  constructor(x, y, width, height, statistics, map) {
-    this.transform = { x, y, width, height };
-    this.statistics = statistics;
-    this.map = map;
-    this.parts = new Parts(x, y, width, height, this.statistics);
+  constructor(entity) {
+    this.entity = entity;
+    this.map = this.entity.map;
+    this.parts = this.entity.parts;
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 1;
   }
-  changeMotion(x, y) {
-    this.xMove = x;
-    this.yMove = y;
-    this.animationMove();
-  }
   animationMove() {
     if (this.yMove == 0 && this.xMove == 0) {
-      this.parts.setCanNextSprite(false);
+      this.parts.canNextSprite = false;
     } else {
-      this.parts.setCanNextSprite(true);
+      this.parts.canNextSprite = true;
       if (this.yMove == -1) {
         this.parts.setAnimation("up");
-      }
-      else if (this.yMove == 1) {
+      } else if (this.yMove == 1) {
         this.parts.setAnimation("down");
-      }
-      else if (this.xMove == -1) {
+      } else if (this.xMove == -1) {
         this.parts.setAnimation("left");
-      }
-      else if (this.xMove == 1) {
+      } else if (this.xMove == 1) {
         this.parts.setAnimation("right");
       }
     }
@@ -41,54 +31,47 @@ export default class {
 
   }
   touchEnded() {
-    this.changeMotion(0, 0);
+    this.xMove = 0;
+    this.yMove = 0;
+    this.animationMove();
   }
-  keyTyped() {
-    switch (events.key) {
-      case "w":
-        this.changeMotion(this.xMove, -1);
-        break;
-      case "s":
-        this.changeMotion(this.xMove, 1);
-        break;
-      case "a":
-        this.changeMotion(-1, this.yMove);
-        break;
-      case "d":
-        this.changeMotion(1, this.yMove);
-        break;
+  keyMove() {
+    if (events.key == "w") {
+      this.yMove = -1;
+    } else if (events.key == "s") {
+      this.yMove = 1;
+    } else if (events.key == "a") {
+      this.xMove = -1;
+    } else if (events.key == "d") {
+      this.xMove = 1;
+    } else {
+      return;
     }
+    this.animationMove();
   }
-  keyReleased() {
-    switch (events.key) {
-      case "w":
-      case "s":
-        this.changeMotion(this.xMove, 0);
-        break;
-      case "a":
-      case "d":
-        this.changeMotion(0, this.yMove);
-        break;
+  keyStop() {
+    if (events.key == "w" || events.key == "s") {
+      this.yMove = 0;
+    } else if (events.key == "a" || events.key == "d") {
+      this.xMove = 0;
+    } else {
+      return;
     }
-  }
-  setTransform(x, y, width, height) {
-    this.transform = { x, y, width, height };
-    this.parts.setTransform(x, y, width, height);
+    this.animationMove();
   }
   move() {
     let xSpeed = this.xMove * this.speed;
     let ySpeed = this.yMove * this.speed;
     if (xSpeed != 0 || ySpeed != 0) {
-      let { x, y, width, height } = this.transform;
-      x += xSpeed;
-      y += ySpeed;
-      if (this.map.collision(x, y) == false) {
-        this.setTransform(x, y, width, height);
+      let newX = this.entity.x + xSpeed;
+      let newY = this.entity.y + ySpeed;
+      if (!this.map.collision(newX, newY)) {
+        this.entity.x = newX;
+        this.entity.y = newY;
       }
     }
   }
   draw() {
-    this.parts.draw();
     this.move();
   }
 }

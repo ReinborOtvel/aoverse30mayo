@@ -1,5 +1,5 @@
 "use strict";
-import Player from "../player/Control.js";
+import Player from "../player/Entity.js";
 import Map from "../map/Map.js";
 export default class {
   setup() {
@@ -13,6 +13,7 @@ export default class {
       if (owner == account) {
         let statistics = JSON.parse(_account.statistics);
         this.player = new Player(50, 50, 5, 10, statistics, this.map);
+        this.map.entities.push(this.player);
       } else {
         alert("character not found");
       }
@@ -38,8 +39,5 @@ export default class {
   }
   draw() {
     this.map.draw();
-    if (this.player != undefined) {
-      this.player.draw();
-    }
   }
 }

@@ -1,19 +1,10 @@
 "use strict";
 export default class {
-  constructor(x, y, width, height, index) {
-    this.setTransform(x, y, width, height);
-    this.index = index;
-    this.animation = "down";
-    this.canNextSprite = false;
-    this.sprite = 0;
-    this.imgs();
-    setInterval(() => {
-      this.nextSprite();
-    }, 200);
-  }
-  imgs() {
+  constructor(parts) {
+    this.parts = parts;
+    this.entity = this.parts.entity;
     this.imgs = { down: [], up: [], left: [], right: [] };
-    engine.loadImage(`./player/weapon/${this.index}.png`, img => {
+    engine.loadImage(`./player/weapon/${this.entity.statistics.weapon}.png`, img => {
       let width = 25;
       let height = 45;
       let animations = ["down", "up", "left", "right"];
@@ -29,42 +20,10 @@ export default class {
       }
     });
   }
-  setTransform(x, y, width, height) {
-    this.transform = { x, y, width, height };
-    this.transform.x -= this.transform.width / 2;
-    this.transform.y -= this.transform.height / 2;
-  }
   draw() {
-    let img = this.imgs[this.animation][this.sprite];
-    utils.image(img, this.transform.x, this.transform.y, this.transform.width, this.transform.height);
-  }
-  setAnimation(name) {
-    if (this.animation != name) {
-      this.sprite = 0;
-      this.animation = name;
-    }
-  }
-  nextSprite() {
-    if (this.canNextSprite == true) {
-      let length;
-      switch (this.animation) {
-        case "down":
-        case "up":
-          length = 5;
-          break;
-        case "left":
-        case "right":
-          length = 4;
-          break;
-      }
-      if (this.sprite < length) {
-        this.sprite++;
-      } else {
-        this.sprite = 0;
-      }
-    }
-  }
-  setCanNextSprite(canNextSprite) {
-    this.canNextSprite = canNextSprite;
+    let x = this.entity.x - (this.entity.width / 2);
+    let y = this.entity.y - (this.entity.height / 2);
+    utils.image(this.imgs[this.parts.animation][this.parts.sprite],
+      x, y, this.entity.width, this.entity.height);
   }
 }

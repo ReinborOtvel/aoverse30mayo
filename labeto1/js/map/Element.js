@@ -1,19 +1,19 @@
 export default class {
-  constructor(image, x, y, width, height) {
+  constructor(image, h, v, width, height) {
     this.image = image;
-    this.x = x;
-    this.y = y;
+    this.h = h;
+    this.v = v;
     this.width = width;
     this.height = height;
+    this.x = this.h * this.width;
+    this.y = this.v * this.height;
   }
   collision(x, y) {
-    x = parseInt(x / this.width);
-    y = parseInt(y / this.height);
-    return this.x == x && this.y == y;
+    let h = parseInt(x / this.width);
+    let v = parseInt(y / this.height);
+    return this.h == h && this.v == v;
   }
   draw() {
-    let x = this.x * this.width;
-    let y = this.y * this.height;
-    utils.image(this.image, x, y, this.width, this.height);
+    utils.image(this.image, this.x, this.y, this.width, this.height);
   }
 }
