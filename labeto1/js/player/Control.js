@@ -1,20 +1,14 @@
 "use strict";
 import Parts from "./Parts.js";
 export default class {
-  constructor(transform, statistics, map, fullLoad) {
-    this.transform = transform;
+  constructor(x, y, width, height, statistics, map) {
+    this.transform = { x, y, width, height };
     this.statistics = statistics;
     this.map = map;
-    this.fullLoad = fullLoad;
+    this.parts = new Parts(x, y, width, height, this.statistics);
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 1;
-    this.parts();
-  }
-  parts() {
-    this.parts = new Parts(this.transform, this.statistics, () => {
-      this.fullLoad();
-    });
   }
   changeMotion(x, y) {
     this.xMove = x;

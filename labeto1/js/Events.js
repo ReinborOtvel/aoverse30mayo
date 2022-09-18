@@ -25,13 +25,13 @@ export default class {
     };
   }
   touchEvent(name) {
-    if (data.canDraw == true && page[name]) {
+    if (page[name]) {
       events.setTouch();
       page[name]();
     }
   }
   keyEvent(name, key) {
-    if (data.canDraw == true && page[name]) {
+    if (page[name]) {
       events.key = key;
       page[name]();
     }

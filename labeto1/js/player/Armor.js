@@ -1,25 +1,32 @@
 "use strict";
 export default class {
-  constructor(transform, index) {
-    this.transform = transform;
+  constructor(x, y, width, height, index) {
+    this.setTransform(x, y, width, height);
     this.index = index;
     this.animation = "down";
     this.canNextSprite = false;
     this.sprite = 0;
+    this.imgs();
+    setInterval(() => {
+      this.nextSprite();
+    }, 200);
+  }
+  imgs() {
     this.imgs = { down: [], up: [], left: [], right: [] };
-    let img = engine.loadImage(`./player/armor/${this.index}.png`);
-    let width = 25;
-    let height = 45;
-    for (let i = 0; i < 6; i++) {
-      let x = i * width;
-      this.imgs.down[i] = img.get(x, 0, width, height);
-      this.imgs.up[i] = img.get(x, height, width, height);
-    }
-    for (let i = 0; i < 5; i++) {
-      let x = i * width;
-      this.imgs.left[i] = img.get(x, 2 * height, width, height);
-      this.imgs.right[i] = img.get(x, 3 * height, width, height);
-    }
+    engine.loadImage(`./player/armor/${this.index}.png`, img => {
+      let width = 25;
+      let height = 45;
+      for (let h = 0; h < 6; h++) {
+        let x = h * width;
+        this.imgs.down[h] = img.get(x, 0, width, height);
+        this.imgs.up[h] = img.get(x, height, width, height);
+      }
+      for (let h = 0; h < 5; h++) {
+        let x = h * width;
+        this.imgs.left[h] = img.get(x, 2 * height, width, height);
+        this.imgs.right[h] = img.get(x, 3 * height, width, height);
+      }
+    });
   }
   setTransform(x, y, width, height) {
     this.transform = { x, y, width, height };

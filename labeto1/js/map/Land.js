@@ -4,16 +4,9 @@ export default class {
     this.index = index;
     this.transform = { x, y, width, height };
     this.element = new Element(undefined, x, y, width, height);
-    engine.loadImage(`./graphics/nature/tree/${this.index}.png`, image => {
+    engine.loadImage(`./graphics/nature/land/${this.index}.png`, image => {
       this.element.image = image;
     });
-  }
-  collision(x, y) {
-    return this.element.collision(x, y);
-  }
-  afterEntity(yEntity) {
-    let y = this.transform.y * this.transform.height;
-    return yEntity < y;
   }
   draw() {
     this.element.draw();

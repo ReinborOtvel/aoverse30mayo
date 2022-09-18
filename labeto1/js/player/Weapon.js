@@ -1,39 +1,33 @@
 "use strict";
 export default class {
   constructor(x, y, width, height, index) {
-    this.transform = transform;
+    this.setTransform(x, y, width, height);
     this.index = index;
     this.animation = "down";
     this.canNextSprite = false;
     this.sprite = 0;
-    this.setTransform(this.transform.x, this.transform.y, this.transform.width, this.transform.height);
-    this.setImgs();
+    this.imgs();
     setInterval(() => {
       this.nextSprite();
     }, 200);
   }
-  setImgs() {
+  imgs() {
     this.imgs = { down: [], up: [], left: [], right: [] };
-    let url = `./player/weapon/${this.index}.png`;
-    engine.loadImage(url, img => {
-      this.loadImg(img);
-    });
-  }
-  loadImg(img) {
-    let width = 25;
-    let height = 45;
-    let animations = ["down", "up", "left", "right"];
-    let lengths = [6, 6, 5, 5];
-    for (let vertical in animations) {
-      let animation = animations[vertical];
-      let length = lengths[vertical];
-      let y = vertical * height;
-      for (let horizontal = 0; horizontal < length; horizontal++) {
-        let x = horizontal * width;
-        this.imgs[animation][horizontal] = img.get(x, y, width, height);
+    engine.loadImage(`./player/weapon/${this.index}.png`, img => {
+      let width = 25;
+      let height = 45;
+      let animations = ["down", "up", "left", "right"];
+      let lengths = [6, 6, 5, 5];
+      for (let v in animations) {
+        let animation = animations[v];
+        let length = lengths[v];
+        let y = v * height;
+        for (let h = 0; h < length; h++) {
+          let x = h * width;
+          this.imgs[animation][h] = img.get(x, y, width, height);
+        }
       }
-    }
-    this.fullLoad();
+    });
   }
   setTransform(x, y, width, height) {
     this.transform = { x, y, width, height };
@@ -51,7 +45,7 @@ export default class {
     }
   }
   nextSprite() {
-    if (data.canDraw == true && this.canNextSprite == true) {
+    if (this.canNextSprite == true) {
       let length;
       switch (this.animation) {
         case "down":

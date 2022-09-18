@@ -4,15 +4,15 @@ import Map from "../map/Map.js";
 export default class {
   setup() {
     this.map = new Map();
-    this.player();
+    this.setPlayer();
   }
-  player() {
+  setPlayer() {
     metamask.database.getAccount(metamask.account).then(_account => {
       let owner = _account.owner.toUpperCase();
       let account = metamask.account.toUpperCase();
       if (owner == account) {
         let statistics = JSON.parse(_account.statistics);
-        this.player = new Player(50, 50, 5, 5, statistics, this.map);
+        this.player = new Player(50, 50, 5, 10, statistics, this.map);
       } else {
         alert("character not found");
       }

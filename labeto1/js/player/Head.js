@@ -1,21 +1,22 @@
 "use strict";
 export default class {
   constructor(x, y, width, height, index) {
-    this.transform = { x, y, width, height };
+    this.setTransform(x, y, width, height);
     this.index = index;
     this.animation = "down";
     this.imgs();
   }
-  imgs(img) {
+  imgs() {
     this.imgs = {};
-    let img = engine.loadImage(`./player/head/${this.index}.png`);
-    let width = 17;
-    let animations = ["down", "right", "left", "up"];
-    for (let i in animations) {
-      let animation = animations[i];
-      let x = i * width;
-      this.imgs[animation] = img.get(x, 0, width, 17);
-    }
+    engine.loadImage(`./player/head/${this.index}.png`, img => {
+      let width = 17;
+      let animations = ["down", "right", "left", "up"];
+      for (let i in animations) {
+        let animation = animations[i];
+        let x = i * width;
+        this.imgs[animation] = img.get(x, 0, width, 17);
+      }
+    });
   }
   setTransform(x, y, width, height) {
     this.transform = { x, y, width: width / 2, height: height / 2 };

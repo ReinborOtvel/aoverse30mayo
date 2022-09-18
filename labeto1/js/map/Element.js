@@ -1,10 +1,10 @@
 export default class {
-  constructor(image, width, height, x, y) {
+  constructor(image, x, y, width, height) {
     this.image = image;
-    this.width = width;
-    this.height = height;
     this.x = x;
     this.y = y;
+    this.width = width;
+    this.height = height;
   }
   collision(x, y) {
     x = parseInt(x / this.width);
