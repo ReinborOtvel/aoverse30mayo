@@ -24,11 +24,33 @@ export default class {
       }
     }
   }
-  touchStarted() {
-    this.touchMoved();
-  }
   touchMoved() {
-
+    if (utils.verifyClick(3, 73, 8, 82)) {
+      this.xMove = -1;
+      this.yMove = 0;
+    } else if (utils.verifyClick(5, 64, 10, 73)) {
+      this.xMove = -1;
+      this.yMove = -1;
+    } else if (utils.verifyClick(10, 61, 15, 70)) {
+      this.xMove = 0;
+      this.yMove = -1;
+    } else if (utils.verifyClick(14, 63, 19, 72)) {
+      this.xMove = 1;
+      this.yMove = -1;
+    } else if (utils.verifyClick(17, 73, 22, 82)) {
+      this.xMove = 1;
+      this.yMove = 0;
+    } else if (utils.verifyClick(14, 83, 19, 92)) {
+      this.xMove = 1;
+      this.yMove = 1;
+    } else if (utils.verifyClick(10, 85, 15, 94)) {
+      this.xMove = 0;
+      this.yMove = 1;
+    } else if (utils.verifyClick(5, 81, 10, 90)) {
+      this.xMove = -1;
+      this.yMove = 1;
+    }
+    this.animationMove();
   }
   touchEnded() {
     this.xMove = 0;

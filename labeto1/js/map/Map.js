@@ -9,13 +9,16 @@ export default class {
         this.lands.push(new Land(579, h, v, 10, 10));
       }
     }
-    this.trees = [];
-    for (let h = 0; h <= 9; h += parseInt(engine.random(1, 4))) {
-      for (let v = 0; v <= 4; v += 2) {
-        let index = parseInt(engine.random(1, 59));
-        this.trees.push(new Tree(index, h, v, 10, 20));
-      }
-    }
+    this.trees = [
+      new Tree(5, 1, 1, 10, 20),
+      new Tree(5, 2, 1, 10, 20),
+      new Tree(5, 3, 1, 10, 20),
+      new Tree(5, 4, 1, 10, 20),
+      new Tree(5, 1, 2, 10, 20),
+      new Tree(5, 2, 2, 10, 20),
+      new Tree(5, 3, 2, 10, 20),
+      new Tree(5, 4, 2, 10, 20),
+    ];
     this.entities = [];
   }
   collision(x, y) {

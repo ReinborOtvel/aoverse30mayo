@@ -25,12 +25,18 @@ export default class {
     };
   }
   touchEvent(name) {
+    if (window.page == undefined) {
+      return;
+    }
     if (page[name]) {
       events.setTouch();
       page[name]();
     }
   }
   keyEvent(name, key) {
+    if (window.page == undefined) {
+      return;
+    }
     if (page[name]) {
       events.key = key;
       page[name]();

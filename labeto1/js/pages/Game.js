@@ -12,7 +12,7 @@ export default class {
       let account = metamask.account.toUpperCase();
       if (owner == account) {
         let statistics = JSON.parse(_account.statistics);
-        this.player = new Player(50, 50, 5, 10, statistics, this.map);
+        this.player = new Player(70, 70, 5, 10, statistics, this.map);
         this.map.entities.push(this.player);
       } else {
         alert("character not found");

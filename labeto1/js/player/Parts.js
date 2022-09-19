@@ -25,11 +25,11 @@ export default class {
     if (this.canNextSprite) {
       this.sprite++;
       if (this.animation == "down" || this.animation == "up") {
-        if (this.sprite > 6) {
+        if (this.sprite >= 6) {
           this.sprite = 0;
         }
       } else if (this.animation == "left" || this.animation == "right") {
-        if (this.sprite > 5) {
+        if (this.sprite >= 5) {
           this.sprite = 0;
         }
       }
