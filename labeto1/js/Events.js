@@ -18,6 +18,12 @@ export default class {
       events.keyEvent("keyReleased", key);
     }
   }
+  verifyTouch(xInit, yInit, xEnd, yEnd) {
+    return events.touch.x >= xInit &&
+      events.touch.x <= xEnd &&
+      events.touch.y >= yInit &&
+      events.touch.y <= yEnd;
+  }
   setTouch() {
     events.touch = {
       x: utils.percentagePixelsWidth(engine.mouseX),
