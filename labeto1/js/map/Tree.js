@@ -12,11 +12,27 @@ export default class {
     engine.loadImage(`./graphics/nature/tree/${this.index}.png`, image => {
       this.element.image = image;
     });
+    this.life = 5;
+  }
+  interaction(entity) {
+    if (this.life <= 0) {
+      return;
+    }
+    this.life -= entity.damage;
+    if (this.life <= 0) {
+      entity.inventory.wood += 4;
+    }
   }
   collision(x, y) {
+    if (this.life <= 0) {
+      return false;
+    }
     return this.element.collision(x, y);
   }
   draw() {
+    if (this.life <= 0) {
+      return;
+    }
     this.element.draw();
   }
 }

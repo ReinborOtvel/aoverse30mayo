@@ -24,6 +24,9 @@ export default class {
       }
     }
   }
+  touchStarted() {
+    this.touchMoved();
+  }
   touchMoved() {
     if (utils.verifyClick(3, 73, 8, 82)) {
       this.xMove = -1;
@@ -53,9 +56,11 @@ export default class {
     this.animationMove();
   }
   touchEnded() {
-    this.xMove = 0;
-    this.yMove = 0;
-    this.animationMove();
+    if (utils.verifyClick(10, 73, 15, 82)) {
+      this.xMove = 0;
+      this.yMove = 0;
+      this.animationMove();
+    }
   }
   keyMove() {
     if (events.key == "w") {

@@ -9,6 +9,9 @@ export default class {
     this.height = height;
     this.statistics = statistics;
     this.map = map;
+    this.damage = 1;
+    this.inventory = { wood: 0 };
+    this.interactionRange = 5;
     this.parts = new Parts(this);
     this.control = new Control(this);
     this.movementWheel = new MovementWheel(this);
@@ -19,8 +22,27 @@ export default class {
   keyReleased() {
     this.control.keyStop();
   }
+  interaction() {
+    let { touch } = events;
+    let entity = this.map.interaction(touch.x, touch.y);
+    if (entity == false) {
+      return;
+    }
+    let xInit = entity.x - this.interactionRange;
+    let xEnd = entity.x + entity.width;
+    xEnd += this.interactionRange;
+    let yInit = entity.y - this.interactionRange;
+    let yEnd = entity.y + entity.height;
+    yEnd += this.interactionRange;
+    let xRange = this.x > xInit && this.x < xEnd;
+    let yRange = this.y > yInit && this.y < yEnd;
+    if (xRange && yRange) {
+      entity.interaction(this);
+    }
+  }
   touchStarted() {
-    this.control.touchMoved();
+    this.control.touchStarted();
+    this.interaction();
   }
   touchMoved() {
     this.control.touchMoved();

@@ -23,19 +23,29 @@ export default class {
     });
   }
   keyTyped() {
-    this.player.keyTyped();
+    if (this.player != undefined) {
+      this.player.keyTyped();
+    }
   }
   keyReleased() {
-    this.player.keyReleased();
+    if (this.player != undefined) {
+      this.player.keyReleased();
+    }
   }
   touchStarted() {
-    this.player.touchStarted();
+    if (this.player != undefined) {
+      this.player.touchStarted();
+    }
   }
   touchMoved() {
-    this.player.touchMoved();
+    if (this.player != undefined) {
+      this.player.touchMoved();
+    }
   }
   touchEnded() {
-    this.player.touchEnded();
+    if (this.player != undefined) {
+      this.player.touchEnded();
+    }
   }
   draw() {
     this.map.draw();

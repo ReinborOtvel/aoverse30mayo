@@ -29,6 +29,14 @@ export default class {
     }
     return false;
   }
+  interaction(x, y) {
+    for (let tree of this.trees) {
+      if (tree.collision(x, y) == true) {
+        return tree;
+      }
+    }
+    return false;
+  }
   draw() {
     this.afterEntities = [];
     for (let land of this.lands) {
