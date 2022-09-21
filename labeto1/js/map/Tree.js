@@ -1,8 +1,6 @@
-import Element from "./Element.js";
 import Effect from "./Effect.js";
-export default class Tree extends Element {
+export default class Tree {
   constructor(index, h, v, width, height) {
-    super(`./graphics/nature/tree/${index}.png`, h, v, width, height);
     this.effect = new Effect(this);
     this.life = 5;
   }

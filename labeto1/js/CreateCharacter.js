@@ -1,5 +1,6 @@
 "use strict";
-import Player from "../player/Parts.js";
+import Player from "./player/Parts.js";
+import Statistics from "./player/Statistics.js";
 export default class {
   setup() {
     this.transaction = false;

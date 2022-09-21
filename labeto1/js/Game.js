@@ -1,6 +1,6 @@
 "use strict";
-import Player from "../player/Entity.js";
-import Map from "../map/Map.js";
+import Player from "./player/Entity.js";
+import Map from "./map/Map.js";
 export default class {
   setup() {
     this.map = new Map();

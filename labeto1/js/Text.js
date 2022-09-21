@@ -1,9 +1,10 @@
+import Percentage from "./Percentage.js";
 export default class {
   constructor(text, x, y, size, color) {
     this.text = text;
-    this.x = utils.percentageWidth(x);
-    this.y = utils.percentageHeight(y);
-    this.size = utils.percentageWidth(size);
+    this.x = Percentage.width(x);
+    this.y = Percentage.height(y);
+    this.size = Percentage.width(size);
     this.color = color;
   }
   draw() {

@@ -1,5 +1,5 @@
 "use strict";
-import Player from "../player/Parts.js";
+import Player from "./player/Parts.js";
 export default class {
   setup() {
     this.assignLeaders();

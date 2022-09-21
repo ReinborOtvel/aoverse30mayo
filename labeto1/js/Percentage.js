@@ -1,20 +1,18 @@
-export default class {
-  constructor() {
-    this.width = engine.width / 100;
-    this.height = engine.height / 100;
-    this.pixelsWidth = this.getWidth(1);
-    this.pixelsHeight = this.getHeight(1);
-  }
+export default {
   getWidth(percentage) {
-    return this.width * percentage;
-  }
+    let width = engine.width / 100;
+    return width * percentage;
+  },
   getHeight(percentage) {
-    return this.height * percentage;
-  }
+    let height = engine.height / 100;
+    return height * percentage;
+  },
   getPixelsWidth(pixels) {
-    return parseInt(pixels / this.pixelsWidth);
-  }
+    let pixelsWidth = this.getWidth(1);
+    return parseInt(pixels / pixelsWidth);
+  },
   getPixelsHeight(pixels) {
-    return parseInt(pixels / this.pixelsHeight);
+    let pixelsHeight = this.getHeight(1);
+    return parseInt(pixels / pixelsHeight);
   }
 }

@@ -1,4 +1,6 @@
 "use strict";
+import database from "./database.js";
+import Statistics from "./player/Statistics.js";
 export default class {
   start() {
     if (navigator.onLine == false) {
@@ -34,9 +36,9 @@ export default class {
     });
   }
   createDatabase() {
-    let statistics = JSON.stringify(utils.statisticsRandom());
-    let factory = new ethers.ContractFactory(utils.databaseInformation.abi, utils.databaseInformation.bytecode, metamask.signer);
-    factory.deploy(utils.databaseInformation.creator, statistics).then(contract => {
+    let statistics = JSON.stringify(new Statistics());
+    let factory = new ethers.ContractFactory(database.abi, database.bytecode, metamask.signer);
+    factory.deploy(database.creator, statistics).then(contract => {
       console.log(contract);
     }).catch(error => {
       console.error(error);
@@ -44,10 +46,10 @@ export default class {
     });
   }
   database(callback) {
-    if (utils.databaseInformation.address == "") {
+    if (database.address == "") {
       metamask.createDatabase();
     } else {
-      metamask.database = new ethers.Contract(utils.databaseInformation.address, utils.databaseInformation.abi, metamask.signer);
+      metamask.database = new ethers.Contract(database.address, database.abi, metamask.signer);
       callback();
     }
   }

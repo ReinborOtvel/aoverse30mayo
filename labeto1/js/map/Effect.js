@@ -1,5 +1,4 @@
-import Element from "./Element.js";
-export default class Effect extends Element {
+export default class Effect {
   constructor(entity) {
     this.entity = entity;
     this.image = engine.loadImage("./graphics/effects/0.png");
