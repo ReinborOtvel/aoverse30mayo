@@ -3,6 +3,18 @@ export default class {
   constructor(index, x, y, width, height) {
     this.index = index;
     this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.animation = "down";
+    this.sprite = 0;
+    this.canNextSprite = false;
+    this.setImages();
+    setInterval(() => {
+      this.nextSprite();
+    }, 200);
+  }
+  setImages() {
     this.images = { down: [], up: [], left: [], right: [] };
     engine.loadImage(`./player/armor/${this.index}.png`, image => {
       let width = 25;
@@ -17,32 +29,38 @@ export default class {
         this.images.left[h] = image.get(x, 2 * height, width, height);
         this.images.right[h] = image.get(x, 3 * height, width, height);
       }
+      this.setImage();
     });
   }
+  setImage() {
+    let image = this.images[this.animation][this.sprite];
+    let x = this.x - this.width / 2;
+    let y = this.y - this.height / 2;
+    this.image = new Image(image, x, y, this.width, this.height);
+  }
+  setAnimation(newAnimation) {
+    if (this.animation != newAnimation) {
+      this.animation = newAnimation;
+      this.sprite = 0;
+    }
+  }
   draw() {
-    let img = this.imgs[this.parts.animation][this.parts.sprite];
-    let x = this.entity.x - this.entity.width / 2;
-    let y = this.entity.y - this.entity.height / 2;
-    utils.image(img, x, y, this.entity.width, this.entity.height);
+    this.image.draw();
   }
   nextSprite() {
-    if (this.parts.canNextSprite) {
+    if (this.canNextSprite) {
       let length;
-      switch (this.parts.animation) {
-        case "down":
-        case "up":
-          length = 5;
-          break;
-        case "left":
-        case "right":
-          length = 4;
-          break;
+      if (this.animation == "down" || this.animation == "up") {
+        length = 5;
+      } else if (this.animation == "left" || this.animation == "right") {
+        length = 4;
       }
-      if (this.sprite < length) {
-        this.sprite++;
-      } else {
+      if (this.sprite >= length) {
         this.sprite = 0;
+      } else {
+        this.sprite++;
       }
+      this.setImage();
     }
   }
 }
