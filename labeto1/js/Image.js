@@ -1,10 +1,11 @@
+import Percentage from "./Percentage.js";
 export default class {
   constructor(image, x, y, width, height) {
     this.image = image;
-    this.x = utils.percentageWidth(x);
-    this.y = utils.percentageHeight(y);
-    this.width = utils.percentageWidth(width);
-    this.height = utils.percentageHeight(height);
+    this.x = Percentage.getWidth(x);
+    this.y = Percentage.getHeight(y);
+    this.width = Percentage.getWidth(width);
+    this.height = Percentage.getHeight(height);
   }
   draw() {
     if (this.image == undefined) {

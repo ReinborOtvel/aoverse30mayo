@@ -1,21 +1,21 @@
 "use strict";
 export default class {
-  constructor(parts) {
-    this.parts = parts;
-    this.entity = this.parts.entity;
-    this.imgs = { down: [], up: [], left: [], right: [] };
-    engine.loadImage(`./player/armor/${this.entity.statistics.armor}.png`, img => {
+  constructor(index, x, y, width, height) {
+    this.index = index;
+    this.x = x;
+    this.images = { down: [], up: [], left: [], right: [] };
+    engine.loadImage(`./player/armor/${this.index}.png`, image => {
       let width = 25;
       let height = 45;
       for (let h = 0; h < 6; h++) {
         let x = h * width;
-        this.imgs.down[h] = img.get(x, 0, width, height);
-        this.imgs.up[h] = img.get(x, height, width, height);
+        this.images.down[h] = image.get(x, 0, width, height);
+        this.images.up[h] = image.get(x, height, width, height);
       }
       for (let h = 0; h < 5; h++) {
         let x = h * width;
-        this.imgs.left[h] = img.get(x, 2 * height, width, height);
-        this.imgs.right[h] = img.get(x, 3 * height, width, height);
+        this.images.left[h] = image.get(x, 2 * height, width, height);
+        this.images.right[h] = image.get(x, 3 * height, width, height);
       }
     });
   }

@@ -10,14 +10,14 @@ export default class {
       }
     }
     this.trees = [
-      new Tree(5, 1, 1, 10, 20),
-      new Tree(5, 2, 1, 10, 20),
-      new Tree(5, 3, 1, 10, 20),
-      new Tree(5, 4, 1, 10, 20),
-      new Tree(5, 1, 2, 10, 20),
-      new Tree(5, 2, 2, 10, 20),
-      new Tree(5, 3, 2, 10, 20),
-      new Tree(5, 4, 2, 10, 20),
+      new Tree(1, 1, 10, 20),
+      new Tree(2, 1, 10, 20),
+      new Tree(3, 1, 10, 20),
+      new Tree(4, 1, 10, 20),
+      new Tree(1, 2, 10, 20),
+      new Tree(2, 2, 10, 20),
+      new Tree(3, 2, 10, 20),
+      new Tree(4, 2, 10, 20),
     ];
     this.entities = [];
   }
