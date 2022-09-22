@@ -12,15 +12,15 @@ export default class {
     this.damage = 1;
     this.inventory = { wood: 0 };
     this.interactionRange = 5;
-    this.parts = new Parts(this);
-    this.control = new Control(this);
-    this.movementWheel = new MovementWheel(this);
+    this.parts = new Parts();
+    this.control = new Control();
+    this.movementWheel = new MovementWheel();
   }
   keyTyped() {
-    this.control.keyMove();
+    this.control.keyTyped();
   }
   keyReleased() {
-    this.control.keyStop();
+    this.control.keyReleased();
   }
   interaction() {
     let { touch } = events;

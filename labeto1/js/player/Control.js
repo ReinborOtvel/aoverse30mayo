@@ -1,26 +1,25 @@
 "use strict";
 export default class {
-  constructor(entity) {
-    this.entity = entity;
-    this.map = this.entity.map;
-    this.parts = this.entity.parts;
+  constructor(map) {
+    this.map = map;
+    this.canNextSprite = false;
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 1;
   }
   animationMove() {
     if (this.yMove == 0 && this.xMove == 0) {
-      this.parts.canNextSprite = false;
+      this.canNextSprite = false;
     } else {
-      this.parts.canNextSprite = true;
+      this.canNextSprite = true;
       if (this.yMove == -1) {
-        this.parts.setAnimation("up");
+        this.setAnimation("up");
       } else if (this.yMove == 1) {
-        this.parts.setAnimation("down");
+        this.setAnimation("down");
       } else if (this.xMove == -1) {
-        this.parts.setAnimation("left");
+        this.setAnimation("left");
       } else if (this.xMove == 1) {
-        this.parts.setAnimation("right");
+        this.setAnimation("right");
       }
     }
   }

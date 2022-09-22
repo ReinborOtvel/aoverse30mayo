@@ -1,10 +1,11 @@
 "use strict";
 import Metamask from "./Metamask.js";
-import Events from "./Events.js";
 import CreateCharacter from "./CreateCharacter.js";
 import SelectLeader from "./SelectLeader.js";
 import Game from "./Game.js";
-import Rect from "./Rect.js";
+import Utils from "./Utils.js";
+import Touch from "./Touch.js";
+import Key from "./Key.js";
 class Data {
   constructor() {
     new p5(engine => {
@@ -27,21 +28,22 @@ class Data {
         window.page = new Game();
         break;
     }
-    page.setup();
   }
   setup() {
     metamask.start();
-    events.setup();
-    this.background = new Rect(0, 0, 100, 100, "#2B2B2B");
+    window.utils = new Utils();
+    window.touch = new Touch();
+    window.key = new Key();
   }
   draw() {
-    this.background.draw();
+    rect(0, 0, 100, 100, "#2B2B2B");
     engine.noSmooth();
-    if (window.page != undefined) {
+    if (window.page == undefined) {
+      return;
+    } if (page.draw == undefined) {
       page.draw();
     }
   }
 }
 window.metamask = new Metamask();
-window.events = new Events();
 window.data = new Data();

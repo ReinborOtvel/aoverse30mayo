@@ -3,37 +3,33 @@ import Head from "./Head.js";
 import Armor from "./Armor.js";
 import Weapon from "./Weapon.js";
 export default class {
-  constructor(entity) {
-    this.entity = entity;
-    this.animation = "down";
-    this.sprite = 0;
-    this.canNextSprite = false;
-    this.head = new Head(this);
-    this.armor = new Armor(this);
-    this.weapon = new Weapon(this);
+  constructor() {
+    this.head = new Head();
+    this.armor = new Armor();
+    this.weapon = new Weapon();
     setInterval(() => {
       this.nextSprite();
     }, 200);
   }
-  setAnimation(animation) {
-    if (animation != this.animation) {
-      this.animation = animation;
-      this.sprite = 0;
-    }
+  canNextSprite(value) {
+    this.head.canNextSprite = value;
+    this.armor.canNextSprite = value;
+    this.weapon.canNextSprite = value;
+  }
+  animation(newAnimation) {
+    this.head.setAnimation(newAnimation);
+    this.armor.setAnimation(newAnimation);
+    this.weapon.setAnimation(newAnimation);
+  }
+  setTransform(x, y, width, height) {
+    this.head.setTransform(x, y, width, height);
+    this.armor.setTransform(x, y, width, height);
+    this.weapon.setTransform(x, y, width, height);
   }
   nextSprite() {
-    if (this.canNextSprite) {
-      this.sprite++;
-      if (this.animation == "down" || this.animation == "up") {
-        if (this.sprite >= 6) {
-          this.sprite = 0;
-        }
-      } else if (this.animation == "left" || this.animation == "right") {
-        if (this.sprite >= 5) {
-          this.sprite = 0;
-        }
-      }
-    }
+    this.head.nextSprite();
+    this.armor.nextSprite();
+    this.weapon.nextSprite();
   }
   draw() {
     this.armor.draw();

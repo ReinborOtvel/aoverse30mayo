@@ -10,9 +10,6 @@ export default class {
     this.sprite = 0;
     this.canNextSprite = false;
     this.setImages();
-    setInterval(() => {
-      this.nextSprite();
-    }, 200);
   }
   setImages() {
     this.images = { down: [], up: [], left: [], right: [] };
@@ -23,20 +20,18 @@ export default class {
         let x = h * width;
         this.images.down[h] = image.get(x, 0, width, height);
         this.images.up[h] = image.get(x, height, width, height);
+        if (h < 5) {
+          this.images.left[h] = image.get(x, 2 * height, width, height);
+          this.images.right[h] = image.get(x, 3 * height, width, height);
+        }
       }
-      for (let h = 0; h < 5; h++) {
-        let x = h * width;
-        this.images.left[h] = image.get(x, 2 * height, width, height);
-        this.images.right[h] = image.get(x, 3 * height, width, height);
-      }
-      this.setImage();
     });
   }
-  setImage() {
-    let image = this.images[this.animation][this.sprite];
-    let x = this.x - this.width / 2;
-    let y = this.y - this.height / 2;
-    this.image = new Image(image, x, y, this.width, this.height);
+  setTransform(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
   }
   setAnimation(newAnimation) {
     if (this.animation != newAnimation) {
@@ -45,7 +40,13 @@ export default class {
     }
   }
   draw() {
-    this.image.draw();
+    let image = this.images[this.animation][this.sprite];
+    let x = this.x - this.width / 2;
+    let y = this.y - this.height / 2;
+    if (image == undefined) {
+      return;
+    }
+    utils.image(image, x, y, this.width, this.height);
   }
   nextSprite() {
     if (this.canNextSprite) {
@@ -54,13 +55,14 @@ export default class {
         length = 5;
       } else if (this.animation == "left" || this.animation == "right") {
         length = 4;
+      } else {
+        return;
       }
       if (this.sprite >= length) {
         this.sprite = 0;
       } else {
         this.sprite++;
       }
-      this.setImage();
     }
   }
 }
