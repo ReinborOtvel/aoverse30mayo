@@ -2,10 +2,7 @@
 export default class {
   constructor(index, x, y, width, height) {
     this.index = index;
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
+    this.setTransform(x, y, width, height);
     this.animation = "down";
     this.sprite = 0;
     this.canNextSprite = false;

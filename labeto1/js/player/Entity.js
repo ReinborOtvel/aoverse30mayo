@@ -3,10 +3,7 @@ import Parts from "./Parts.js";
 import MovementWheel from "./MovementWheel.js";
 export default class {
   constructor(x, y, width, height, statistics, map) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
+    this.setTransform(x, y, width, height);
     this.statistics = statistics;
     this.map = map;
     this.damage = 1;
@@ -15,6 +12,12 @@ export default class {
     this.parts = new Parts();
     this.control = new Control();
     this.movementWheel = new MovementWheel();
+  }
+  setTransform(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
   }
   keyTyped() {
     this.control.keyTyped();

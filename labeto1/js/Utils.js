@@ -47,4 +47,7 @@ export default class {
     let pixelsHeight = utils.percentageHeight(1);
     return parseInt(pixels / pixelsHeight);
   }
+  range(initial, end) {
+    return Math.round(engine.random(initial, end));
+  }
 } 
