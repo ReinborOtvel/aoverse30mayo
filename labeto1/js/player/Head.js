@@ -6,6 +6,12 @@ export default class {
     this.animation = "down";
     this.setImages();
   }
+  setTransform(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
   setImages() {
     this.images = {};
     engine.loadImage(`./player/head/${this.index}.png`, image => {

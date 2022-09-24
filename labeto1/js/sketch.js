@@ -17,17 +17,16 @@ class Data {
   setPage(name, fps) {
     engine.createCanvas(852, 480);
     engine.frameRate(fps);
-    switch (name) {
-      case "createCharacter":
-        window.page = new CreateCharacter();
-        break;
-      case "selectLeader":
-        window.page = new SelectLeader();
-        break;
-      case "game":
-        window.page = new Game();
-        break;
+    if (name == "createCharacter") {
+      window.page = new CreateCharacter();
+    } else if (name == "selectLeader") {
+      window.page = new SelectLeader();
+    } else if (name == "game") {
+      window.page = new Game();
+    } else {
+      return;
     }
+    window.page.setup();
   }
   setup() {
     metamask.start();
@@ -36,13 +35,14 @@ class Data {
     window.key = new Key();
   }
   draw() {
-    rect(0, 0, 100, 100, "#2B2B2B");
+    utils.rect(0, 0, 100, 100, "#2B2B2B");
     engine.noSmooth();
     if (window.page == undefined) {
       return;
     } if (page.draw == undefined) {
-      page.draw();
+      return;
     }
+    page.draw();
   }
 }
 window.metamask = new Metamask();

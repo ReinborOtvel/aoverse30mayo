@@ -1,7 +1,5 @@
 export default class {
-  constructor(entity) {
-    this.entity = entity;
-    this.control = this.entity.control;
+  constructor() {
     this.x = 13;
     this.y = 78;
   }

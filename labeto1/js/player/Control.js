@@ -1,23 +1,38 @@
 "use strict";
+import Parts from "./Parts.js";
 export default class {
-  constructor(map) {
+  constructor(x, y, width, height, statistics, map) {
+    this.setTransform(x, y, width, height);
+    this.statistics = statistics;
     this.map = map;
+    this.parts = new Parts(this.x, this.y, this.width, this.height, statistics);
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 1;
   }
+  afterY(entity) {
+    let y = entity.y + entity.height;
+    return y > this.y;
+  }
+  setTransform(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
   animationMove() {
     if (this.yMove == 0 && this.xMove == 0) {
-      return false;
+      this.parts.canNextSprite(false);
     } else {
+      this.parts.canNextSprite(true);
       if (this.yMove == -1) {
-        return "up";
+        this.parts.animation("up");
       } else if (this.yMove == 1) {
-        return "down";
+        this.parts.animation("down");
       } else if (this.xMove == -1) {
-        return "left";
+        this.parts.animation("left");
       } else if (this.xMove == 1) {
-        return "right";
+        this.parts.animation("right");
       }
     }
   }
@@ -50,12 +65,14 @@ export default class {
       this.xMove = -1;
       this.yMove = 1;
     }
+    this.animationMove();
   }
   touchEnded() {
     if (touch.verify(10, 73, 15, 82)) {
       this.xMove = 0;
       this.yMove = 0;
     }
+    this.animationMove();
   }
   keyMove() {
     if (key.key == "w") {
@@ -67,6 +84,7 @@ export default class {
     } else if (key.key == "d") {
       this.xMove = 1;
     }
+    this.animationMove();
   }
   keyStop() {
     if (key.key == "w" || key.key == "s") {
@@ -74,6 +92,7 @@ export default class {
     } else if (key.key == "a" || key.key == "d") {
       this.xMove = 0;
     }
+    this.animationMove();
   }
   move() {
     let xSpeed = this.xMove * this.speed;
@@ -82,9 +101,12 @@ export default class {
       let newX = this.x + xSpeed;
       let newY = this.y + ySpeed;
       if (!this.map.collision(newX, newY)) {
-        this.x = newX;
-        this.y = newY;
+        this.setTransform(newX, newY, this.width, this.height);
+        this.parts.setTransform(this.x, this.y, this.width, this.height);
       }
     }
+  }
+  draw() {
+    this.move();
   }
 }

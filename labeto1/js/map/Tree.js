@@ -1,5 +1,4 @@
 import Effect from "./Effect.js";
-import Image from "../Image.js";
 export default class Tree {
   constructor(h, v, width, height) {
     this.h = h;
@@ -9,7 +8,6 @@ export default class Tree {
     this.x = this.h * this.width;
     this.y = this.v * this.height;
     this.image = engine.loadImage("./graphics/nature/tree/5.png");
-    this.image = new Image(this.image, this.x, this.y, this.width, this.height);
     this.effect = new Effect(this.x, this.y, this.width, this.height);
     this.life = 5;
   }
@@ -27,13 +25,13 @@ export default class Tree {
     }
     let xEnd = this.x + this.width;
     let yEnd = this.y + this.height;
-    return x >= this.x && y <= xEnd && y >= this.y && y <= yEnd;
+    return x >= this.x && x <= xEnd && y >= this.y && y <= yEnd;
   }
   draw() {
     if (this.life <= 0) {
       return;
     }
-    this.image.draw();
+    utils.image(this.image, this.x, this.y, this.width, this.height);
     this.effect.draw();
   }
 }

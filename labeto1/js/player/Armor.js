@@ -40,9 +40,6 @@ export default class {
     let image = this.images[this.animation][this.sprite];
     let x = this.x - this.width / 2;
     let y = this.y - this.height / 2;
-    if (image == undefined) {
-      return;
-    }
     utils.image(image, x, y, this.width, this.height);
   }
   nextSprite() {
