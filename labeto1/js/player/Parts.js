@@ -21,7 +21,7 @@ export default class {
     this.weapon.canNextSprite = value;
   }
   animation(newAnimation) {
-    this.head.setAnimation(newAnimation);
+    this.head.animation = newAnimation;
     this.armor.setAnimation(newAnimation);
     this.weapon.setAnimation(newAnimation);
   }

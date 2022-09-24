@@ -50,7 +50,7 @@ export default class {
   }
   writeLeader() {
     this.leaderAccount = prompt("leader address");
-    if (ethers.utils.isAddress(this.leaderAccount) == true) {
+    if (ethers.utils.isAddress(this.leaderAccount)) {
       this.assignLeaderPlayer();
     } else {
       this.randomLeader();
@@ -79,11 +79,11 @@ export default class {
     }
   }
   touchEnded() {
-    if (utils.verifyClick(50, 13, 83, 19)) {
+    if (touch.verify(50, 13, 83, 19)) {
       this.randomLeader();
-    } else if (utils.verifyClick(54, 23, 80, 30)) {
+    } else if (touch.verify(54, 23, 80, 30)) {
       this.writeLeader();
-    } else if (utils.verifyClick(6, 78, 28, 86)) {
+    } else if (touch.verify(6, 78, 28, 86)) {
       this.joinGroup();
     }
   }

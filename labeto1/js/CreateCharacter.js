@@ -1,19 +1,19 @@
 "use strict";
 import Player from "./player/Parts.js";
 import Statistics from "./player/Statistics.js";
+import database from "./database.js";
 export default class {
   setup() {
     this.transaction = false;
     this.newCharacter();
   }
   newCharacter() {
-    let statistics = utils.statisticsRandom();
-    this.player = new Player(70, 50, 40, 80, statistics);
+    this.player = new Player(70, 50, 40, 80, Statistics());
   }
   touchEnded() {
-    if (utils.verifyClick(6, 73, 37, 80)) {
+    if (touch.verify(6, 73, 37, 80)) {
       this.newCharacter();
-    } else if (utils.verifyClick(6, 83, 42, 89)) {
+    } else if (touch.verify(6, 83, 42, 89)) {
       this.createCharacter();
     }
   }
@@ -24,8 +24,8 @@ export default class {
         method: 'eth_sendTransaction',
         params: [{
           from: metamask.account,
-          to: utils.databaseInformation.creator,
-          value: ethers.utils.parseEther(utils.databaseInformation.ticket)._hex,
+          to: database.creator,
+          value: ethers.utils.parseEther(database.ticket)._hex,
           chainId: ethers.utils.hexValue(56),
         }],
       }).then(() => {
@@ -47,8 +47,8 @@ export default class {
   }
   draw() {
     utils.text("character", 5, 15, 5, "#fff");
-    utils.textRect(" new character", 5, 75, 34);
-    utils.textRect(" create character", 5, 85, 39);
+    utils.text("new character", 5, 80, 5, "#C548EE");
+    utils.text("create character", 5, 90, 5, "#C548EE");
     if (this.player != undefined) {
       this.drawStatistics();
       this.player.draw();

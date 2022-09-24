@@ -8,6 +8,12 @@ export default class {
     this.canNextSprite = false;
     this.setImages();
   }
+  setAnimation(newAnimation) {
+    if (this.animation != newAnimation) {
+      this.animation = newAnimation;
+      this.sprite = 0;
+    }
+  }
   setTransform(x, y, width, height) {
     this.x = x;
     this.y = y;

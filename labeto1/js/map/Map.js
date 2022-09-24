@@ -19,7 +19,6 @@ export default class {
       new Tree(3, 2, 10, 20),
       new Tree(4, 2, 10, 20),
     ];
-    this.entities = [];
   }
   collision(x, y) {
     for (let tree of this.trees) {
@@ -38,24 +37,11 @@ export default class {
     return false;
   }
   draw() {
-    this.afterEntities = [];
     for (let land of this.lands) {
       land.draw();
     }
-    treeFor: for (let tree of this.trees) {
-      for (let entity of this.entities) {
-        if (entity.afterY(tree)) {
-          this.afterEntities.push(tree);
-          continue treeFor;
-        }
-      }
+    for (let tree of this.trees) {
       tree.draw();
-    }
-    for (let entity of this.entities) {
-      entity.draw();
-    }
-    for (let entity of this.afterEntities) {
-      entity.draw();
     }
   }
 }

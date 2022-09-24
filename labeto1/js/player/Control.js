@@ -2,10 +2,13 @@
 import Parts from "./Parts.js";
 export default class {
   constructor(x, y, width, height, statistics, map) {
-    this.setTransform(x, y, width, height);
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
     this.statistics = statistics;
     this.map = map;
-    this.parts = new Parts(this.x, this.y, this.width, this.height, statistics);
+    this.parts = new Parts(this.x, this.y, this.width, this.height, this.statistics);
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 1;
@@ -19,6 +22,7 @@ export default class {
     this.y = y;
     this.width = width;
     this.height = height;
+    this.parts.setTransform(this.x, this.y, this.width, this.height);
   }
   animationMove() {
     if (this.yMove == 0 && this.xMove == 0) {
@@ -74,7 +78,7 @@ export default class {
     }
     this.animationMove();
   }
-  keyMove() {
+  keyTyped() {
     if (key.key == "w") {
       this.yMove = -1;
     } else if (key.key == "s") {
@@ -86,7 +90,7 @@ export default class {
     }
     this.animationMove();
   }
-  keyStop() {
+  keyReleased() {
     if (key.key == "w" || key.key == "s") {
       this.yMove = 0;
     } else if (key.key == "a" || key.key == "d") {
@@ -102,11 +106,11 @@ export default class {
       let newY = this.y + ySpeed;
       if (!this.map.collision(newX, newY)) {
         this.setTransform(newX, newY, this.width, this.height);
-        this.parts.setTransform(this.x, this.y, this.width, this.height);
       }
     }
   }
   draw() {
     this.move();
+    this.parts.draw();
   }
 }

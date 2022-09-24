@@ -13,11 +13,10 @@ export default class {
       if (owner == account) {
         let statistics = JSON.parse(_account.statistics);
         this.player = new Player(70, 70, 5, 10, statistics, this.map);
-        this.map.entities.push(this.player);
       } else {
         alert("character not found");
       }
-    }).catch((error) => {
+    }).catch(error => {
       console.error(error);
       alert("character not found");
     });
@@ -49,5 +48,8 @@ export default class {
   }
   draw() {
     this.map.draw();
+    if (this.player != undefined) {
+      this.player.draw();
+    }
   }
 }
