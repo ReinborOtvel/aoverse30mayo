@@ -23,25 +23,17 @@ class Data {
       window.page = new SelectLeader();
     } else if (name == "game") {
       window.page = new Game();
-    } else {
-      return;
     }
-    window.page.setup();
-  }
-  setup() {
-    metamask.start();
+    page.setup();
     window.utils = new Utils();
     window.touch = new Touch();
     window.key = new Key();
   }
+  setup() {
+    metamask.start();
+  }
   draw() {
     utils.rect(0, 0, 100, 100, "#2B2B2B");
-    engine.noSmooth();
-    if (window.page == undefined) {
-      return;
-    } if (page.draw == undefined) {
-      return;
-    }
     page.draw();
   }
 }

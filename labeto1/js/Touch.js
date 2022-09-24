@@ -16,29 +16,15 @@ export default class {
   }
   touchStarted() {
     this.set();
-    if (window.page == undefined) {
-      return;
-    } if (page.touchStarted == undefined) {
-      return;
-    }
     page.touchStarted();
+    console.log(touch.x, touch.y);
   }
   touchMoved() {
     this.set();
-    if (window.page == undefined) {
-      return;
-    } if (page.touchMoved == undefined) {
-      return;
-    }
     page.touchMoved();
   }
   touchEnded() {
     this.set();
-    if (window.page == undefined) {
-      return;
-    } if (page.touchEnded == undefined) {
-      return;
-    }
     page.touchEnded();
   }
 }
