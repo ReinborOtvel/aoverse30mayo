@@ -24,18 +24,27 @@ class Data {
     } else if (name == "game") {
       window.page = new Game();
     }
+    key.setup();
+    touch.setup();
     page.setup();
-    window.utils = new Utils();
-    window.touch = new Touch();
-    window.key = new Key();
   }
   setup() {
-    metamask.start();
+    engine.createCanvas(852, 480);
+    engine.frameRate(1);
+    metamask.setup();
   }
   draw() {
     utils.rect(0, 0, 100, 100, "#2B2B2B");
-    page.draw();
+    if (window.page != undefined) {
+      page.draw();
+    } else {
+      utils.text("Loading", 5, 50, 25, "#fff");
+      utils.text(data.error, 5, 80, 5, "#EE4848");
+    }
   }
 }
+window.utils = new Utils();
+window.touch = new Touch();
+window.key = new Key();
 window.metamask = new Metamask();
 window.data = new Data();

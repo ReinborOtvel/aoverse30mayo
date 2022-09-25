@@ -1,8 +1,8 @@
 export default class {
-  constructor() {
-    engine.touchStarted = this.touchStarted;
-    engine.touchMoved = this.touchStarted;
-    engine.touchEnded = this.touchStarted;
+  setup() {
+    engine.touchStarted = touch.touchStarted;
+    engine.touchMoved = touch.touchMoved;
+    engine.touchEnded = touch.touchEnded;
   }
   verify(xInit, yInit, xEnd, yEnd) {
     return touch.x >= xInit &&
@@ -15,16 +15,22 @@ export default class {
     touch.y = utils.percentagePixelsHeight(engine.mouseY);
   }
   touchStarted() {
-    this.set();
-    page.touchStarted();
+    touch.set();
+    if (page.touchStarted != undefined) {
+      page.touchStarted();
+    }
     console.log(touch.x, touch.y);
   }
   touchMoved() {
-    this.set();
-    page.touchMoved();
+    touch.set();
+    if (page.touchMoved != undefined) {
+      page.touchMoved();
+    }
   }
   touchEnded() {
-    this.set();
-    page.touchEnded();
+    touch.set();
+    if (page.touchEnded != undefined) {
+      page.touchEnded();
+    }
   }
 }

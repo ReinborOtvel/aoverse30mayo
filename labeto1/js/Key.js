@@ -1,21 +1,19 @@
 "use strict";
 export default class {
-  constructor() {
-    engine.keyTyped = this.keyTyped;
-    engine.keyReleased = this.keyReleased;
+  setup() {
+    engine.keyTyped = key.keyTyped;
+    engine.keyReleased = key.keyReleased;
   }
   keyTyped({ key }) {
     window.key.key = key;
-    if (window.page == undefined) {
-      return;
+    if (page.keyTyped != undefined) {
+      page.keyTyped();
     }
-    page.keyTyped();
   }
   keyReleased({ key }) {
     window.key.key = key;
-    if (window.page == undefined) {
-      return;
+    if (page.keyReleased != undefined) {
+      page.keyReleased();
     }
-    page.keyReleased();
   }
 }

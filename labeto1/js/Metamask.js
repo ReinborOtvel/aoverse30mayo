@@ -2,11 +2,11 @@
 import database from "./database.js";
 import Statistics from "./player/Statistics.js";
 export default class {
-  start() {
+  setup() {
     if (navigator.onLine == false) {
-      alert("no internet");
+      data.error = "no internet";
     } else if (window.ethereum == undefined) {
-      alert("download metamask");
+      data.error = "download metamask";
     } else {
       metamask.account(() => {
         metamask.chainId(() => {
@@ -22,7 +22,7 @@ export default class {
       callback();
     }).catch(error => {
       console.error(error);
-      alert("error, accounts");
+      data.error = "error, accounts";
     });
   }
   chainId(callback) {
@@ -32,7 +32,7 @@ export default class {
       callback();
     }).catch(error => {
       console.error(error);
-      alert("error, chain id");
+      data.error = "error, chain id";
     });
   }
   createDatabase() {
@@ -42,7 +42,7 @@ export default class {
       console.log(contract);
     }).catch(error => {
       console.error(error);
-      alert("error, create database");
+      data.error = "error, create database";
     });
   }
   database(callback) {
@@ -65,7 +65,7 @@ export default class {
       callback();
     }).catch(error => {
       console.error(error);
-      alert("error, change network to binance");
+      data.error = "error, change network to binance";
     });
   }
   testnet(callback) {
@@ -80,7 +80,7 @@ export default class {
       callback();
     }).catch(error => {
       console.error(error);
-      alert("error, change network to binance testnet");
+      data.error = "error, change network to binance testnet";
     });
   }
   load() {

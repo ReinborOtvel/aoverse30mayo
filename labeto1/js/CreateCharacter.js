@@ -8,12 +8,14 @@ export default class {
     this.newCharacter();
   }
   newCharacter() {
+    console.log(0);
     this.player = new Player(70, 50, 40, 80, Statistics());
   }
   touchEnded() {
-    if (touch.verify(6, 73, 37, 80)) {
+    console.log(1);
+    if (touch.verify(5, 73, 36, 80)) {
       this.newCharacter();
-    } else if (touch.verify(6, 83, 42, 89)) {
+    } else if (touch.verify(6, 83, 41, 89)) {
       this.createCharacter();
     }
   }
