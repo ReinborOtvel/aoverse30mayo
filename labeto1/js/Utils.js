@@ -16,6 +16,9 @@ export default class {
     engine.rect(x, y, width, height);
   }
   image(image, x, y, width, height) {
+    if (image == undefined) {
+      return;
+    }
     x = utils.percentageWidth(x);
     y = utils.percentageHeight(y);
     width = utils.percentageWidth(width);

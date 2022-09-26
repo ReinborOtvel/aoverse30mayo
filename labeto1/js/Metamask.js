@@ -4,56 +4,47 @@ import Statistics from "./player/Statistics.js";
 export default class {
   setup() {
     if (navigator.onLine == false) {
-      data.error = "no internet";
-    } else if (window.ethereum == undefined) {
-      data.error = "download metamask";
+      return;
+    } if (window.ethereum == undefined) {
+      return;
     } else {
-      metamask.account(() => {
-        metamask.chainId(() => {
-          metamask.load();
+      ethereum.on('chainChanged', () => {
+        location.reload();
+      });
+      metamask.provider = new ethers.providers.Web3Provider(ethereum);
+      metamask.provider.send("eth_requestAccounts", []).then(accounts => {
+        metamask.account = accounts[0];
+        metamask.signer = metamask.provider.getSigner();
+        metamask.signer.getChainId().then(chainId => {
+          if (chainId == 97) {
+            if (database.address == "") {
+              metamask.createDatabase();
+            } else {
+              metamask.database = new ethers.Contract(database.address, database.abi, metamask.signer);
+              metamask.verify();
+            }
+          } else if (chainId == 56) {
+            if (localStorage.getItem("createCharacter") == "true") {
+              localStorage.removeItem("createCharacter");
+              data.setPage("createCharacter", 1);
+            } else {
+              metamask.testnet();
+            }
+          } else {
+            metamask.testnet();
+          }
         });
       });
     }
-  }
-  account(callback) {
-    metamask.provider = new ethers.providers.Web3Provider(ethereum);
-    metamask.provider.send("eth_requestAccounts", []).then(accounts => {
-      metamask.account = accounts[0];
-      callback();
-    }).catch(error => {
-      console.error(error);
-      data.error = "error, accounts";
-    });
-  }
-  chainId(callback) {
-    metamask.signer = metamask.provider.getSigner();
-    metamask.signer.getChainId().then(chainId => {
-      metamask.chainId = chainId;
-      callback();
-    }).catch(error => {
-      console.error(error);
-      data.error = "error, chain id";
-    });
   }
   createDatabase() {
     let statistics = JSON.stringify(new Statistics());
     let factory = new ethers.ContractFactory(database.abi, database.bytecode, metamask.signer);
     factory.deploy(database.creator, statistics).then(contract => {
       console.log(contract);
-    }).catch(error => {
-      console.error(error);
-      data.error = "error, create database";
     });
   }
-  database(callback) {
-    if (database.address == "") {
-      metamask.createDatabase();
-    } else {
-      metamask.database = new ethers.Contract(database.address, database.abi, metamask.signer);
-      callback();
-    }
-  }
-  binance(callback) {
+  binance() {
     ethereum.request({
       method: 'wallet_addEthereumChain',
       params: [{
@@ -61,14 +52,9 @@ export default class {
         chainName: "binance",
         rpcUrls: ['https://bsc-dataseed.binance.org/'],
       },],
-    }).then(() => {
-      callback();
-    }).catch(error => {
-      console.error(error);
-      data.error = "error, change network to binance";
     });
   }
-  testnet(callback) {
+  testnet() {
     ethereum.request({
       method: 'wallet_addEthereumChain',
       params: [{
@@ -76,23 +62,7 @@ export default class {
         chainName: "binance testnet",
         rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
       },],
-    }).then(() => {
-      callback();
-    }).catch(error => {
-      console.error(error);
-      data.error = "error, change network to binance testnet";
     });
-  }
-  load() {
-    if (metamask.chainId == 97) {
-      metamask.database(() => {
-        metamask.verify();
-      });
-    } else {
-      metamask.testnet(() => {
-        location.reload();
-      });
-    }
   }
   verify() {
     metamask.database.getAccount(metamask.account).then(_account => {
@@ -103,14 +73,12 @@ export default class {
       } else {
         data.statistics = JSON.parse(localStorage.getItem("statistics"));
         if (data.statistics == null) {
-          metamask.binance(() => {
-            data.setPage("createCharacter", 1);
-          });
+          localStorage.setItem("createCharacter", "true");
+          metamask.binance();
         } else {
           data.setPage("selectLeader", 1);
         }
       }
     });
   }
-
 }

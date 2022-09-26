@@ -8,11 +8,9 @@ export default class {
     this.newCharacter();
   }
   newCharacter() {
-    console.log(0);
     this.player = new Player(70, 50, 40, 80, Statistics());
   }
   touchEnded() {
-    console.log(1);
     if (touch.verify(5, 73, 36, 80)) {
       this.newCharacter();
     } else if (touch.verify(6, 83, 41, 89)) {
@@ -35,7 +33,6 @@ export default class {
         location.reload();
       }).catch(() => {
         this.transaction = false;
-        alert("error, create character");
       });
     }
   }

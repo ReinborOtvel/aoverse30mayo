@@ -23,6 +23,10 @@ class Data {
       window.page = new SelectLeader();
     } else if (name == "game") {
       window.page = new Game();
+    } else {
+      data.error = name;
+      window.page = undefined;
+      return;
     }
     key.setup();
     touch.setup();

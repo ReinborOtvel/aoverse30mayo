@@ -2,6 +2,7 @@
 import Player from "./player/Parts.js";
 export default class {
   setup() {
+    this.joinGroupTransaction = false;
     this.assignLeaders();
   }
   assignLeaderPlayer() {
@@ -12,12 +13,9 @@ export default class {
         let statistics = JSON.parse(_account.statistics);
         this.leaderPlayer = new Player(60, 65, 25, 50, statistics);
       } else {
-        alert("leader not found");
         this.randomLeader();
       }
-    }).catch(error => {
-      console.error(error);
-      alert("leader not found");
+    }).catch(() => {
       this.randomLeader();
     });
 
@@ -57,10 +55,12 @@ export default class {
     }
   }
   joinGroup() {
+    if (this.joinGroupTransaction == true) {
+      return;
+    }
+    this.joinGroupTransaction = true;
     let statistics = localStorage.getItem("statistics");
-    if (statistics == null) {
-      alert("character not found");
-    } else {
+    if (statistics != null) {
       metamask.database.createAccount(this.leaderAccount, statistics).then(() => {
         localStorage.removeItem("statistics");
         let interval = setInterval(() => {
@@ -70,8 +70,6 @@ export default class {
             if (owner == account) {
               clearInterval(interval);
               location.reload();
-            } else {
-              alert("wait 10 more seconds");
             }
           });
         }, 10000);
@@ -79,11 +77,11 @@ export default class {
     }
   }
   touchEnded() {
-    if (touch.verify(50, 13, 83, 19)) {
+    if (touch.verify(55, 8, 87, 15)) {
       this.randomLeader();
-    } else if (touch.verify(54, 23, 80, 30)) {
+    } else if (touch.verify(54, 18, 80, 25)) {
       this.writeLeader();
-    } else if (touch.verify(6, 78, 28, 86)) {
+    } else if (touch.verify(4, 78, 26, 86)) {
       this.joinGroup();
     }
   }
@@ -101,14 +99,15 @@ export default class {
       let _text = `${leader.slice(0, 6)} - ${members}`;
       utils.text(_text, 5, y, 5, "#fff");
     }
-    utils.textRect(" random leader", 50, 15, 35);
-    utils.textRect(" write leader", 53, 25, 29);
+    utils.text("random leader", 55, 15, 5, "#C548EE");
+    utils.text("write leader", 55, 25, 5, "#C548EE");
     if (this.leaderAccount != undefined) {
-      utils.text(`leader ${this.leaderAccount.slice(0, 7)}`, 350, 165, 30, "#fff");
+      utils.text("leader", 71, 60, 5, "#fff");
+      utils.text(`${this.leaderAccount.slice(0, 7)}`, 71, 70, 5, "#fff");
     }
     if (this.leaderPlayer != undefined) {
       this.leaderPlayer.draw();
     }
-    utils.textRect(" join group", 5, 80, 25);
+    utils.text("join group", 5, 85, 5, "#C548EE");
   }
 }
