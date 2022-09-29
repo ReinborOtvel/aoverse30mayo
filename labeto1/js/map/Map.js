@@ -28,9 +28,9 @@ export default class {
     }
     return false;
   }
-  interaction(x, y) {
+  touchEntity() {
     for (let tree of this.trees) {
-      if (tree.collision(x, y) == true) {
+      if (tree.collision(touch.x, touch.y)) {
         return tree;
       }
     }

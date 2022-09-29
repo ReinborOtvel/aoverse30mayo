@@ -1,5 +1,7 @@
 "use strict";
 import Parts from "./Parts.js";
+import MovementWheel from "./MovementWheel.js";
+import Interaction from "./Interaction.js";
 export default class {
   constructor(x, y, width, height, statistics, map) {
     this.x = x;
@@ -8,10 +10,15 @@ export default class {
     this.height = height;
     this.statistics = statistics;
     this.map = map;
+    this.interaction = new Interaction();
     this.parts = new Parts(this.x, this.y, this.width, this.height, this.statistics);
+    this.movementWheel = new MovementWheel(this);
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 1;
+    this.damage = 1;
+    this.rangeX = 4;
+    this.rangeY = 4;
   }
   afterY(entity) {
     let y = entity.y + entity.height;
@@ -77,6 +84,7 @@ export default class {
       this.yMove = 0;
     }
     this.animationMove();
+    this.interaction();
   }
   keyTyped() {
     if (key.key == "w") {
@@ -112,5 +120,7 @@ export default class {
   draw() {
     this.move();
     this.parts.draw();
+    this.movementWheel.draw();
+    this.interaction.draw();
   }
 }

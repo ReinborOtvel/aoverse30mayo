@@ -11,11 +11,11 @@ export default class Tree {
     this.effect = new Effect(this.x, this.y, this.width, this.height);
     this.life = 5;
   }
-  interaction(damage) {
+  interaction(entity) {
     if (this.life <= 0) {
       return false;
     }
-    this.life -= damage;
+    this.life -= entity.damage;
     this.effect.setActive();
     return this.life <= 0;
   }

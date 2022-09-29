@@ -13,12 +13,7 @@ export default class {
       if (owner == account) {
         let statistics = JSON.parse(_account.statistics);
         this.player = new Player(70, 70, 5, 10, statistics, this.map);
-      } else {
-        alert("character not found");
       }
-    }).catch(error => {
-      console.error(error);
-      alert("character not found");
     });
   }
   keyTyped() {
