@@ -12,12 +12,13 @@ export default class {
       let account = metamask.account.toUpperCase();
       if (owner == account) {
         page.player = new Player();
-        let x = 70;
-        let y = 70;
-        let width = 5;
-        let height = 10;
-        let statistics = JSON.parse(_account.statistics);
-        page.player.setup(x, y, width, height, statistics);
+        page.player.setup({
+          x: 70,
+          y: 70,
+          width: 5,
+          height: 10,
+          statistics: JSON.parse(_account.statistics),
+        });
       }
     });
   }
