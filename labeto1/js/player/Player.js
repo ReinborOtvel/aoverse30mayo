@@ -3,22 +3,16 @@ import Parts from "./Parts.js";
 import MovementWheel from "./MovementWheel.js";
 import Interaction from "./Interaction.js";
 export default class {
-  constructor(x, y, width, height, statistics, map) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
+  setup({ x, y, width, height, statistics }) {
+    this.setTransform(x, y, width, height);
     this.statistics = statistics;
-    this.map = map;
+    this.parts = new Parts();
     this.interaction = new Interaction();
-    this.parts = new Parts(this.x, this.y, this.width, this.height, this.statistics);
-    this.movementWheel = new MovementWheel(this);
+    this.movementWheel = new MovementWheel();
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 1;
     this.damage = 1;
-    this.rangeX = 4;
-    this.rangeY = 4;
   }
   afterY(entity) {
     let y = entity.y + entity.height;
@@ -29,7 +23,6 @@ export default class {
     this.y = y;
     this.width = width;
     this.height = height;
-    this.parts.setTransform(this.x, this.y, this.width, this.height);
   }
   animationMove() {
     if (this.yMove == 0 && this.xMove == 0) {
@@ -84,7 +77,7 @@ export default class {
       this.yMove = 0;
     }
     this.animationMove();
-    this.interaction();
+    this.interaction.touchEnded();
   }
   keyTyped() {
     if (key.key == "w") {
@@ -112,7 +105,7 @@ export default class {
     if (xSpeed != 0 || ySpeed != 0) {
       let newX = this.x + xSpeed;
       let newY = this.y + ySpeed;
-      if (!this.map.collision(newX, newY)) {
+      if (!page.map.collision(newX, newY)) {
         this.setTransform(newX, newY, this.width, this.height);
       }
     }

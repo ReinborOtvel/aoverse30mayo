@@ -1,5 +1,5 @@
 "use strict";
-import Player from "./player/Control.js";
+import Player from "./player/Player.js";
 import Map from "./map/Map.js";
 export default class {
   setup() {
@@ -11,40 +11,45 @@ export default class {
       let owner = _account.owner.toUpperCase();
       let account = metamask.account.toUpperCase();
       if (owner == account) {
+        page.player = new Player();
+        let x = 70;
+        let y = 70;
+        let width = 5;
+        let height = 10;
         let statistics = JSON.parse(_account.statistics);
-        this.player = new Player(70, 70, 5, 10, statistics, this.map);
+        page.player.setup(x, y, width, height, statistics);
       }
     });
   }
   keyTyped() {
-    if (this.player != undefined) {
-      this.player.keyTyped();
+    if (page.player != undefined) {
+      page.player.keyTyped();
     }
   }
   keyReleased() {
-    if (this.player != undefined) {
-      this.player.keyReleased();
+    if (page.player != undefined) {
+      page.player.keyReleased();
     }
   }
   touchStarted() {
-    if (this.player != undefined) {
-      this.player.touchStarted();
+    if (page.player != undefined) {
+      page.player.touchStarted();
     }
   }
   touchMoved() {
-    if (this.player != undefined) {
-      this.player.touchMoved();
+    if (page.player != undefined) {
+      page.player.touchMoved();
     }
   }
   touchEnded() {
-    if (this.player != undefined) {
-      this.player.touchEnded();
+    if (page.player != undefined) {
+      page.player.touchEnded();
     }
   }
   draw() {
-    this.map.draw();
-    if (this.player != undefined) {
-      this.player.draw();
+    page.map.draw();
+    if (page.player != undefined) {
+      page.player.draw();
     }
   }
 }
