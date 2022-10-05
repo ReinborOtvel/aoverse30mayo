@@ -6,13 +6,15 @@ export default class {
   setup({ x, y, width, height, statistics }) {
     this.setTransform(x, y, width, height);
     this.statistics = statistics;
-    this.parts = new Parts();
-    this.interaction = new Interaction();
-    this.movementWheel = new MovementWheel();
     this.xMove = 0;
     this.yMove = 0;
     this.speed = 1;
     this.damage = 1;
+    this.animation = "down";
+    this.sprite = 0;
+    this.parts = new Parts();
+    this.interaction = new Interaction();
+    this.movementWheel = new MovementWheel();
   }
   afterY(entity) {
     let y = entity.y + entity.height;
