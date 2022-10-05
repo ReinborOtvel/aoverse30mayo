@@ -1,5 +1,5 @@
 export default class {
-  constructor() {
+  setup() {
     this.image = engine.loadImage("./assets/attackButton.png");
     this.x = 85;
     this.y = 85;

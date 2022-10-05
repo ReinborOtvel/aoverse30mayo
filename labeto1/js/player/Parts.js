@@ -8,6 +8,11 @@ export default class {
     this.armor = new Armor();
     this.weapon = new Weapon();
   }
+  setup() {
+    this.head.setup();
+    this.armor.setup();
+    this.weapon.setup();
+  }
   draw() {
     this.armor.draw();
     this.head.draw();

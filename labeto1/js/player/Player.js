@@ -3,8 +3,13 @@ import Parts from "./Parts.js";
 import MovementWheel from "./MovementWheel.js";
 import Interaction from "./Interaction.js";
 export default class {
+  constructor() {
+    this.parts = new Parts();
+    this.interaction = new Interaction();
+    this.movementWheel = new MovementWheel();
+  }
   setup({ x, y, width, height, statistics }) {
-    this.setTransform(x, y, width, height);
+    this.setTransform({ x, y, width, height });
     this.statistics = statistics;
     this.xMove = 0;
     this.yMove = 0;
@@ -12,33 +17,45 @@ export default class {
     this.damage = 1;
     this.animation = "down";
     this.sprite = 0;
-    this.parts = new Parts();
-    this.interaction = new Interaction();
-    this.movementWheel = new MovementWheel();
+    this.rangeX = 5;
+    this.rangeY = 5;
+    this.parts.setup();
+    this.interaction.setup();
+    this.movementWheel.setup();
   }
-  afterY(entity) {
+  afterY({ entity }) {
     let y = entity.y + entity.height;
     return y > this.y;
   }
-  setTransform(x, y, width, height) {
+  setTransform({ x, y, width, height }) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
   }
+  newAnimation({ animation }) {
+    if (animation != this.animation) {
+      this.animation = animation;
+      this.sprite = 0;
+    }
+  }
   animationMove() {
     if (this.yMove == 0 && this.xMove == 0) {
-      this.parts.canNextSprite(false);
+      this.canNextSprite = false;
     } else {
-      this.parts.canNextSprite(true);
+      this.canNextSprite = true;
+      let animation = false;
       if (this.yMove == -1) {
-        this.parts.animation("up");
+        animation = "up";
       } else if (this.yMove == 1) {
-        this.parts.animation("down");
+        animation = "down";
       } else if (this.xMove == -1) {
-        this.parts.animation("left");
+        animation = "left";
       } else if (this.xMove == 1) {
-        this.parts.animation("right");
+        animation = "right";
+      }
+      if (animation != false) {
+        this.newAnimation({ animation });
       }
     }
   }
@@ -102,13 +119,19 @@ export default class {
     this.animationMove();
   }
   move() {
+    let { x, y, width, height } = this;
     let xSpeed = this.xMove * this.speed;
     let ySpeed = this.yMove * this.speed;
     if (xSpeed != 0 || ySpeed != 0) {
-      let newX = this.x + xSpeed;
-      let newY = this.y + ySpeed;
-      if (!page.map.collision(newX, newY)) {
-        this.setTransform(newX, newY, this.width, this.height);
+      x += xSpeed;
+      y += ySpeed;
+      if (!page.map.collision(x, y)) {
+        this.setTransform({
+          x,
+          y,
+          width,
+          height
+        });
       }
     }
   }

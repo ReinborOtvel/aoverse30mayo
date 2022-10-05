@@ -1,38 +1,38 @@
 export default class {
-  constructor(control) {
-    this.control = control;
+  setup() {
     this.x = 13;
     this.y = 78;
   }
   updatePosition() {
-    if (this.control.xMove == 0) {
+    let { xMove, yMove } = page.player;
+    if (xMove == 0) {
       this.x = 13;
-      if (this.control.yMove == 0) {
+      if (yMove == 0) {
         this.y = 78;
-      } else if (this.control.yMove == -1) {
+      } else if (yMove == -1) {
         this.y = 66;
-      } else if (this.control.yMove == 1) {
+      } else if (yMove == 1) {
         this.y = 90;
       }
-    } else if (this.control.xMove == -1) {
-      if (this.control.yMove == 0) {
+    } else if (xMove == -1) {
+      if (yMove == 0) {
         this.x = 6;
         this.y = 78;
-      } else if (this.control.yMove == -1) {
+      } else if (yMove == -1) {
         this.x = 8;
         this.y = 69;
-      } else if (this.control.yMove == 1) {
+      } else if (yMove == 1) {
         this.x = 8;
         this.y = 86;
       }
-    } else if (this.control.xMove == 1) {
-      if (this.control.yMove == 0) {
+    } else if (xMove == 1) {
+      if (yMove == 0) {
         this.x = 20;
         this.y = 78;
-      } else if (this.control.yMove == -1) {
+      } else if (yMove == -1) {
         this.x = 17;
         this.y = 68;
-      } else if (this.control.yMove == 1) {
+      } else if (yMove == 1) {
         this.x = 17;
         this.y = 88;
       }
