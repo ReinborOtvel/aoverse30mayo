@@ -1,10 +1,13 @@
 export default class {
+  constructor(main) {
+    this.main = main;
+  }
   setup() {
     this.x = 13;
     this.y = 78;
   }
   updatePosition() {
-    let { xMove, yMove } = page.player;
+    let { xMove, yMove } = this.main;
     if (xMove == 0) {
       this.x = 13;
       if (yMove == 0) {

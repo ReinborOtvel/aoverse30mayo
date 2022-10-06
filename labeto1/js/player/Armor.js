@@ -1,11 +1,14 @@
 "use strict";
 export default class {
+  constructor(main) {
+    this.main = main;
+  }
   setup() {
     this.setImages();
   }
   setImages() {
     this.images = { down: [], up: [], left: [], right: [] };
-    let index = page.player.statistics.armor;
+    let index = this.main.statistics.armor;
     let url = `./player/armor/${index}.png`;
     engine.loadImage(url, image => {
       let width = 25;
@@ -24,7 +27,7 @@ export default class {
     });
   }
   draw() {
-    let { animation, sprite, x, y, width, height } = page.player;
+    let { animation, sprite, x, y, width, height } = this.main;
     let image = this.images[animation][sprite];
     x -= width / 2;
     y -= height / 2;

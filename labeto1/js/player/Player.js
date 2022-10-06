@@ -3,10 +3,11 @@ import Parts from "./Parts.js";
 import MovementWheel from "./MovementWheel.js";
 import Interaction from "./Interaction.js";
 export default class {
-  constructor() {
-    this.parts = new Parts();
-    this.interaction = new Interaction();
-    this.movementWheel = new MovementWheel();
+  constructor({ map }) {
+    this.map = map;
+    this.parts = new Parts(this);
+    this.interaction = new Interaction(this);
+    this.movementWheel = new MovementWheel(this);
   }
   setup({ x, y, width, height, statistics }) {
     this.setTransform({ x, y, width, height });

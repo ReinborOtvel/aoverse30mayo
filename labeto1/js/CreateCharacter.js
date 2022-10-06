@@ -1,5 +1,5 @@
 "use strict";
-import Player from "./player/Parts.js";
+import Player from "./player/Interface.js";
 import Statistics from "./player/Statistics.js";
 import database from "./database.js";
 export default class {
@@ -8,7 +8,14 @@ export default class {
     this.newCharacter();
   }
   newCharacter() {
-    this.player = new Player(70, 50, 40, 80, Statistics());
+    this.player = new Player();
+    this.player.setup({
+      x: 70,
+      y: 50,
+      width: 40,
+      height: 80,
+      statistics: Statistics(),
+    });
   }
   touchEnded() {
     if (touch.verify(5, 73, 36, 80)) {

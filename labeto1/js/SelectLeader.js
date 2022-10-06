@@ -1,5 +1,5 @@
 "use strict";
-import Player from "./player/Parts.js";
+import Player from "./player/Interface.js";
 export default class {
   setup() {
     this.joinGroupTransaction = false;
@@ -10,8 +10,14 @@ export default class {
       let owner = _account.owner.toUpperCase();
       let leader = this.leaderAccount.toUpperCase();
       if (owner == leader) {
-        let statistics = JSON.parse(_account.statistics);
-        this.leaderPlayer = new Player(60, 65, 25, 50, statistics);
+        this.leaderPlayer = new Player();
+        this.leaderPlayer.setup({
+          x: 60,
+          y: 65,
+          width: 25,
+          height: 50,
+          statistics: JSON.parse(_account.statistics),
+        });
       } else {
         this.randomLeader();
       }

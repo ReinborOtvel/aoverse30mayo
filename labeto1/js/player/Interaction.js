@@ -1,30 +1,30 @@
 export default class {
+  constructor(main) {
+    this.main = main;
+  }
   setup() {
     this.image = engine.loadImage("./assets/attackButton.png");
-    this.x = 85;
-    this.y = 85;
-    this.width = 10;
-    this.height = 10;
   }
   cutDownTrees() {
-    for (let tree of page.map.trees) {
+    for (let tree of this.main.map.trees) {
 
     }
   }
   touchEnded() {
-    let entity = page.map.touchEntity();
+    let { map, rangeX, rangeY, x, y } = this.main;
+    let entity = map.touchEntity();
     if (entity == false) {
       return;
     }
-    let xInit = entity.x - page.player.rangeX;
-    let yInit = entity.y - page.player.rangeY;
-    let xEnd = (entity.x + entity.width) + page.player.rangeX;
-    let yEnd = (entity.y + entity.height) + page.player.rangeY;
-    if (page.player.x >= xInit && page.player.x <= xEnd && page.player.y >= yInit && page.player.y <= yEnd) {
-      entity.interaction(page.player);
+    let xInit = entity.x - rangeX;
+    let yInit = entity.y - rangeY;
+    let xEnd = (entity.x + entity.width) + rangeX;
+    let yEnd = (entity.y + entity.height) + rangeY;
+    if (x >= xInit && x <= xEnd && y >= yInit && y <= yEnd) {
+      entity.interaction(this.main);
     }
   }
   draw() {
-    utils.image(this.image, this.x, this.y, this.width, this.height);
+    utils.image(this.image, 85, 85, 10, 10);
   }
 }

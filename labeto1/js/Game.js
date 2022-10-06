@@ -11,7 +11,9 @@ export default class {
       let owner = _account.owner.toUpperCase();
       let account = metamask.account.toUpperCase();
       if (owner == account) {
-        page.player = new Player();
+        page.player = new Player({
+          map: this.map,
+        });
         page.player.setup({
           x: 70,
           y: 70,
