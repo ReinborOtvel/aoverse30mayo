@@ -20,9 +20,29 @@ export default class {
     this.sprite = 0;
     this.rangeX = 5;
     this.rangeY = 5;
+    this.canNextSprite = false;
     this.parts.setup();
     this.interaction.setup();
     this.movementWheel.setup();
+    setInterval(() => {
+      this.nextSprite();
+    }, 200);
+  }
+  nextSprite() {
+    if (!this.canNextSprite) {
+      return;
+    }
+    let length;
+    if (this.animation == "down" || this.animation == "up") {
+      length = 5;
+    } else if (this.animation == "left" || this.animation == "right") {
+      length = 4;
+    }
+    if (this.sprite < length) {
+      this.sprite++;
+    } else {
+      this.sprite = 0;
+    }
   }
   afterY({ entity }) {
     let y = entity.y + entity.height;

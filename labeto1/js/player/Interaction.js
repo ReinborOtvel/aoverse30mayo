@@ -12,7 +12,8 @@ export default class {
   }
   touchEnded() {
     let { map, rangeX, rangeY, x, y } = this.main;
-    let entity = map.touchEntity();
+    console.log(x, y);
+    let entity = map.positionEntity(x, y);
     if (entity == false) {
       return;
     }
@@ -25,6 +26,6 @@ export default class {
     }
   }
   draw() {
-    utils.image(this.image, 85, 85, 10, 10);
+    utils.image(this.image, 88, 85, 8, 10);
   }
 }
