@@ -4,15 +4,15 @@ export default class {
     engine.touchMoved = touch.touchMoved;
     engine.touchEnded = touch.touchEnded;
   }
-  verify(xInit, yInit, xEnd, yEnd) {
+  verify({ xInit, yInit, xEnd, yEnd }) {
     return touch.x >= xInit &&
       touch.x <= xEnd &&
       touch.y >= yInit &&
       touch.y <= yEnd;
   }
   set() {
-    touch.x = utils.percentagePixelsWidth(engine.mouseX);
-    touch.y = utils.percentagePixelsHeight(engine.mouseY);
+    touch.x = utils.percentagePixelsWidth({ percentage: engine.mouseX });
+    touch.y = utils.percentagePixelsHeight({ percentage: engine.mouseY });
   }
   touchStarted() {
     touch.set();

@@ -23,10 +23,6 @@ class Data {
       window.page = new SelectLeader();
     } else if (name == "game") {
       window.page = new Game();
-    } else {
-      data.error = name;
-      window.page = undefined;
-      return;
     }
     key.setup();
     touch.setup();
@@ -38,12 +34,32 @@ class Data {
     metamask.setup();
   }
   draw() {
-    utils.rect(0, 0, 100, 100, "#2B2B2B");
+    utils.rect({
+      transform: {
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 100
+      },
+      color: "#2B2B2B"
+    });
     if (window.page != undefined) {
       page.draw();
     } else {
-      utils.text("Loading", 5, 50, 25, "#fff");
-      utils.text(data.error, 5, 80, 5, "#EE4848");
+      utils.text({
+        text: "Loading",
+        x: 5,
+        y: 50,
+        size: 25,
+        color: "#fff"
+      });
+      utils.text({
+        text: data.error,
+        x: 5,
+        y: 80,
+        size: 5,
+        color: "#EE4848"
+      });
     }
   }
 }
