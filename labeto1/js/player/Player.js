@@ -84,25 +84,60 @@ export default class {
     this.touchMoved();
   }
   touchMoved() {
-    if (touch.verify(3, 73, 8, 82)) {
+    if (touch.verify({
+      xInit:3, 
+      yInit:73,
+      xEnd:8,
+      yEnd:82
+    })) {
       this.xMove = -1;
       this.yMove = 0;
-    } else if (touch.verify(5, 64, 10, 73)) {
+    } else if (touch.verify({
+      xInit:5,
+      yInit:64,
+      xEnd:10,
+      yEnd:73
+    })) {
       this.xMove = -1;
       this.yMove = -1;
-    } else if (touch.verify(10, 61, 15, 70)) {
+    } else if (touch.verify({
+      xInit:10,
+      yInit:61,
+      xEnd:15,
+      yEnd:70
+    })) {
       this.xMove = 0;
       this.yMove = -1;
-    } else if (touch.verify(14, 63, 19, 72)) {
+    } else if (touch.verify({
+      xInit:14,
+      yInit:63,
+      xEnd:19,
+      yEnd:72
+    })) {
       this.xMove = 1;
       this.yMove = -1;
-    } else if (touch.verify(17, 73, 22, 82)) {
+    } else if (touch.verify({
+      xInit:17,
+      yInit:73,
+      xEnd:22,
+      yEnd:82
+    })) {
       this.xMove = 1;
       this.yMove = 0;
-    } else if (touch.verify(14, 83, 19, 92)) {
+    } else if (touch.verify({
+      xInit:14,
+      yInit:83,
+      xEnd:19,
+      yEnd:92
+    })) {
       this.xMove = 1;
       this.yMove = 1;
-    } else if (touch.verify(10, 85, 15, 94)) {
+    } else if (touch.verify({
+      xInit:10,
+      yInit:85,
+      xEnd:15,
+      yEnd:94
+    })) {
       this.xMove = 0;
       this.yMove = 1;
     } else if (touch.verify(5, 81, 10, 90)) {
