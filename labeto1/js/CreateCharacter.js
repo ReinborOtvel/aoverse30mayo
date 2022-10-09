@@ -18,9 +18,19 @@ export default class {
     });
   }
   touchEnded() {
-    if (touch.verify(5, 73, 36, 80)) {
+    if (touch.verify({
+      xInit: 5,
+      yInit: 73,
+      xEnd: 36,
+      yEnd: 80
+    })) {
       this.newCharacter();
-    } else if (touch.verify(6, 83, 41, 89)) {
+    } else if (touch.verify({
+      xInit: 6,
+      yInit: 83,
+      xEnd: 41,
+      yEnd: 89
+    })) {
       this.createCharacter();
     }
   }
@@ -45,16 +55,64 @@ export default class {
   }
   drawStatistics() {
     let { name, strength, endurance, health, speed } = this.player.statistics;
-    utils.text(`name ${name}`, 5, 25, 5, "#fff");
-    utils.text(`strength ${strength}`, 5, 35, 5, "#fff");
-    utils.text(`endurance ${endurance}`, 5, 45, 5, "#fff");
-    utils.text(`health ${health}`, 5, 55, 5, "#fff");
-    utils.text(`speed ${speed}`, 5, 65, 5, "#fff");
+    utils.text({
+      text: `name ${name}`,
+      x: 5,
+      y: 25,
+      size: 5,
+      color: "#fff"
+    });
+    utils.text({
+      text: `strength ${strength}`,
+      x: 5,
+      y: 35,
+      size: 5,
+      color: "#fff"
+    });
+    utils.text({
+      text: `endurance ${endurance}`,
+      x: 5,
+      y: 45,
+      size: 5,
+      color: "#fff"
+    });
+    utils.text({
+      text: `health ${health}`,
+      x: 5,
+      y: 55,
+      size: 5,
+      color: "#fff"
+    });
+    utils.text({
+      text: `speed ${speed}`,
+      x: 5,
+      y: 65,
+      size: 5,
+      color: "#fff"
+    });
   }
   draw() {
-    utils.text("character", 5, 15, 5, "#fff");
-    utils.text("new character", 5, 80, 5, "#C548EE");
-    utils.text("create character", 5, 90, 5, "#C548EE");
+    utils.text({
+      text: "character",
+      x: 5,
+      y: 15,
+      size: 5,
+      color: "#fff"
+    });
+    utils.text({
+      text: "new character",
+      x: 5,
+      y: 80,
+      size: 5,
+      color: "#C548EE"
+    });
+    utils.text({
+      text: "create character",
+      x: 5,
+      y: 90,
+      size: 5,
+      color: "#C548EE"
+    });
     if (this.player != undefined) {
       this.drawStatistics();
       this.player.draw();

@@ -83,17 +83,44 @@ export default class {
     }
   }
   touchEnded() {
-    if (touch.verify(55, 8, 87, 15)) {
+    if (touch.verify({
+      xInit: 55,
+      yInit: 8,
+      xEnd: 87,
+      yEnd: 15
+    })) {
       this.randomLeader();
-    } else if (touch.verify(54, 18, 80, 25)) {
+    } else if (touch.verify({
+      xInit: 54,
+      yInit: 18,
+      xEnd: 80,
+      yEnd: 25
+    })) {
       this.writeLeader();
-    } else if (touch.verify(4, 78, 26, 86)) {
+    } else if (touch.verify({
+      xInit: 4,
+      yInit: 78,
+      xEnd: 26,
+      yEnd: 86
+    })) {
       this.joinGroup();
     }
   }
   draw() {
-    utils.text(`total leaders ${this.leaders.length}`, 5, 15, 5, "#fff");
-    utils.text("leaders - members", 5, 25, 5, "#fff");
+    utils.text({
+      text: `total leaders ${this.leaders.length}`,
+      x: 5,
+      y: 15,
+      size: 5,
+      color: "#fff"
+    });
+    utils.text({
+      text: "leaders - members",
+      x: 5,
+      y: 25,
+      size: 5,
+      color: "#fff"
+    });
     for (let i = 0; i <= 3; i++) {
       let leader = this.leaders[i];
       if (leader == undefined) {
