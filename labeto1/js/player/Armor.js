@@ -1,9 +1,6 @@
 "use strict";
 export default class {
-  constructor(main) {
-    this.main = main;
-  }
-  setup() {
+  constructor(index) {
     this.setImages();
   }
   setImages() {

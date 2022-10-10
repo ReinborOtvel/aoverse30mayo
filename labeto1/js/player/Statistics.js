@@ -7,7 +7,7 @@ export default function () {
     if (i % 2 == 0) {
       characters = "qwrtypsdfghjklzxcvbnm";
     }
-    name += window.engine.random([...characters]);
+    name += window.data.engine.random([...characters]);
   }
   return {
     name,
