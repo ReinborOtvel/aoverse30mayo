@@ -7,8 +7,8 @@ export default class {
   }
   draw() {
     let { x, y, width } = this.transform.percentage;
-    engine.textSize(width);
-    engine.fill(this.color);
-    engine.text(this.text, x, y);
+    window.data.engine.textSize(width);
+    window.data.engine.fill(this.color);
+    window.data.engine.text(this.text, x, y);
   }
 }

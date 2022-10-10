@@ -1,4 +1,5 @@
 "use strict";
+import Range from "../Range.js";
 export default function () {
   let name = "";
   for (let i = 0; i <= 5; i++) {
@@ -6,16 +7,16 @@ export default function () {
     if (i % 2 == 0) {
       characters = "qwrtypsdfghjklzxcvbnm";
     }
-    name += engine.random([...characters]);
+    name += window.engine.random([...characters]);
   }
   return {
     name,
-    head: utils.range(1, 236),
-    armor: utils.range(1, 350),
-    weapon: utils.range(1, 89),
-    strength: utils.range(20, 100),
-    endurance: utils.range(20, 100),
-    health: utils.range(20, 100),
-    speed: utils.range(20, 100),
+    head: Range(1, 236),
+    armor: Range(1, 350),
+    weapon: Range(1, 89),
+    strength: Range(20, 100),
+    endurance: Range(20, 100),
+    health: Range(20, 100),
+    speed: Range(20, 100),
   };
 }

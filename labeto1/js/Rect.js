@@ -6,7 +6,7 @@ export default class {
   }
   draw() {
     let { x, y, width, height } = this.transform.percentage;
-    engine.fill(this.color);
-    engine.rect(x, y, width, height);
+    window.data.engine.fill(this.color);
+    window.data.engine.rect(x, y, width, height);
   }
 }

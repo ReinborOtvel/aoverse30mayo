@@ -3,7 +3,7 @@ import Parts from "./Parts.js";
 import MovementWheel from "./MovementWheel.js";
 import Interaction from "./Interaction.js";
 export default class {
-  constructor({ map }) {
+  constructor(map) {
     this.map = map;
     this.parts = new Parts(this);
     this.interaction = new Interaction(this);
@@ -85,58 +85,58 @@ export default class {
   }
   touchMoved() {
     if (touch.verify({
-      xInit:3, 
-      yInit:73,
-      xEnd:8,
-      yEnd:82
+      xInit: 3,
+      yInit: 73,
+      xEnd: 8,
+      yEnd: 82
     })) {
       this.xMove = -1;
       this.yMove = 0;
     } else if (touch.verify({
-      xInit:5,
-      yInit:64,
-      xEnd:10,
-      yEnd:73
+      xInit: 5,
+      yInit: 64,
+      xEnd: 10,
+      yEnd: 73
     })) {
       this.xMove = -1;
       this.yMove = -1;
     } else if (touch.verify({
-      xInit:10,
-      yInit:61,
-      xEnd:15,
-      yEnd:70
+      xInit: 10,
+      yInit: 61,
+      xEnd: 15,
+      yEnd: 70
     })) {
       this.xMove = 0;
       this.yMove = -1;
     } else if (touch.verify({
-      xInit:14,
-      yInit:63,
-      xEnd:19,
-      yEnd:72
+      xInit: 14,
+      yInit: 63,
+      xEnd: 19,
+      yEnd: 72
     })) {
       this.xMove = 1;
       this.yMove = -1;
     } else if (touch.verify({
-      xInit:17,
-      yInit:73,
-      xEnd:22,
-      yEnd:82
+      xInit: 17,
+      yInit: 73,
+      xEnd: 22,
+      yEnd: 82
     })) {
       this.xMove = 1;
       this.yMove = 0;
     } else if (touch.verify({
-      xInit:14,
-      yInit:83,
-      xEnd:19,
-      yEnd:92
+      xInit: 14,
+      yInit: 83,
+      xEnd: 19,
+      yEnd: 92
     })) {
       this.xMove = 1;
       this.yMove = 1;
     } else if (touch.verify({
-      xInit:10,
-      yInit:85,
-      xEnd:15,
-      yEnd:94
+      xInit: 10,
+      yInit: 85,
+      xEnd: 15,
+      yEnd: 94
     })) {
       this.xMove = 0;
       this.yMove = 1;

@@ -6,13 +6,13 @@ import Game from "./Game.js";
 class Data {
   constructor() {
     new p5(engine => {
-      window.engine = engine;
-      engine.setup = () => this.setup();
+      this.engine = engine;
+      this.engine.setup = () => this.setup();
     });
   }
   setPage(name, fps) {
-    engine.createCanvas(852, 480);
-    engine.frameRate(fps);
+    this.engine.createCanvas(852, 480);
+    this.engine.frameRate(fps);
     switch (name) {
       case "loading":
         this.page = new Loading();
@@ -27,7 +27,7 @@ class Data {
         this.page = new Game();
         break;
     }
-    engine.draw = () => this.page.draw();
+    this.engine.draw = () => this.page.draw();
   }
   setup() {
     this.setPage("loading", 1);

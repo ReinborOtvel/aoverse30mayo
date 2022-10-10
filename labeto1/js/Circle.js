@@ -5,6 +5,6 @@ export default class {
   }
   draw() {
     let { x, y, width: diameter } = this.transform.percentage;
-    engine.circle(x, y, diameter);
+    window.data.engine.circle(x, y, diameter);
   }
 }

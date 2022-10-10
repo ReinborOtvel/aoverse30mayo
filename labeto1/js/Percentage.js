@@ -1,7 +1,7 @@
 export default class {
   constructor() {
-    this.horizontal = engine.width / 100;
-    this.vertical = engine.height / 100;
+    this.horizontal = window.data.engine.width / 100;
+    this.vertical = window.data.engine.height / 100;
   }
   width(percentage) {
     return this.horizontal * percentage;
