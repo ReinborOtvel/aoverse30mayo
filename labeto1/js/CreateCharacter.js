@@ -2,120 +2,67 @@
 import Player from "./player/Interface.js";
 import Statistics from "./player/Statistics.js";
 import database from "./database.js";
+import Text from "./Text.js";
+import ChangingText from "./ChangingText.js";
 export default class {
-  setup() {
+  constructor() {
     this.transaction = false;
-    this.newCharacter();
+    this.text = [
+      new Text(5, 15, 5, "#fff", "character"),
+      new Text(5, 80, 5, "#C548EE", "new character"),
+      new Text(5, 90, 5, "#C548EE", "create character"),
+    ];
+    this.changingText = {
+      name: new ChangingText(5, 25, 5, "#fff"),
+      strength: new ChangingText(5, 35, 5, "#fff"),
+      endurance: new ChangingText(5, 45, 5, "#fff"),
+      health: new ChangingText(5, 55, 5, "#fff"),
+      speed: new ChangingText(5, 65, 5, "#fff"),
+    };
+    this.new();
   }
-  newCharacter() {
-    this.player = new Player();
-    this.player.setup({
-      x: 70,
-      y: 50,
-      width: 40,
-      height: 80,
-      statistics: Statistics(),
-    });
+  new() {
+    this.player = new Player(70, 50, 40, 80, Statistics());
   }
   touchEnded() {
-    if (touch.verify({
-      xInit: 5,
-      yInit: 73,
-      xEnd: 36,
-      yEnd: 80
-    })) {
+    if (touch.verify(5, 73, 36, 80)) {
       this.newCharacter();
-    } else if (touch.verify({
-      xInit: 6,
-      yInit: 83,
-      xEnd: 41,
-      yEnd: 89
-    })) {
+    } else if (touch.verify(6, 83, 41, 89)) {
       this.createCharacter();
     }
   }
-  createCharacter() {
-    if (this.transaction == false) {
-      this.transaction = true;
-      ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [{
-          from: metamask.account,
-          to: database.creator,
-          value: ethers.utils.parseEther(database.ticket)._hex,
-          chainId: ethers.utils.hexValue(56),
-        }],
-      }).then(() => {
-        localStorage.setItem("statistics", JSON.stringify(this.player.statistics));
-        location.reload();
-      }).catch(() => {
-        this.transaction = false;
-      });
-    }
+  create() {
+    if (this.transaction) return;
+    this.transaction = true;
+    window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [{
+        from: window.data.metamask.account,
+        to: database.creator,
+        value: window.ethers.utils.parseEther(database.ticket)._hex,
+        chainId: window.ethers.utils.hexValue(56),
+      }],
+    }).then(() => {
+      let statistics = JSON.stringify(this.player.statistics);
+      window.localStorage.setItem("statistics", statistics);
+      window.location.reload();
+    }).catch(() => {
+      this.transaction = false;
+    });
   }
   drawStatistics() {
     let { name, strength, endurance, health, speed } = this.player.statistics;
-    utils.text({
-      text: `name ${name}`,
-      x: 5,
-      y: 25,
-      size: 5,
-      color: "#fff"
-    });
-    utils.text({
-      text: `strength ${strength}`,
-      x: 5,
-      y: 35,
-      size: 5,
-      color: "#fff"
-    });
-    utils.text({
-      text: `endurance ${endurance}`,
-      x: 5,
-      y: 45,
-      size: 5,
-      color: "#fff"
-    });
-    utils.text({
-      text: `health ${health}`,
-      x: 5,
-      y: 55,
-      size: 5,
-      color: "#fff"
-    });
-    utils.text({
-      text: `speed ${speed}`,
-      x: 5,
-      y: 65,
-      size: 5,
-      color: "#fff"
-    });
+    this.changingText.name.draw(`name ${name}`);
+    this.changingText.strength.draw(`strength ${strength}`);
+    this.changingText.endurance.draw(`endurance ${endurance}`);
+    this.changingText.health.draw(`health ${health}`);
+    this.changingText.speed.draw(`speed ${speed}`);
   }
   draw() {
-    utils.text({
-      text: "character",
-      x: 5,
-      y: 15,
-      size: 5,
-      color: "#fff"
-    });
-    utils.text({
-      text: "new character",
-      x: 5,
-      y: 80,
-      size: 5,
-      color: "#C548EE"
-    });
-    utils.text({
-      text: "create character",
-      x: 5,
-      y: 90,
-      size: 5,
-      color: "#C548EE"
-    });
-    if (this.player != undefined) {
-      this.drawStatistics();
-      this.player.draw();
+    for (let text of this.text) {
+      text.draw();
     }
+    this.drawStatistics();
+    this.player.draw();
   }
 }

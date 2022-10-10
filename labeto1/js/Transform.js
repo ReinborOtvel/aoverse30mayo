@@ -7,25 +7,25 @@ export default class {
     this.height = new PercentageNumber(height);
   }
   set transform({ x, y, width, height }) {
-    this.x.set(x);
-    this.y.set(y);
-    this.width.set(width);
-    this.height.set(height);
+    this.x.number = x;
+    this.y.number = y;
+    this.width.number = width;
+    this.height.number = height;
   }
   get number() {
     return {
-      x: this.x.get(),
-      y: this.y.get(),
-      width: this.width.get(),
-      height: this.height.get(),
+      x: this.x.number,
+      y: this.y.number,
+      width: this.width.number,
+      height: this.height.number,
     }
   }
   get percentage() {
     return {
-      x: this.x.percentageWidth(),
-      y: this.y.percentageHeight(),
-      width: this.width.percentageWidth(),
-      height: this.height.percentageHeight(),
+      x: this.x.width,
+      y: this.y.height,
+      width: this.width.width,
+      height: this.height.height,
     }
   }
 }

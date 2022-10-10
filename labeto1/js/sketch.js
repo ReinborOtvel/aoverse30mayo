@@ -7,7 +7,7 @@ class Data {
   constructor() {
     new p5(engine => {
       window.engine = engine;
-      engine.setup = this.setup;
+      engine.setup = () => this.setup();
     });
   }
   setPage(name, fps) {
@@ -27,8 +27,7 @@ class Data {
         this.page = new Game();
         break;
     }
-    this.page.setup();
-    engine.draw = this.page.draw;
+    engine.draw = () => this.page.draw();
   }
   setup() {
     this.setPage("loading", 1);

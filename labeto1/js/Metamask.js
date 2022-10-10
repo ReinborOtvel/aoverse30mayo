@@ -2,44 +2,49 @@
 import database from "./database.js";
 import Statistics from "./player/Statistics.js";
 export default class {
-  setup() {
-    if (navigator.onLine == false) {
-      return;
-    } if (window.ethereum == undefined) {
-      return;
+  constructor() {
+    window.ethereum.on('chainChanged', () => {
+      window.location.reload();
+    });
+    this.provider = new window.ethers.providers.Web3Provider(window.ethereum);
+    this.provider.send("eth_requestAccounts", []).then(accounts => {
+      this.account = accounts[0];
+      this.signer = this.provider.getSigner();
+      this.signer.getChainId().then(chainId => {
+        switch (chainId) {
+          case 97:
+            this.chainId97();
+            break;
+          case 56:
+            this.chainId56();
+            break;
+          default:
+            this.testnet();
+            break;
+        }
+      });
+    });
+  }
+  chainId56() {
+    let createCharacter = window.localStorage.getItem("createCharacter");
+    if (createCharacter == "true") {
+      window.localStorage.removeItem("createCharacter");
+      window.data.setPage("createCharacter", 1);
     } else {
-      ethereum.on('chainChanged', () => {
-        location.reload();
-      });
-      metamask.provider = new ethers.providers.Web3Provider(ethereum);
-      metamask.provider.send("eth_requestAccounts", []).then(accounts => {
-        metamask.account = accounts[0];
-        metamask.signer = metamask.provider.getSigner();
-        metamask.signer.getChainId().then(chainId => {
-          if (chainId == 97) {
-            if (database.address == "") {
-              metamask.createDatabase();
-            } else {
-              metamask.database = new ethers.Contract(database.address, database.abi, metamask.signer);
-              metamask.verify();
-            }
-          } else if (chainId == 56) {
-            if (localStorage.getItem("createCharacter") == "true") {
-              localStorage.removeItem("createCharacter");
-              data.setPage("createCharacter", 1);
-            } else {
-              metamask.testnet();
-            }
-          } else {
-            metamask.testnet();
-          }
-        });
-      });
+      this.testnet();
+    }
+  }
+  chainId97() {
+    if (database.address == "") {
+      this.createDatabase();
+    } else {
+      this.database = new window.ethers.Contract(database.address, database.abi, this.signer);
+      this.verify();
     }
   }
   createDatabase() {
-    let statistics = JSON.stringify(new Statistics());
-    let factory = new ethers.ContractFactory(database.abi, database.bytecode, metamask.signer);
+    let statistics = JSON.stringify(Statistics());
+    let factory = new ethers.ContractFactory(database.abi, database.bytecode, this.signer);
     factory.deploy(database.creator, statistics).then(contract => {
       console.log(contract);
     });
@@ -65,18 +70,19 @@ export default class {
     });
   }
   verify() {
-    metamask.database.getAccount(metamask.account).then(_account => {
-      let owner = _account.owner.toUpperCase();
-      let account = metamask.account.toUpperCase();
+    this.database.getAccount(this.account).then(({ owner }) => {
+      owner = owner.toUpperCase();
+      let account = this.account.toUpperCase();
       if (owner == account) {
-        data.setPage("game", 20);
+        window.data.setPage("game", 20);
       } else {
-        data.statistics = JSON.parse(localStorage.getItem("statistics"));
-        if (data.statistics == null) {
-          localStorage.setItem("createCharacter", "true");
-          metamask.binance();
+        let statistics = window.localStorage.getItem("statistics");
+        window.data.statistics = JSON.parse(statistics);
+        if (window.data.statistics == null) {
+          window.localStorage.setItem("createCharacter", "true");
+          this.binance();
         } else {
-          data.setPage("selectLeader", 1);
+          window.data.setPage("selectLeader", 1);
         }
       }
     });
