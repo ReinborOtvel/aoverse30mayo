@@ -1,20 +1,18 @@
 "use strict";
+import AnimationHorizontal from "../AnimationHorizontal.js";
 export default class {
-  constructor(main) {
-    this.main = main;
+  constructor(index, x, y, width, height) {
+    this.sprites(index, x, y, width, height);
   }
-  setup() {
-    this.setImages();
-  }
-  setImages() {
-    this.images = {};
-    let index = this.main.statistics.head;
+  sprites(index, x, y, width, height) {
     let url = `./player/head/${index}.png`;
+    let animations = ["down", "right", "left", "up"];
+    let lengths = [1, 1, 1, 1];
+    this.animation = new Animation(x, y, width, height, url, 17, 17, animations, lengths);
     engine.loadImage(url, image => {
       let width = 17;
       let y = 0;
       let height = 17;
-      let animations = ["down", "right", "left", "up"];
       for (let h in animations) {
         let animation = animations[h];
         let x = h * width;

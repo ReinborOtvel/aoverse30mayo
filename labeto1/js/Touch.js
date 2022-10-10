@@ -1,36 +1,32 @@
+import PercentagePixel from "./PercentagePixel.js";
 export default class {
-  setup() {
-    engine.touchStarted = touch.touchStarted;
-    engine.touchMoved = touch.touchMoved;
-    engine.touchEnded = touch.touchEnded;
+  constructor() {
+    this.percentagePixel = new PercentagePixel();
+    window.data.engine.touchStarted = this.touchStarted;
+    window.data.engine.touchMoved = this.touchMoved;
+    window.data.engine.touchEnded = this.touchEnded;
   }
-  verify({ xInit, yInit, xEnd, yEnd }) {
-    return touch.x >= xInit &&
-      touch.x <= xEnd &&
-      touch.y >= yInit &&
-      touch.y <= yEnd;
+  verify(xInit, yInit, xEnd, yEnd) {
+    return this.x >= xInit &&
+      this.x <= xEnd &&
+      this.y >= yInit &&
+      this.y <= yEnd;
   }
   set() {
-    touch.x = utils.percentagePixelsWidth({ percentage: engine.mouseX });
-    touch.y = utils.percentagePixelsHeight({ percentage: engine.mouseY });
+    this.x = this.percentagePixel.width(window.data.engine.mouseX);
+    this.y = this.percentagePixel.height(window.data.engine.mouseY);
   }
   touchStarted() {
-    touch.set();
-    if (page.touchStarted != undefined) {
-      page.touchStarted();
-    }
-    console.log(touch.x, touch.y);
+    this.set();
+    window.data.page.touchStarted();
+    console.log(this.x, this.y);
   }
   touchMoved() {
     touch.set();
-    if (page.touchMoved != undefined) {
-      page.touchMoved();
-    }
+    window.data.page.touchMoved();
   }
   touchEnded() {
     touch.set();
-    if (page.touchEnded != undefined) {
-      page.touchEnded();
-    }
+    window.data.page.touchEnded();
   }
 }

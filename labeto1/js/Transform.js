@@ -6,7 +6,7 @@ export default class {
     this.width = new PercentageNumber(width);
     this.height = new PercentageNumber(height);
   }
-  set transform({ x, y, width, height }) {
+  setTransform(x, y, width, height) {
     this.x.number = x;
     this.y.number = y;
     this.width.number = width;

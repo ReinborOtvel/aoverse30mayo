@@ -5,15 +5,11 @@ export default class {
     engine.keyReleased = key.keyReleased;
   }
   keyTyped({ key }) {
-    window.key.key = key;
-    if (page.keyTyped != undefined) {
-      page.keyTyped();
-    }
+    this.key = key;
+    window.data.page.keyTyped();
   }
   keyReleased({ key }) {
-    window.key.key = key;
-    if (page.keyReleased != undefined) {
-      page.keyReleased();
-    }
+    this.key = key;
+    window.data.page.keyReleased();
   }
 }

@@ -1,7 +1,7 @@
 import Text from "./Text.js";
 export default class {
-  constructor(x, y, width, color) {
-    this.text = new Text(x, y, width, undefined, color);
+  constructor(x, y, size, color) {
+    this.text = new Text(x, y, size, undefined, color);
   }
   draw(text) {
     this.text.text = text;

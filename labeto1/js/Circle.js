@@ -4,7 +4,7 @@ export default class {
     this.transform = new Transform(x, y, diameter);
   }
   draw() {
-    let { x, y, width: diameter } = this.transform.percentage;
-    window.data.engine.circle(x, y, diameter);
+    let { x, y, width } = this.transform.percentage;
+    window.data.engine.circle(x, y, width);
   }
 }
