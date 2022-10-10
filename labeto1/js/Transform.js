@@ -6,13 +6,13 @@ export default class {
     this.width = new PercentageNumber(width);
     this.height = new PercentageNumber(height);
   }
-  set(x, y, width, height) {
+  set transform({ x, y, width, height }) {
     this.x.set(x);
     this.y.set(y);
     this.width.set(width);
     this.height.set(height);
   }
-  get() {
+  get number() {
     return {
       x: this.x.get(),
       y: this.y.get(),
@@ -20,7 +20,7 @@ export default class {
       height: this.height.get(),
     }
   }
-  getPercentage() {
+  get percentage() {
     return {
       x: this.x.percentageWidth(),
       y: this.y.percentageHeight(),
