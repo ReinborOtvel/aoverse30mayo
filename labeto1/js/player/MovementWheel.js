@@ -1,51 +1,53 @@
+import Circle from "../Circle.js";
 export default class {
-  constructor(main) {
-    this.main = main;
+  constructor() {
+    this.circles = [
+      new Circle(13, 78, 5),
+      new Circle(13, 78, 20),
+    ];
   }
-  setup() {
-    this.x = 13;
-    this.y = 78;
-  }
-  updatePosition() {
-    let { xMove, yMove } = this.main;
+  updatePosition(xMove, yMove) {
+    let x;
+    let y;
     if (xMove == 0) {
-      this.x = 13;
+      x = 13;
       if (yMove == 0) {
-        this.y = 78;
+        y = 78;
       } else if (yMove == -1) {
-        this.y = 66;
+        y = 66;
       } else if (yMove == 1) {
-        this.y = 90;
+        y = 90;
       }
     } else if (xMove == -1) {
       if (yMove == 0) {
-        this.x = 6;
-        this.y = 78;
+        x = 6;
+        y = 78;
       } else if (yMove == -1) {
-        this.x = 8;
-        this.y = 69;
+        x = 8;
+        y = 69;
       } else if (yMove == 1) {
-        this.x = 8;
-        this.y = 86;
+        x = 8;
+        y = 86;
       }
     } else if (xMove == 1) {
       if (yMove == 0) {
-        this.x = 20;
-        this.y = 78;
+        x = 20;
+        y = 78;
       } else if (yMove == -1) {
-        this.x = 17;
-        this.y = 68;
+        x = 17;
+        y = 68;
       } else if (yMove == 1) {
-        this.x = 17;
-        this.y = 88;
+        x = 17;
+        y = 88;
       }
     }
+    this.circles[0].transform.setTransform(x, y, 5);
   }
   draw() {
-    this.updatePosition();
     engine.stroke("#fff");
     engine.noFill();
-    utils.circle(13, 78, 20);
-    utils.circle(this.x, this.y, 5);
+    for (let circle of this.circles) {
+      circle.draw();
+    }
   }
 }

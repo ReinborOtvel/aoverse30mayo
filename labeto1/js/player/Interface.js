@@ -1,15 +1,9 @@
 "use strict";
 import Parts from "./Parts.js";
 export default class {
-  constructor() {
-    this.parts = new Parts(this);
-  }
-  setup({ x, y, width, height, statistics }) {
-    this.setTransform({ x, y, width, height });
+  constructor(x, y, width, height, statistics) {
     this.statistics = statistics;
-    this.animation = "down";
-    this.sprite = 0;
-    this.parts.setup();
+    this.parts = new Parts(x, y, width, height, this.statistics);
   }
   setTransform({ x, y, width, height }) {
     this.x = x;

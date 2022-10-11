@@ -1,36 +1,20 @@
 "use strict";
+import AnimationVertical from "../AnimationVertical.js";
 export default class {
-  constructor(main) {
-    this.main = main;
-  }
-  setup() {
-    this.setImages();
-  }
-  setImages() {
-    this.images = { down: [], up: [], left: [], right: [] };
-    let index = this.main.statistics.weapon;
-    let url = `./player/weapon/${index}.png`;
-    engine.loadImage(url, image => {
-      let width = 25;
-      let height = 45;
-      let animations = ["down", "up", "left", "right"];
-      let lengths = [6, 6, 5, 5];
-      for (let v in animations) {
-        let animation = animations[v];
-        let length = lengths[v];
-        let y = v * height;
-        for (let h = 0; h < length; h++) {
-          let x = h * width;
-          this.images[animation][h] = image.get(x, y, width, height);
-        }
-      }
-    });
-  }
-  draw() {
-    let { x, y, width, height, sprite, animation } = this.main;
+  constructor(x, y, width, height, index) {
+    this.animation = "down";
+    this.sprite = 0;
     x -= width / 2;
     y -= height / 2;
-    let image = this.images[animation][sprite];
-    utils.image(image, x, y, width, height);
+    this.sprites(x, y, width, height, index);
+  }
+  sprites(x, y, width, height, index) {
+    let url = `./player/weapon/${index}.png`;
+    let animations = ["down", "up", "left", "right"];
+    let lengths = [6, 6, 5, 5];
+    this.animations = new AnimationVertical(x, y, width, height, url, 25, 45, animations, lengths);
+  }
+  draw() {
+    this.animations.draw(this.animation, this.sprite);
   }
 }

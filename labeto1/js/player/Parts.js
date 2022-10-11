@@ -3,16 +3,13 @@ import Head from "./Head.js";
 import Armor from "./Armor.js";
 import Weapon from "./Weapon.js";
 export default class {
-  constructor(main) {
-    this.main = main;
-    this.head = new Head(this.main);
-    this.armor = new Armor(this.main);
-    this.weapon = new Weapon(this.main);
+  constructor(x, y, width, height, statistics) {
+    this.head = new Head(x, y, width, height, this.statistics.head);
+    this.armor = new Armor(x, y, width, height, this.statistics.armor);
+    this.weapon = new Weapon(x, y, width, height, this.statistics.weapon);
   }
-  setup() {
-    this.head.setup();
-    this.armor.setup();
-    this.weapon.setup();
+  transform() {
+    this.head.animations.transform.setTransform(x, y, width, height);
   }
   draw() {
     this.armor.draw();
