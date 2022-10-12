@@ -4,13 +4,13 @@ import Statistics from "./player/Statistics.js";
 import database from "./database.js";
 import Text from "./Text.js";
 import ChangingText from "./ChangingText.js";
-export default class {
-  constructor() {
+export default {
+  setup() {
     this.transaction = false;
     this.text = [
-      new Text(5, 15, 5, "#fff", "character"),
-      new Text(5, 80, 5, "#C548EE", "new character"),
-      new Text(5, 90, 5, "#C548EE", "create character"),
+      new Text(5, 15, 5, "character", "#fff"),
+      new Text(5, 80, 5, "new character", "#C548EE"),
+      new Text(5, 90, 5, "create character", "#C548EE"),
     ];
     this.changingText = {
       name: new ChangingText(5, 25, 5, "#fff"),
@@ -20,17 +20,17 @@ export default class {
       speed: new ChangingText(5, 65, 5, "#fff"),
     };
     this.new();
-  }
+  },
   new() {
     this.player = new Player(70, 50, 40, 80, Statistics());
-  }
+  },
   touchEnded() {
     if (touch.verify(5, 73, 36, 80)) {
       this.newCharacter();
     } else if (touch.verify(6, 83, 41, 89)) {
       this.createCharacter();
     }
-  }
+  },
   create() {
     if (this.transaction) return;
     this.transaction = true;
@@ -49,7 +49,7 @@ export default class {
     }).catch(() => {
       this.transaction = false;
     });
-  }
+  },
   drawStatistics() {
     let { name, strength, endurance, health, speed } = this.player.statistics;
     this.changingText.name.draw(`name ${name}`);
@@ -57,7 +57,7 @@ export default class {
     this.changingText.endurance.draw(`endurance ${endurance}`);
     this.changingText.health.draw(`health ${health}`);
     this.changingText.speed.draw(`speed ${speed}`);
-  }
+  },
   draw() {
     for (let text of this.text) {
       text.draw();

@@ -15,6 +15,6 @@ export default class {
     this.animations = new AnimationVertical(x, y, width, height, url, 25, 45, animations, lengths);
   }
   draw() {
-    this.animation.draw(this.animation, this.sprite);
+    this.animations.draw(this.animation, this.sprite);
   }
 }

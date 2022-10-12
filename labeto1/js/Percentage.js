@@ -1,12 +1,12 @@
-export default class {
-  constructor() {
-    this.horizontal = window.data.engine.width / 100;
-    this.vertical = window.data.engine.height / 100;
-  }
+export default {
+  setup() {
+    window.data.percentage.horizontal = window.data.engine.width / 100;
+    window.data.percentage.vertical = window.data.engine.height / 100;
+  },
   width(percentage) {
-    return this.horizontal * percentage;
-  }
+    return window.data.percentage.horizontal * percentage;
+  },
   height(percentage) {
-    return this.vertical * percentage;
+    return window.data.percentage.vertical * percentage;
   }
 }

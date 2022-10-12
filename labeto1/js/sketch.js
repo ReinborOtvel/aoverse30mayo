@@ -3,34 +3,38 @@ import Loading from "./Loading.js";
 import CreateCharacter from "./CreateCharacter.js";
 import SelectLeader from "./SelectLeader.js";
 import Game from "./Game.js";
-class Data {
-  constructor() {
-    new p5(engine => {
-      this.engine = engine;
-      this.engine.setup = () => this.setup();
-    });
-  }
+import Rect from "./Rect.js";
+window.data = {
   setPage(name, fps) {
-    this.engine.createCanvas(852, 480);
-    this.engine.frameRate(fps);
+    window.data.engine.createCanvas(852, 480);
+    window.data.engine.frameRate(fps);
     switch (name) {
       case "loading":
-        this.page = new Loading();
+        window.data.page = new Loading();
         break;
       case "createCharacter":
-        this.page = new CreateCharacter();
+        window.data.page = new CreateCharacter();
         break;
       case "selectLeader":
-        this.page = new SelectLeader();
+        window.data.page = new SelectLeader();
         break;
       case "game":
-        this.page = new Game();
+        window.data.page = new Game();
         break;
     }
-    this.engine.draw = () => this.page.draw();
-  }
+    window.data.page.setup();
+  },
+  draw() {
+    window.data.background.draw();
+    window.data.page.draw();
+  },
   setup() {
-    this.setPage("loading", 1);
+    window.data.setPage("loading", 1);
+    window.data.background = new Rect(0, 0, 100, 100, "#2B2B2B");
   }
 }
-window.data = new Data();
+new p5(engine => {
+  window.data.engine = engine;
+  window.data.engine.setup = window.data.setup;
+  window.data.engine.draw = window.data.draw;
+});

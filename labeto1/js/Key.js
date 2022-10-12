@@ -1,15 +1,15 @@
 "use strict";
-export default class {
+export default {
   setup() {
-    engine.keyTyped = key.keyTyped;
-    engine.keyReleased = key.keyReleased;
-  }
+    window.data.engine.keyTyped = window.data.key.keyTyped;
+    window.data.engine.keyReleased = window.data.key.keyReleased;
+  },
   keyTyped({ key }) {
-    this.key = key;
+    window.data.key.key = key;
     window.data.page.keyTyped();
-  }
+  },
   keyReleased({ key }) {
-    this.key = key;
+    window.data.key.key = key;
     window.data.page.keyReleased();
   }
 }
