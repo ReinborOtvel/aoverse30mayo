@@ -5,10 +5,18 @@ export default {
   },
   keyTyped({ key }) {
     window.data.key.key = key;
-    window.data.page.keyTyped();
+    if (window.data.page) {
+      if (window.data.page.keyTyped) {
+        window.data.page.keyTyped();
+      }
+    }
   },
   keyReleased({ key }) {
     window.data.key.key = key;
-    window.data.page.keyReleased();
+    if (window.data.page) {
+      if (window.data.page.keyReleased) {
+        window.data.page.keyReleased();
+      }
+    }
   }
 }

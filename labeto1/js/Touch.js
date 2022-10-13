@@ -16,21 +16,27 @@ export default {
   },
   touchStarted() {
     window.data.touch.set();
-    if (window.data.page.touchStarted) {
-      window.data.page.touchStarted();
+    if (window.data.page) {
+      if (window.data.page.touchStarted) {
+        window.data.page.touchStarted();
+      }
     }
     console.log(window.data.touch.x, window.data.touch.y);
   },
   touchMoved() {
     window.data.touch.set();
-    if (window.data.page.touchMoved) {
-      window.data.page.touchMoved();
+    if (window.data.page) {
+      if (window.data.page.touchMoved) {
+        window.data.page.touchMoved();
+      }
     }
   },
   touchEnded() {
     window.data.touch.set();
-    if (window.data.page.touchEnded) {
-      window.data.page.touchEnded();
+    if (window.data.page) {
+      if (window.data.page.touchEnded) {
+        window.data.page.touchEnded();
+      }
     }
   }
 }

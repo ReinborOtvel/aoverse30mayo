@@ -7,6 +7,7 @@ import Range from "./Range.js";
 import Key from "./Key.js";
 import Objects from "./objects/Objects.js";
 import Touch from "./Touch.js";
+import Pages from "./pages/Pages.js";
 window.data = Data;
 window.data.metamask = Metamask;
 window.data.percentage = Percentage;
@@ -15,6 +16,7 @@ window.data.range = Range;
 window.data.key = Key;
 window.data.objects = Objects;
 window.data.touch = Touch;
+window.data.pages = Pages;
 new p5(engine => {
   window.data.engine = engine;
   window.data.engine.setup = window.data.setup;

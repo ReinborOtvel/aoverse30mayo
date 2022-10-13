@@ -1,73 +1,69 @@
 "use strict";
 import Player from "./player/Interface.js";
-export default class {
+export default {
   setup() {
-    this.joinGroupTransaction = false;
-    this.assignLeaders();
-  }
-  assignLeaderPlayer() {
-    metamask.database.getAccount(this.leaderAccount).then(_account => {
-      let owner = _account.owner.toUpperCase();
-      let leader = this.leaderAccount.toUpperCase();
-      if (owner == leader) {
-        this.leaderPlayer = new Player();
-        this.leaderPlayer.setup({
-          x: 60,
-          y: 65,
-          width: 25,
-          height: 50,
-          statistics: JSON.parse(_account.statistics),
-        });
-      } else {
-        this.randomLeader();
-      }
-    }).catch(() => {
-      this.randomLeader();
+    window.data.page.transaction = false;
+    window.data.page.leaders = [];
+    window.data.page.membership = {};
+    window.data.metamask.database.allAccounts().then(accounts => {
+      window.data.page.countMembers(accounts);
+      window.data.page.leadersAvailable(accounts);
     });
-
-  }
-  randomLeader() {
-    this.leaderAccount = engine.random(this.leaders);
-    this.assignLeaderPlayer();
-  }
-  assignLeaders() {
-    this.leaders = [];
-    metamask.database.allAccounts().then(_accounts => {
-      this.membership = {};
-      for (let account of _accounts) {
-        let owner = account.owner.toUpperCase();
-        this.membership[owner] = 0;
-      }
-      for (let account of _accounts) {
-        let leader = account.leader.toUpperCase();
-        this.membership[leader]++;
-      }
-      let user = metamask.account.toUpperCase();
-      for (let account of _accounts) {
-        let owner = account.owner.toUpperCase();
-        if (owner != user && this.membership[owner] < 5) {
-          this.leaders.push(account.owner);
+  },
+  countMembers(accounts) {
+    for (let account of accounts) {
+      let owner = account.owner.toUpperCase();
+      window.data.page.membership[owner] = 0;
+    }
+    for (let account of accounts) {
+      let leader = account.leader.toUpperCase();
+      window.data.page.membership[leader]++;
+    }
+  },
+  leadersAvailable(accounts) {
+    let user = window.data.metamask.account.toUpperCase();
+    for (let account of accounts) {
+      let owner = account.owner.toUpperCase();
+      if (owner != user) {
+        if (window.data.page.membership[owner] <= 4) {
+          window.data.page.leaders.push(account.owner);
         }
       }
-      this.randomLeader();
-    });
-  }
-  writeLeader() {
-    this.leaderAccount = prompt("leader address");
-    if (ethers.utils.isAddress(this.leaderAccount)) {
-      this.assignLeaderPlayer();
-    } else {
-      this.randomLeader();
     }
-  }
+    window.data.page.random();
+  },
+  random() {
+    window.data.page.leader = window.data.engine.random(window.data.page.leaders);
+    window.data.page.assignLeaderPlayer();
+  },
+  verifyLeader() {
+    window.data.metamask.database.getAccount(window.data.page.leader).then(account => {
+      let owner = account.owner.toUpperCase();
+      let leader = window.data.page.leader.toUpperCase();
+      if (owner == leader) {
+        window.data.page.player = new Player(60, 65, 25, 50, JSON.parse(account.statistics));
+      } else {
+        window.data.page.random();
+      }
+    }).catch(() => {
+      window.data.page.randomLeader();
+    });
+  },
+  writeLeader() {
+    let leader = window.prompt("leader address");
+    if (window.ethers.utils.isAddress(leader)) {
+      window.data.page.leader = leader;
+      window.data.page.player();
+    }
+  },
   joinGroup() {
-    if (this.joinGroupTransaction == true) {
+    if (window.data.page.joinGroupTransaction == true) {
       return;
     }
-    this.joinGroupTransaction = true;
-    let statistics = localStorage.getItem("statistics");
+    window.data.page.joinGroupTransaction = true;
+    let statistics = window.localStorage.getItem("statistics");
     if (statistics != null) {
-      metamask.database.createAccount(this.leaderAccount, statistics).then(() => {
+      window.data.metamask.database.createAccount(this.leaderAccount, statistics).then(() => {
         localStorage.removeItem("statistics");
         let interval = setInterval(() => {
           metamask.database.getAccount(metamask.account).then(_account => {
@@ -81,7 +77,7 @@ export default class {
         }, 10000);
       });
     }
-  }
+  },
   touchEnded() {
     if (touch.verify({
       xInit: 55,
@@ -105,7 +101,7 @@ export default class {
     })) {
       this.joinGroup();
     }
-  }
+  },
   draw() {
     utils.text({
       text: `total leaders ${this.leaders.length}`,
