@@ -1,5 +1,4 @@
 "use strict";
-import AnimationHorizontal from "../AnimationHorizontal.js";
 export default class {
   constructor(x, y, width, height, index) {
     width /= 2;
@@ -14,7 +13,7 @@ export default class {
     let url = `./player/head/${index}.png`;
     let animations = ["down", "right", "left", "up"];
     let lengths = [1, 1, 1, 1];
-    this.animations = new AnimationHorizontal(x, y, width, height, url, 17, 17, animations, lengths);
+    this.animations = new window.data.objects.AnimationHorizontal(x, y, width, height, url, 17, 17, animations, lengths);
   }
   draw() {
     this.animations.draw(this.animation, this.sprite);

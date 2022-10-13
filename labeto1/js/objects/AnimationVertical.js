@@ -13,9 +13,11 @@ export default class extends Image {
           this.animations[animation][h] = this.image.get(x, y, widthS, heightS);
         }
       }
+      this.canDraw = true;
     });
   }
   draw(animation, sprite) {
+    if (!this.canDraw) return;
     let image = this.animations[animation][sprite];
     let { x, y, width, height } = this.transform.percentage;
     window.data.engine.noSmooth();

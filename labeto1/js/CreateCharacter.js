@@ -2,38 +2,36 @@
 import Player from "./player/Interface.js";
 import Statistics from "./player/Statistics.js";
 import database from "./database.js";
-import Text from "./Text.js";
-import ChangingText from "./ChangingText.js";
 export default {
   setup() {
-    this.transaction = false;
-    this.text = [
-      new Text(5, 15, 5, "character", "#fff"),
-      new Text(5, 80, 5, "new character", "#C548EE"),
-      new Text(5, 90, 5, "create character", "#C548EE"),
+    window.data.page.transaction = false;
+    window.data.page.text = [
+      new window.data.objects.Text(5, 15, 5, "character", "#fff"),
+      new window.data.objects.Text(5, 80, 5, "new character", "#C548EE"),
+      new window.data.objects.Text(5, 90, 5, "create character", "#C548EE"),
     ];
-    this.changingText = {
-      name: new ChangingText(5, 25, 5, "#fff"),
-      strength: new ChangingText(5, 35, 5, "#fff"),
-      endurance: new ChangingText(5, 45, 5, "#fff"),
-      health: new ChangingText(5, 55, 5, "#fff"),
-      speed: new ChangingText(5, 65, 5, "#fff"),
+    window.data.page.changingText = {
+      name: new window.data.objects.ChangingText(5, 25, 5, "#fff"),
+      strength: new window.data.objects.ChangingText(5, 35, 5, "#fff"),
+      endurance: new window.data.objects.ChangingText(5, 45, 5, "#fff"),
+      health: new window.data.objects.ChangingText(5, 55, 5, "#fff"),
+      speed: new window.data.objects.ChangingText(5, 65, 5, "#fff"),
     };
-    this.new();
+    window.data.page.newCharacter();
   },
-  new() {
-    this.player = new Player(70, 50, 40, 80, Statistics());
+  newCharacter() {
+    window.data.page.player = new Player(70, 50, 40, 80, Statistics());
   },
   touchEnded() {
-    if (touch.verify(5, 73, 36, 80)) {
-      this.newCharacter();
-    } else if (touch.verify(6, 83, 41, 89)) {
-      this.createCharacter();
+    if (window.data.touch.verify(5, 73, 36, 80)) {
+      window.data.page.newCharacter();
+    } else if (window.data.touch.verify(6, 83, 41, 89)) {
+      window.data.page.create();
     }
   },
   create() {
-    if (this.transaction) return;
-    this.transaction = true;
+    if (window.data.page.transaction) return;
+    window.data.page.transaction = true;
     window.ethereum.request({
       method: 'eth_sendTransaction',
       params: [{
@@ -43,26 +41,26 @@ export default {
         chainId: window.ethers.utils.hexValue(56),
       }],
     }).then(() => {
-      let statistics = JSON.stringify(this.player.statistics);
+      let statistics = JSON.stringify(window.data.page.player.statistics);
       window.localStorage.setItem("statistics", statistics);
       window.location.reload();
     }).catch(() => {
-      this.transaction = false;
+      window.data.page.transaction = false;
     });
   },
   drawStatistics() {
-    let { name, strength, endurance, health, speed } = this.player.statistics;
-    this.changingText.name.draw(`name ${name}`);
-    this.changingText.strength.draw(`strength ${strength}`);
-    this.changingText.endurance.draw(`endurance ${endurance}`);
-    this.changingText.health.draw(`health ${health}`);
-    this.changingText.speed.draw(`speed ${speed}`);
+    let { name, strength, endurance, health, speed } = window.data.page.player.statistics;
+    window.data.page.changingText.name.draw(`name ${name}`);
+    window.data.page.changingText.strength.draw(`strength ${strength}`);
+    window.data.page.changingText.endurance.draw(`endurance ${endurance}`);
+    window.data.page.changingText.health.draw(`health ${health}`);
+    window.data.page.changingText.speed.draw(`speed ${speed}`);
   },
   draw() {
-    for (let text of this.text) {
+    for (let text of window.data.page.text) {
       text.draw();
     }
-    this.drawStatistics();
-    this.player.draw();
+    window.data.page.drawStatistics();
+    window.data.page.player.draw();
   }
 }

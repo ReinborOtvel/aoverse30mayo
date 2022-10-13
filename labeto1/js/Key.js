@@ -1,4 +1,3 @@
-"use strict";
 export default {
   setup() {
     window.data.engine.keyTyped = window.data.key.keyTyped;

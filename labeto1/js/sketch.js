@@ -1,38 +1,20 @@
 "use strict";
-import Loading from "./Loading.js";
-import CreateCharacter from "./CreateCharacter.js";
-import SelectLeader from "./SelectLeader.js";
-import Game from "./Game.js";
-import Rect from "./Rect.js";
-window.data = {
-  setPage(name, fps) {
-    window.data.engine.createCanvas(852, 480);
-    window.data.engine.frameRate(fps);
-    switch (name) {
-      case "loading":
-        window.data.page = new Loading();
-        break;
-      case "createCharacter":
-        window.data.page = new CreateCharacter();
-        break;
-      case "selectLeader":
-        window.data.page = new SelectLeader();
-        break;
-      case "game":
-        window.data.page = new Game();
-        break;
-    }
-    window.data.page.setup();
-  },
-  draw() {
-    window.data.background.draw();
-    window.data.page.draw();
-  },
-  setup() {
-    window.data.setPage("loading", 1);
-    window.data.background = new Rect(0, 0, 100, 100, "#2B2B2B");
-  }
-}
+import Data from "./Data.js";
+import Metamask from "./Metamask.js";
+import Percentage from "./Percentage.js";
+import PercentagePixel from "./PercentagePixel.js";
+import Range from "./Range.js";
+import Key from "./Key.js";
+import Objects from "./objects/Objects.js";
+import Touch from "./Touch.js";
+window.data = Data;
+window.data.metamask = Metamask;
+window.data.percentage = Percentage;
+window.data.percentagePixel = PercentagePixel;
+window.data.range = Range;
+window.data.key = Key;
+window.data.objects = Objects;
+window.data.touch = Touch;
 new p5(engine => {
   window.data.engine = engine;
   window.data.engine.setup = window.data.setup;

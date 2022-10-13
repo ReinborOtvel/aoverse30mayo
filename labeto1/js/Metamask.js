@@ -3,20 +3,23 @@ import database from "./database.js";
 import Statistics from "./player/Statistics.js";
 export default {
   setup() {
-    window.data.setPage("createCharacter", 1);
     if (!window.navigator.onLine) {
+      window.data.message = "You don't have\ninternet";
       return;
     }
     if (window.ethereum == undefined) {
+      window.data.message = "You don't have\nmetamask";
       return;
     }
     window.ethereum.on('chainChanged', () => {
       window.location.reload();
     });
     window.data.metamask.provider = new window.ethers.providers.Web3Provider(window.ethereum);
+    window.data.message = "approve your\naccounts";
     window.data.metamask.provider.send("eth_requestAccounts", []).then(accounts => {
       window.data.metamask.account = accounts[0];
       window.data.metamask.signer = window.data.metamask.provider.getSigner();
+      window.data.message = "getting the chain id";
       window.data.metamask.signer.getChainId().then(chainId => {
         switch (chainId) {
           case 97:
@@ -57,6 +60,7 @@ export default {
     });
   },
   binance() {
+    window.data.message = "you switch to\nbinance";
     window.ethereum.request({
       method: 'wallet_addEthereumChain',
       params: [{
@@ -67,6 +71,7 @@ export default {
     });
   },
   testnet() {
+    window.data.message = "you switch to\nbinance testnet";
     window.ethereum.request({
       method: 'wallet_addEthereumChain',
       params: [{

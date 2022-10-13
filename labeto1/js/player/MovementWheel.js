@@ -1,9 +1,8 @@
-import Circle from "../Circle.js";
 export default class {
   constructor() {
     this.circles = [
-      new Circle(13, 78, 5),
-      new Circle(13, 78, 20),
+      new window.data.objects.Circle(13, 78, 5),
+      new window.data.objects.Circle(13, 78, 20),
     ];
   }
   updatePosition(xMove, yMove) {

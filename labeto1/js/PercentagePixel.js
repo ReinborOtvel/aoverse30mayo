@@ -1,12 +1,10 @@
 export default {
-  setup() {
-    window.data.percentagePixel.horizontal = window.data.percentage.width(1);
-    window.data.percentagePixel.vertical = window.data.percentage.height(1);
-  },
   width(pixels) {
-    return parseInt(pixels / window.data.percentagePixel.horizontal);
+    let horizontal = window.data.percentage.width(1);
+    return parseInt(pixels / horizontal);
   },
   height(pixels) {
-    return parseInt(pixels / window.data.percentagePixel.vertical);
+    let vertical = window.data.percentage.height(1);
+    return parseInt(pixels / vertical);
   }
 }
