@@ -4,12 +4,11 @@ export default {
     window.data.pages[window.data.namePage].setup();
   },
   draw() {
-    window.data.background.draw();
     window.data.pages[window.data.namePage].draw();
   },
   setup() {
     window.data.engine.createCanvas(852, 480);
-    window.data.engine.frameRate(20);
+    window.data.engine.frameRate(15);
     window.data.touch.setup();
     window.data.key.setup();
     window.data.metamask.setup();
