@@ -1,23 +1,7 @@
 "use strict";
-import Data from "./Data.js";
-import Metamask from "./Metamask.js";
-import Percentage from "./Percentage.js";
-import PercentagePixel from "./PercentagePixel.js";
-import Range from "./Range.js";
-import Key from "./Key.js";
-import Objects from "./objects/Objects.js";
-import Touch from "./Touch.js";
-import Pages from "./pages/Pages.js";
-window.data = Data;
-window.data.metamask = Metamask;
-window.data.percentage = Percentage;
-window.data.percentagePixel = PercentagePixel;
-window.data.range = Range;
-window.data.key = Key;
-window.data.objects = Objects;
-window.data.touch = Touch;
-window.data.pages = Pages;
+import data from "./data.js";
 new p5(engine => {
+  window.data = data;
   window.data.engine = engine;
   window.data.engine.setup = window.data.setup;
   window.data.engine.draw = window.data.draw;

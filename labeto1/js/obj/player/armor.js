@@ -1,4 +1,3 @@
-"use strict";
 export default class {
   constructor(x, y, width, height, index) {
     x -= width / 2;

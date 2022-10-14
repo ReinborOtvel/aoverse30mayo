@@ -10,5 +10,10 @@ export default {
   },
   draw() {
     window.data.pages[window.data.pages.name].draw();
+  },
+  call(method) {
+    if (window.data.pages[window.data.pages.name][method]) {
+      window.data.pages[window.data.pages.name][method]();
+    }
   }
 }

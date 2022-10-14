@@ -1,13 +1,9 @@
-"use strict";
-import Parts from "./Parts.js";
-import MovementWheel from "./MovementWheel.js";
-import Interaction from "./Interaction.js";
 export default class {
   constructor(map) {
     this.map = map;
-    this.parts = new Parts(this);
-    this.interaction = new Interaction(this);
-    this.movementWheel = new MovementWheel(this);
+    this.parts = new window.data.objects.player.parts();
+    this.interaction = new window.data.objects.player.interaction();
+    this.movementWheel = new window.data.objects.player.movementWheel();
   }
   setup({ x, y, width, height, statistics }) {
     this.setTransform({ x, y, width, height });
