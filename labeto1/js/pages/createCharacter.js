@@ -1,26 +1,23 @@
 "use strict";
-import Player from "./player/Interface.js";
-import Statistics from "./player/Statistics.js";
-import database from "./database.js";
 export default {
   setup() {
-    window.data.page.transaction = false;
-    window.data.page.text = [
-      new window.data.objects.Text(5, 15, 5, "character", "#fff"),
-      new window.data.objects.Text(5, 80, 5, "new character", "#C548EE"),
-      new window.data.objects.Text(5, 90, 5, "create character", "#C548EE"),
+    window.data.pages.createCharacter.transaction = false;
+    window.data.pages.createCharacter.text = [
+      new window.data.obj.text(5, 15, 5, "character", "#fff"),
+      new window.data.obj.text(5, 80, 5, "new character", "#C548EE"),
+      new window.data.obj.text(5, 90, 5, "create character", "#C548EE"),
     ];
-    window.data.page.changingText = {
-      name: new window.data.objects.ChangingText(5, 25, 5, "#fff"),
-      strength: new window.data.objects.ChangingText(5, 35, 5, "#fff"),
-      endurance: new window.data.objects.ChangingText(5, 45, 5, "#fff"),
-      health: new window.data.objects.ChangingText(5, 55, 5, "#fff"),
-      speed: new window.data.objects.ChangingText(5, 65, 5, "#fff"),
+    window.data.pages.createCharacter.changingText = {
+      name: new window.data.obj.changingText(5, 25, 5, "#fff"),
+      strength: new window.data.obj.changingText(5, 35, 5, "#fff"),
+      endurance: new window.data.obj.changingText(5, 45, 5, "#fff"),
+      health: new window.data.obj.changingText(5, 55, 5, "#fff"),
+      speed: new window.data.obj.changingText(5, 65, 5, "#fff"),
     };
-    window.data.page.newCharacter();
+    window.data.pages.createCharacter.newCharacter();
   },
   newCharacter() {
-    window.data.page.player = new Player(70, 50, 40, 80, Statistics());
+    window.data.pages.createCharacter.player = new Player(70, 50, 40, 80, Statistics());
   },
   touchEnded() {
     if (window.data.touch.verify(5, 73, 36, 80)) {

@@ -1,34 +1,22 @@
-import pages from "./pages/pages.js";
-import objects from "./objects/objects.js";
-import percentage from "./data/percentage.js";
-import percentagePixel from "./data/percentagePixel.js";
-import range from "./page/range.js";
-import touch from "./page/touch.js";
-import key from "./page/key.js";
-import metamask from "./page/metamask.js";
-import database from "./page/database.js";
+import obj from "./obj/import.js";
+import fun from "./fun/import.js";
+import pages from "./pages/import.js";
 export default {
+  obj,
+  fun,
   pages,
-  objects,
-  percentage,
-  percentagePixel,
-  range,
-  touch,
-  key,
-  metamask,
-  database,
   page(name) {
     window.data.pages.name = name;
-    window.data.pages.setup();
+    window.data.pages.call("setup");
   },
   draw() {
-    window.data.pages.draw();
+    window.data.pages.call("draw");
   },
   setup() {
     window.data.engine.createCanvas(852, 480);
     window.data.engine.frameRate(15);
-    window.data.touch.setup();
-    window.data.key.setup();
-    window.data.metamask.setup();
+    window.data.obj.touch.setup();
+    window.data.obj.key.setup();
+    window.data.obj.metamask.setup();
   }
 }
