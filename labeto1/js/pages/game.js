@@ -1,9 +1,7 @@
 "use strict";
-import Player from "./player/Player.js";
-import Map from "./map/Map.js";
 export default class {
   setup() {
-    this.map = new Map();
+    this.map = new window.data.obj.map();
     this.setPlayer();
   }
   setPlayer() {
@@ -11,7 +9,7 @@ export default class {
       let owner = _account.owner.toUpperCase();
       let account = metamask.account.toUpperCase();
       if (owner == account) {
-        page.player = new Player({
+        page.player = new window.data.obj.player.entity({
           map: this.map,
         });
         page.player.setup({

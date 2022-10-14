@@ -1,7 +1,6 @@
-import Transform from "./Transform.js";
 export default class {
   constructor(x, y, size, text, color) {
-    this.transform = new Transform(x, y, size);
+    this.transform = new window.data.obj.transform(x, y, size);
     this.text = text;
     this.color = color;
   }

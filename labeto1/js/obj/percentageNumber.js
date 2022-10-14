@@ -3,9 +3,9 @@ export default class {
     this.number = number;
   }
   get width() {
-    return window.data.percentage.width(this.number);
+    return window.data.fun.percentage.width(this.number);
   }
   get height() {
-    return window.data.percentage.height(this.number);
+    return window.data.fun.percentage.height(this.number);
   }
 }

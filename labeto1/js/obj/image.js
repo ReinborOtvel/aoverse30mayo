@@ -1,7 +1,6 @@
-import Transform from "./Transform.js";
 export default class {
   constructor(x, y, width, height, url, loadImage) {
-    this.transform = new Transform(x, y, width, height);
+    this.transform = new window.data.obj.transform(x, y, width, height);
     this.canDraw = false;
     window.data.engine.loadImage(url, image => {
       this.image = image;

@@ -17,47 +17,47 @@ export default {
     window.data.pages.createCharacter.newCharacter();
   },
   newCharacter() {
-    window.data.pages.createCharacter.player = new Player(70, 50, 40, 80, Statistics());
+    window.data.pages.createCharacter.player = new window.data.obj.player.image(70, 50, 40, 80,
+      window.data.obj.player.statistics()
+    );
   },
   touchEnded() {
-    if (window.data.touch.verify(5, 73, 36, 80)) {
-      window.data.page.newCharacter();
-    } else if (window.data.touch.verify(6, 83, 41, 89)) {
-      window.data.page.create();
+    if (window.data.obj.touch.verify(5, 73, 36, 80)) {
+      window.data.pages.createCharacter.newCharacter();
+    } else if (window.data.obj.touch.verify(6, 83, 41, 89)) {
+      window.data.pages.createCharacter.create();
     }
   },
   create() {
-    if (window.data.page.transaction) return;
-    window.data.page.transaction = true;
+    if (window.data.pages.createCharacter.transaction) return;
+    window.data.pages.createCharacter.transaction = true;
     window.ethereum.request({
       method: 'eth_sendTransaction',
       params: [{
-        from: window.data.metamask.account,
-        to: database.creator,
-        value: window.ethers.utils.parseEther(database.ticket)._hex,
+        from: window.data.obj.metamask.account,
+        to: window.data.fun.database.creator,
+        value: window.ethers.utils.parseEther(window.data.fun.database.ticket)._hex,
         chainId: window.ethers.utils.hexValue(56),
       }],
     }).then(() => {
-      let statistics = JSON.stringify(window.data.page.player.statistics);
+      let statistics = JSON.stringify(window.data.pages.createCharacter.player.statistics);
       window.localStorage.setItem("statistics", statistics);
       window.location.reload();
     }).catch(() => {
-      window.data.page.transaction = false;
+      window.data.pages.createCharacter.transaction = false;
     });
   },
   drawStatistics() {
-    let { name, strength, endurance, health, speed } = window.data.page.player.statistics;
-    window.data.page.changingText.name.draw(`name ${name}`);
-    window.data.page.changingText.strength.draw(`strength ${strength}`);
-    window.data.page.changingText.endurance.draw(`endurance ${endurance}`);
-    window.data.page.changingText.health.draw(`health ${health}`);
-    window.data.page.changingText.speed.draw(`speed ${speed}`);
+    for (let property in window.data.pages.createCharacter.changingText) {
+      let statistic = window.data.pages.createCharacter.player.statistics[property];
+      window.data.pages.createCharacter.changingText[property].draw(`${property} ${statistic}`);
+    }
   },
   draw() {
-    for (let text of window.data.page.text) {
+    for (let text of window.data.pages.createCharacter.text) {
       text.draw();
     }
-    window.data.page.drawStatistics();
-    window.data.page.player.draw();
+    window.data.pages.createCharacter.drawStatistics();
+    window.data.pages.createCharacter.player.draw();
   }
 }

@@ -1,12 +1,8 @@
-"use strict";
-import Head from "./Head.js";
-import Armor from "./Armor.js";
-import Weapon from "./Weapon.js";
 export default class {
   constructor(x, y, width, height, statistics) {
-    this.head = new Head(x, y, width, height, statistics.head);
-    this.armor = new Armor(x, y, width, height, statistics.armor);
-    this.weapon = new Weapon(x, y, width, height, statistics.weapon);
+    this.head = new widnow.data.obj.player.head(x, y, width, height, statistics.head);
+    this.armor = new widnow.data.obj.player.armor(x, y, width, height, statistics.armor);
+    this.weapon = new widnow.data.obj.player.weapon(x, y, width, height, statistics.weapon);
   }
   transform() {
     this.head.animations.transform.setTransform(x, y, width, height);

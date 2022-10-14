@@ -1,10 +1,9 @@
-import PercentageNumber from "./PercentageNumber.js";
 export default class {
   constructor(x, y, width, height) {
-    this.x = new PercentageNumber(x);
-    this.y = new PercentageNumber(y);
-    this.width = new PercentageNumber(width);
-    this.height = new PercentageNumber(height);
+    this.x = new window.data.obj.percentageNumber(x);
+    this.y = new window.data.obj.percentageNumber(y);
+    this.width = new window.data.obj.percentageNumber(width);
+    this.height = new window.data.obj.percentageNumber(height);
   }
   setTransform(x, y, width, height) {
     this.x.number = x;

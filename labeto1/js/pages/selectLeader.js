@@ -1,5 +1,4 @@
 "use strict";
-import Player from "./player/Interface.js";
 export default {
   setup() {
     window.data.page.transaction = false;

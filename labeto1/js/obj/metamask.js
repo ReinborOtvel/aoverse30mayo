@@ -11,22 +11,22 @@ export default {
     window.ethereum.on('chainChanged', () => {
       window.location.reload();
     });
-    window.data.events.metamask.provider = new window.ethers.providers.Web3Provider(window.ethereum);
+    window.data.obj.metamask.provider = new window.ethers.providers.Web3Provider(window.ethereum);
     window.data.pages.message.text = "approve your\naccounts";
-    window.data.events.metamask.provider.send("eth_requestAccounts", []).then(accounts => {
-      window.data.events.metamask.account = accounts[0];
-      window.data.events.metamask.signer = window.data.events.metamask.provider.getSigner();
+    window.data.obj.metamask.provider.send("eth_requestAccounts", []).then(accounts => {
+      window.data.obj.metamask.account = accounts[0];
+      window.data.obj.metamask.signer = window.data.obj.metamask.provider.getSigner();
       window.data.pages.message.text = "getting the\nchain id";
-      window.data.events.metamask.signer.getChainId().then(chainId => {
+      window.data.obj.metamask.signer.getChainId().then(chainId => {
         switch (chainId) {
           case 97:
-            window.data.events.metamask.chainId97();
+            window.data.obj.metamask.chainId97();
             break;
           case 56:
-            window.data.events.metamask.chainId56();
+            window.data.obj.metamask.chainId56();
             break;
           default:
-            window.data.events.metamask.testnet();
+            window.data.obj.metamask.testnet();
             break;
         }
       });
@@ -38,29 +38,29 @@ export default {
       window.localStorage.removeItem("createCharacter");
       window.data.page("createCharacter");
     } else {
-      window.data.events.metamask.testnet();
+      window.data.obj.metamask.testnet();
     }
   },
   chainId97() {
-    if (window.data.utils.database.address == "") {
-      window.data.events.metamask.createDatabase();
+    if (window.data.fun.database.address == "") {
+      window.data.obj.metamask.createDatabase();
     } else {
-      window.data.events.metamask.database = new window.ethers.Contract(
-        window.data.utils.database.address,
-        window.data.utils.database.abi,
-        window.data.events.metamask.signer
+      window.data.obj.metamask.database = new window.ethers.Contract(
+        window.data.fun.database.address,
+        window.data.fun.database.abi,
+        window.data.obj.metamask.signer
       );
-      window.data.events.metamask.verify();
+      window.data.obj.metamask.verify();
     }
   },
   createDatabase() {
-    let statistics = JSON.stringify(window.data.objects.player.statistics());
+    let statistics = JSON.stringify(window.data.obj.player.statistics());
     let factory = new window.ethers.ContractFactory(
-      window.data.utils.database.abi,
-      window.data.utils.database.bytecode,
-      window.data.events.metamask.signer
+      window.data.fun.database.abi,
+      window.data.fun.database.bytecode,
+      window.data.obj.metamask.signer
     );
-    factory.deploy(window.data.utils.database.creator, statistics).then(contract => {
+    factory.deploy(window.data.fun.database.creator, statistics).then(contract => {
       console.log(contract);
     });
   },
@@ -69,7 +69,7 @@ export default {
     window.ethereum.request({
       method: 'wallet_addEthereumChain',
       params: [{
-        chainId: window.ethers.utils.hexValue(56),
+        chainId: window.ethers.fun.hexValue(56),
         chainName: "binance",
         rpcUrls: ['https://bsc-dataseed.binance.org/'],
       },],
@@ -80,23 +80,23 @@ export default {
     window.ethereum.request({
       method: 'wallet_addEthereumChain',
       params: [{
-        chainId: window.ethers.utils.hexValue(97),
+        chainId: window.ethers.fun.hexValue(97),
         chainName: "binance testnet",
         rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
       },],
     });
   },
   verify() {
-    window.data.events.metamask.database.getAccount(window.data.events.metamask.account).then(account => {
+    window.data.obj.metamask.database.getAccount(window.data.obj.metamask.account).then(account => {
       let owner = account.owner.toUpperCase();
-      let address = window.data.events.metamask.account.toUpperCase();
+      let address = window.data.obj.metamask.account.toUpperCase();
       if (owner == address) {
         window.data.page("game");
       } else {
-        window.data.events.metamask.statistics = JSON.parse(window.localStorage.getItem("statistics"));
-        if (window.data.events.metamask.statistics == null) {
+        window.data.obj.metamask.statistics = JSON.parse(window.localStorage.getItem("statistics"));
+        if (window.data.obj.metamask.statistics == null) {
           window.localStorage.setItem("createCharacter", "true");
-          window.data.events.metamask.binance();
+          window.data.obj.metamask.binance();
         } else {
           window.data.page("selectLeader");
         }

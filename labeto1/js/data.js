@@ -13,6 +13,7 @@ export default {
     window.data.pages.call("draw");
   },
   setup() {
+    window.data.page("message");
     window.data.engine.createCanvas(852, 480);
     window.data.engine.frameRate(15);
     window.data.obj.touch.setup();

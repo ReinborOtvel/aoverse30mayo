@@ -1,5 +1,5 @@
-import Image from "./Image.js";
-export default class extends Image {
+import image from "./image.js";
+export default class extends image {
   constructor(xT, yT, widthT, heightT, url, widthS, heightS, animations, lengths) {
     super(xT, yT, widthT, heightT, url, () => {
       this.animations = {};
