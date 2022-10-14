@@ -1,10 +1,10 @@
 export default {
   page(name) {
-    window.data.namePage = name;
-    window.data.pages[window.data.namePage].setup();
+    window.data.pages.name = name;
+    window.data.pages.setup();
   },
   draw() {
-    window.data.pages[window.data.namePage].draw();
+    window.data.pages.draw();
   },
   setup() {
     window.data.engine.createCanvas(852, 480);

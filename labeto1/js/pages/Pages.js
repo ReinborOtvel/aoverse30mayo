@@ -5,9 +5,10 @@ export default {
   CreateCharacter,
   SelectLeader,
   Game,
-  setup(name) {
-    window.data.pages.name = name;
-    window.data.pages[name].setup();
+  setup() {
+    window.data.pages[window.data.pages.name].setup();
   },
-  draw() { }
+  draw() {
+    window.data.pages[window.data.pages.name].draw();
+  }
 }
