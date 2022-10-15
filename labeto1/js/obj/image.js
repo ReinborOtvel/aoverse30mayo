@@ -9,6 +9,9 @@ export default class {
       }
     });
   }
+  setTransform(x, y, width, height) {
+    this.transform.setTransform(x, y, width, height);
+  }
   draw() {
     if (!this.canDraw) return;
     let { x, y, width, height } = this.transform.percentage;

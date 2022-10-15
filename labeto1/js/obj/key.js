@@ -5,10 +5,10 @@ export default {
   },
   keyTyped({ key }) {
     window.data.obj.key.key = key;
-    window.data.pages.call("keyTyped");
+    window.data.pages[window.data.pages.name].keyTyped();
   },
   keyReleased({ key }) {
     window.data.obj.key.key = key;
-    window.data.pages.call("keyReleased");
+    window.data.pages[window.data.pages.name].keyReleased();
   }
 }

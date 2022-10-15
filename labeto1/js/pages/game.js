@@ -1,56 +1,47 @@
 "use strict";
-export default class {
+export default {
   setup() {
-    this.map = new window.data.obj.map();
+    this.map = new window.data.obj.map.map();
     this.setPlayer();
-  }
+  },
   setPlayer() {
-    metamask.database.getAccount(metamask.account).then(_account => {
-      let owner = _account.owner.toUpperCase();
-      let account = metamask.account.toUpperCase();
-      if (owner == account) {
-        page.player = new window.data.obj.player.entity({
-          map: this.map,
-        });
-        page.player.setup({
-          x: 70,
-          y: 70,
-          width: 5,
-          height: 10,
-          statistics: JSON.parse(_account.statistics),
-        });
+    window.data.obj.metamask.database.getAccount(window.data.obj.metamask.account).then(account => {
+      let owner = account.owner.toUpperCase();
+      let user = window.data.obj.metamask.account.toUpperCase();
+      if (owner == user) {
+        this.player = new window.data.obj.player.entity(70, 70, 5, 10, JSON.parse(account.statistics), this.map);
       }
     });
-  }
+  },
   keyTyped() {
-    if (page.player != undefined) {
-      page.player.keyTyped();
+    if (this.player) {
+      this.player.keyTyped();
     }
-  }
+  },
   keyReleased() {
-    if (page.player != undefined) {
-      page.player.keyReleased();
+    if (this.player) {
+      this.player.keyReleased();
     }
-  }
+  },
   touchStarted() {
-    if (page.player != undefined) {
-      page.player.touchStarted();
+    if (this.player) {
+      this.player.touchStarted();
     }
-  }
+  },
   touchMoved() {
-    if (page.player != undefined) {
-      page.player.touchMoved();
+    if (this.player) {
+      this.player.touchMoved();
     }
-  }
+  },
   touchEnded() {
-    if (page.player != undefined) {
-      page.player.touchEnded();
+    if (this.player) {
+      this.player.touchEnded();
     }
-  }
+  },
   draw() {
-    page.map.draw();
-    if (page.player != undefined) {
-      page.player.draw();
+    this.map.draw();
+    if (this.player) {
+      this.player.draw();
     }
   }
 }

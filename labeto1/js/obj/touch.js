@@ -16,15 +16,15 @@ export default {
   },
   touchStarted() {
     window.data.obj.touch.set();
-    window.data.pages.call("touchStarted");
+    window.data.pages[window.data.pages.name].touchStarted();
     console.log(window.data.obj.touch.x, window.data.obj.touch.y);
   },
   touchMoved() {
     window.data.obj.touch.set();
-    window.data.pages.call("touchMoved");
+    window.data.pages[window.data.pages.name].touchMoved();
   },
   touchEnded() {
     window.data.obj.touch.set();
-    window.data.pages.call("touchEnded");
+    window.data.pages[window.data.pages.name].touchEnded();
   }
 }

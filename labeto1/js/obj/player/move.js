@@ -1,12 +1,11 @@
 export default class {
-  constructor(x, y) {
-    this.transform = new window.data.obj.transform(x, y);
-    this.xMove = 0;
-    this.yMove = 0;
-    this.speed = 1;
+  setup() {
+    window.data.pages.game.player.move.xMove = 0;
+    window.data.pages.game.player.move.yMove = 0;
+    window.data.pages.game.player.move.speed = 1;
   }
   animation() {
-    if (this.yMove == 0 && this.xMove == 0) {
+    if (window.data.pages.game.player.move.yMove == 0 && window.data.pages.game.player.movethis.xMove == 0) {
       this.canNextSprite = false;
     } else {
       this.canNextSprite = true;
@@ -68,6 +67,7 @@ export default class {
     }
   }
   keyReleased() {
+    console.log(this);
     if (window.data.obj.key.key == "w" || window.data.obj.key.key == "s") {
       this.yMove = 0;
     } else if (window.data.obj.key.key == "a" || window.data.obj.key.key == "d") {

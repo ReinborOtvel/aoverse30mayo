@@ -7,11 +7,11 @@ export default {
   pages,
   page(name) {
     window.data.pages.name = name;
-    window.data.pages.call("setup");
+    window.data.pages[window.data.pages.name].setup();
   },
   draw() {
     window.data.fun.rect(0, 0, 100, 100, "#000");
-    window.data.pages.call("draw");
+    window.data.pages[window.data.pages.name].draw();
   },
   setup() {
     window.data.page("message");

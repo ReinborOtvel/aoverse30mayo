@@ -38,8 +38,8 @@ export default class {
     }
   }
   draw() {
-    engine.stroke("#fff");
-    engine.noFill();
+    window.data.engine.stroke("#fff");
+    window.data.engine.noFill();
     window.data.fun.circle(13, 78, 5);
     window.data.fun.circle(13, 78, 20);
   }

@@ -3,7 +3,9 @@ export default class {
     let x = h * width;
     let y = v * height;
     this.transform = new window.data.obj.transform(x, y, width, height);
-    this.image = new window.data.obj.image(x, y, width, height, "./graphics/nature/tree/5.png");
+    this.image = new window.data.obj.image(x, y, width, height, "./graphics/nature/tree/5.png", () => {
+      this.image.canDraw = true;
+    });
     this.effect = new window.data.obj.map.effect(x, y, width, height);
     this.life = 5;
   }
