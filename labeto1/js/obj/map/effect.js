@@ -1,21 +1,14 @@
 export default class Effect {
   constructor(x, y, width, height) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.image = engine.loadImage("./graphics/effects/1.png");
-    this.active = false;
+    this.image = new window.data.obj.image(x, y, width, height, "./graphics/effects/1.png");
   }
   setActive() {
-    this.active = true;
+    this.image.canDraw = true;
     setTimeout(() => {
-      this.active = false;
+      this.image.canDraw = false;
     }, 200);
   }
   draw() {
-    if (this.active == true) {
-      utils.image(this.image, this.x, this.y, this.width, this.height);
-    }
+    this.image.draw();
   }
 }

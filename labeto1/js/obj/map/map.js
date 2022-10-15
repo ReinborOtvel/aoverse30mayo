@@ -20,17 +20,13 @@ export default class {
   }
   collision(x, y) {
     for (let tree of this.trees) {
-      if (tree.collision(x, y) == true) {
-        return true;
-      }
+      if (tree.collision(x, y) == true) return true;
     }
     return false;
   }
   positionEntity(x, y) {
     for (let tree of this.trees) {
-      if (tree.collision(x, y)) {
-        return tree;
-      }
+      if (tree.collision(x, y)) return tree;
     }
     return false;
   }

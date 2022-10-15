@@ -4,8 +4,10 @@ export default class {
     this.armor = new window.data.obj.player.armor(x, y, width, height, statistics.armor);
     this.weapon = new window.data.obj.player.weapon(x, y, width, height, statistics.weapon);
   }
-  transform() {
-    this.head.animations.transform.setTransform(x, y, width, height);
+  setTransform(x, y, width, height) {
+    this.head.setTransform(x, y, width, height);
+    this.armor.setTransform(x, y, width, height);
+    this.weapon.setTransform(x, y, width, height);
   }
   draw() {
     this.armor.draw();

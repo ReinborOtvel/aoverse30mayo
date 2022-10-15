@@ -6,6 +6,7 @@ import movementWheel from "./movementWheel.js";
 import parts from "./parts.js";
 import statistics from "./statistics.js";
 import weapon from "./weapon.js";
+import move from "./move.js";
 export default {
   armor,
   head,
@@ -15,4 +16,5 @@ export default {
   parts,
   statistics,
   weapon,
+  move,
 }

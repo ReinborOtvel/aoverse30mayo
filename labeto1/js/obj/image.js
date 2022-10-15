@@ -4,7 +4,9 @@ export default class {
     this.canDraw = false;
     window.data.engine.loadImage(url, image => {
       this.image = image;
-      loadImage();
+      if (loadImage) {
+        loadImage();
+      }
     });
   }
   draw() {
