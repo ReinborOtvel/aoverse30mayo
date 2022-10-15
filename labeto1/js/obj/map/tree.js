@@ -1,4 +1,3 @@
-import Effect from "./Effect.js";
 export default class Tree {
   constructor(h, v, width, height) {
     this.h = h;
@@ -8,7 +7,7 @@ export default class Tree {
     this.x = this.h * this.width;
     this.y = this.v * this.height;
     this.image = engine.loadImage("./graphics/nature/tree/5.png");
-    this.effect = new Effect(this.x, this.y, this.width, this.height);
+    this.effect = new window.data.obj.map.effect(this.x, this.y, this.width, this.height);
     this.life = 5;
   }
   interaction(entity) {

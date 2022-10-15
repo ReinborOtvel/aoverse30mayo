@@ -1,141 +1,107 @@
 "use strict";
 export default {
   setup() {
-    window.data.page.transaction = false;
-    window.data.page.leaders = [];
-    window.data.page.membership = {};
-    window.data.metamask.database.allAccounts().then(accounts => {
-      window.data.page.countMembers(accounts);
-      window.data.page.leadersAvailable(accounts);
+    window.data.pages.selectLeader.transaction = false;
+    window.data.pages.selectLeader.leaders = [];
+    window.data.pages.selectLeader.membership = {};
+    window.data.obj.metamask.database.allAccounts().then(accounts => {
+      window.data.pages.selectLeader.countMembers(accounts);
+      window.data.pages.selectLeader.available(accounts);
     });
   },
   countMembers(accounts) {
     for (let account of accounts) {
       let owner = account.owner.toUpperCase();
-      window.data.page.membership[owner] = 0;
+      window.data.pages.selectLeader.membership[owner] = 0;
     }
     for (let account of accounts) {
       let leader = account.leader.toUpperCase();
-      window.data.page.membership[leader]++;
+      window.data.pages.selectLeader.membership[leader]++;
     }
   },
-  leadersAvailable(accounts) {
-    let user = window.data.metamask.account.toUpperCase();
+  available(accounts) {
+    let user = window.data.obj.metamask.account.toUpperCase();
     for (let account of accounts) {
       let owner = account.owner.toUpperCase();
-      if (owner != user) {
-        if (window.data.page.membership[owner] <= 4) {
-          window.data.page.leaders.push(account.owner);
-        }
-      }
+      if (owner == user) continue;
+      if (window.data.pages.selectLeader.membership[owner] > 4) continue;
+      window.data.pages.selectLeader.leaders.push(account.owner);
     }
-    window.data.page.random();
+    window.data.pages.selectLeader.random();
   },
   random() {
-    window.data.page.leader = window.data.engine.random(window.data.page.leaders);
-    window.data.page.assignLeaderPlayer();
+    window.data.pages.selectLeader.leader = window.data.engine.random(window.data.pages.selectLeader.leaders);
+    window.data.pages.selectLeader.verify();
   },
-  verifyLeader() {
-    window.data.metamask.database.getAccount(window.data.page.leader).then(account => {
+  verify() {
+    window.data.obj.metamask.database.getAccount(window.data.pages.selectLeader.leader).then(account => {
       let owner = account.owner.toUpperCase();
-      let leader = window.data.page.leader.toUpperCase();
+      let leader = window.data.pages.selectLeader.leader.toUpperCase();
       if (owner == leader) {
-        window.data.page.player = new Player(60, 65, 25, 50, JSON.parse(account.statistics));
+        window.data.pages.selectLeader.player = new window.data.obj.player.image(60, 65, 25, 50, JSON.parse(account.statistics));
       } else {
-        window.data.page.random();
+        window.data.pages.selectLeader.random();
       }
-    }).catch(() => {
-      window.data.page.randomLeader();
+    }).catch(error => {
+      console.error(error);
+      window.data.pages.selectLeader.random();
     });
   },
-  writeLeader() {
+  write() {
     let leader = window.prompt("leader address");
     if (window.ethers.utils.isAddress(leader)) {
-      window.data.page.leader = leader;
-      window.data.page.player();
+      window.data.pages.selectLeader.leader = leader;
+      window.data.pages.selectLeader.verify();
     }
   },
   joinGroup() {
-    if (window.data.page.joinGroupTransaction == true) {
-      return;
-    }
-    window.data.page.joinGroupTransaction = true;
+    if (window.data.pages.selectLeader.transaction) return;
+    window.data.pages.selectLeader.transaction = true;
     let statistics = window.localStorage.getItem("statistics");
-    if (statistics != null) {
-      window.data.metamask.database.createAccount(this.leaderAccount, statistics).then(() => {
-        localStorage.removeItem("statistics");
-        let interval = setInterval(() => {
-          metamask.database.getAccount(metamask.account).then(_account => {
-            let owner = _account.owner.toUpperCase();
-            let account = metamask.account.toUpperCase();
-            if (owner == account) {
-              clearInterval(interval);
-              location.reload();
-            }
-          });
-        }, 10000);
-      });
-    }
+    if (statistics == null) return;
+    window.data.obj.metamask.database.createAccount(window.data.pages.selectLeader.leader, statistics).then(() => {
+      window.localStorage.removeItem("statistics");
+      let interval = setInterval(() => {
+        window.data.obj.metamask.database.getAccount(window.data.obj.metamask.account).then(account => {
+          let owner = account.owner.toUpperCase();
+          let user = window.data.obj.metamask.account.toUpperCase();
+          if (owner == user) {
+            clearInterval(interval);
+            window.location.reload();
+          }
+        });
+      }, 10000);
+    });
   },
   touchEnded() {
-    if (touch.verify({
-      xInit: 55,
-      yInit: 8,
-      xEnd: 87,
-      yEnd: 15
-    })) {
-      this.randomLeader();
-    } else if (touch.verify({
-      xInit: 54,
-      yInit: 18,
-      xEnd: 80,
-      yEnd: 25
-    })) {
-      this.writeLeader();
-    } else if (touch.verify({
-      xInit: 4,
-      yInit: 78,
-      xEnd: 26,
-      yEnd: 86
-    })) {
-      this.joinGroup();
+    if (window.data.obj.touch.verify(55, 8, 87, 15)) {
+      window.data.pages.selectLeader.random();
+    } else if (window.data.obj.touch.verify(54, 18, 80, 25)) {
+      window.data.pages.selectLeader.write();
+    } else if (window.data.obj.touch.verify(4, 78, 26, 86)) {
+      window.data.pages.selectLeader.joinGroup();
     }
   },
   draw() {
-    utils.text({
-      text: `total leaders ${this.leaders.length}`,
-      x: 5,
-      y: 15,
-      size: 5,
-      color: "#fff"
-    });
-    utils.text({
-      text: "leaders - members",
-      x: 5,
-      y: 25,
-      size: 5,
-      color: "#fff"
-    });
+    window.data.fun.text(5, 15, 5, `total leaders ${window.data.pages.selectLeader.leaders.length}`, "#fff");
+    window.data.fun.text(5, 25, 5, "leaders - members", "#fff");
+    window.data.fun.text(55, 15, 5, "random leader", "#C548EE");
+    window.data.fun.text(55, 25, 5, "write leader", "#C548EE");
+    window.data.fun.text(5, 85, 5, "join group", "#C548EE");
     for (let i = 0; i <= 3; i++) {
-      let leader = this.leaders[i];
-      if (leader == undefined) {
-        break;
-      }
+      let leader = window.data.pages.selectLeader.leaders[i];
+      if (leader == undefined) break;
       let top = 35;
       let y = top + (10 * i);
-      let members = this.membership[leader.toUpperCase()];
-      let _text = `${leader.slice(0, 6)} - ${members}`;
-      utils.text(_text, 5, y, 5, "#fff");
+      let members = window.data.pages.selectLeader.membership[leader.toUpperCase()];
+      window.data.fun.text(5, y, 5, `${leader.slice(0, 6)} - ${members}`, "#fff");
     }
-    utils.text("random leader", 55, 15, 5, "#C548EE");
-    utils.text("write leader", 55, 25, 5, "#C548EE");
-    if (this.leaderAccount != undefined) {
-      utils.text("leader", 71, 60, 5, "#fff");
-      utils.text(`${this.leaderAccount.slice(0, 7)}`, 71, 70, 5, "#fff");
+    if (window.data.pages.selectLeader.leader) {
+      window.data.fun.text(71, 60, 5, "leader", "#fff");
+      window.data.fun.text(71, 70, 5, `${window.data.pages.selectLeader.leader.slice(0, 7)}`, "#fff");
     }
-    if (this.leaderPlayer != undefined) {
-      this.leaderPlayer.draw();
+    if (window.data.pages.selectLeader.player) {
+      window.data.pages.selectLeader.player.draw();
     }
-    utils.text("join group", 5, 85, 5, "#C548EE");
   }
 }

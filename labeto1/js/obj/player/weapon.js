@@ -11,7 +11,7 @@ export default class {
     let url = `./player/weapon/${index}.png`;
     let animations = ["down", "up", "left", "right"];
     let lengths = [6, 6, 5, 5];
-    this.animations = new window.data.objects.AnimationVertical(x, y, width, height, url, 25, 45, animations, lengths);
+    this.animations = new window.data.obj.animationVertical(x, y, width, height, url, 25, 45, animations, lengths);
   }
   draw() {
     this.animations.draw(this.animation, this.sprite);

@@ -69,7 +69,7 @@ export default {
     window.ethereum.request({
       method: 'wallet_addEthereumChain',
       params: [{
-        chainId: window.ethers.fun.hexValue(56),
+        chainId: window.ethers.utils.hexValue(56),
         chainName: "binance",
         rpcUrls: ['https://bsc-dataseed.binance.org/'],
       },],
@@ -80,7 +80,7 @@ export default {
     window.ethereum.request({
       method: 'wallet_addEthereumChain',
       params: [{
-        chainId: window.ethers.fun.hexValue(97),
+        chainId: window.ethers.utils.hexValue(97),
         chainName: "binance testnet",
         rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
       },],

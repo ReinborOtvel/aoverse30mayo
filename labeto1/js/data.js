@@ -10,6 +10,7 @@ export default {
     window.data.pages.call("setup");
   },
   draw() {
+    window.data.fun.rect(0, 0, 100, 100, "#000");
     window.data.pages.call("draw");
   },
   setup() {
