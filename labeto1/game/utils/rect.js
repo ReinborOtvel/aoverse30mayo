@@ -1,9 +1,10 @@
 "use strict";
+import percentage from "./percentage.js";
 export default function (x, y, width, height, color) {
-  x = global.Percentage(engine.width, x);
-  y = global.Percentage(engine.height, y);
-  width = global.Percentage(engine.width, width);
-  height = global.Percentage(engine.height, height);
-  engine.fill(color);
-  engine.rect(x, y, width, height);
+  x = percentage(window.engine.width, x);
+  y = percentage(window.engine.height, y);
+  width = percentage(window.engine.width, width);
+  height = percentage(window.engine.height, height);
+  window.engine.fill(color);
+  window.engine.rect(x, y, width, height);
 }

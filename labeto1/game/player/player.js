@@ -1,4 +1,7 @@
 "use strict";
+import parts from "./parts/parts.js";
+import move from "./move.js";
+import movementWheel from "./movementWheel.js";
 export default function (x, y) {
   window.player = {};
   window.player.loadImage = callback => {
@@ -27,8 +30,8 @@ export default function (x, y) {
   window.player.mouseReleased = () => {
     window.player.movementWheel.mouseReleased();
   }
-  PlayerParts();
-  PlayerMove();
-  PlayerMovementWheel();
+  parts();
+  move();
+  movementWheel();
   window.player.transform(x, y, 5, 5);
 }

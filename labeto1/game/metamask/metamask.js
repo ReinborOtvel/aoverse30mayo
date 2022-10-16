@@ -1,15 +1,17 @@
 "use strict";
+import database from "./database.js";
 export default function () {
   if (!window.navigator.onLine) return alert("connect to the internet");
   if (window.ethereum == undefined) return alert("download metamask");
   window.ethereum.on('chainChanged', () => {
     window.location.reload();
   });
-  metamask.provider = new window.ethers.providers.Web3Provider(window.ethereum);
-  metamask.provider.send("eth_requestAccounts", []).then(accounts => {
-    metamask.account = accounts[0];
-    metamask.signer = metamask.provider.getSigner();
-    metamask.signer.getChainId().then(chainId => {
+  window.metamask = {};
+  window.metamask.provider = new window.ethers.providers.Web3Provider(window.ethereum);
+  window.metamask.provider.send("eth_requestAccounts", []).then(accounts => {
+    window.metamask.account = accounts[0];
+    window.metamask.signer = window.metamask.provider.getSigner();
+    window.metamask.signer.getChainId().then(chainId => {
       if (chainId != 97) {
         alert("switch to binance testnet");
         window.ethereum.request({
@@ -21,9 +23,9 @@ export default function () {
           },],
         });
       } else {
-        metamask.database = new window.ethers.Contract(database.address, database.abi, metamask.signer);
-        metamask.database.allAccounts().then(accounts => {
-          let user = metamask.account.toUpperCase();
+        window.metamask.database = new window.ethers.Contract(database.address, database.abi, window.metamask.signer);
+        window.metamask.database.allAccounts().then(accounts => {
+          let user = window.metamask.account.toUpperCase();
           for (let account of accounts) {
             let address = account.owner.toUpperCase();
             if (user != address) continue;

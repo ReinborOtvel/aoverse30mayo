@@ -1,4 +1,4 @@
 "use strict";
 export default function () {
-  player.keyReleased();
+  window.player.keyReleased();
 }
