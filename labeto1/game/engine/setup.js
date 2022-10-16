@@ -1,7 +1,7 @@
 "use strict";
-import map from "./map.js";
-import player from "./player.js";
-import metamask from "./metamask.js";
+import map from "../map/map.js";
+import player from "../player/player.js";
+import metamask from "../metamask/metamask.js";
 export default function () {
   window.engine.createCanvas(852, 480);
   window.engine.frameRate(15);
