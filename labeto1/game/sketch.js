@@ -195,18 +195,25 @@ function Circle(x, y, width) {
   width = Percentage(window.width, width);
   window.circle(x, y, width);
 }
-function Metamask(callback) {
-  metamask = {};
+function Image(image, x, y, width, height) {
+  x = Percentage(window.width, x);
+  y = Percentage(window.height, y);
+  width = Percentage(window.width, width);
+  height = Percentage(window.height, height);
+  window.image(image, x, y, width, height);
+}
+function newMetamask(callback) {
+  let Metamask = {};
   if (!window.navigator.onLine) return alert("connect to the internet");
   if (window.ethereum == undefined) return alert("download metamask");
   window.ethereum.on('chainChanged', () => {
     window.location.reload();
   });
-  metamask.provider = new window.ethers.providers.Web3Provider(window.ethereum);
-  metamask.provider.send("eth_requestAccounts", []).then(accounts => {
-    metamask.account = accounts[0];
-    metamask.signer = metamask.provider.getSigner();
-    metamask.signer.getChainId().then(chainId => {
+  Metamask.provider = new window.ethers.providers.Web3Provider(window.ethereum);
+  Metamask.provider.send("eth_requestAccounts", []).then(accounts => {
+    Metamask.account = accounts[0];
+    Metamask.signer = Metamask.provider.getSigner();
+    Metamask.signer.getChainId().then(chainId => {
       if (chainId != 97) {
         alert("switch to binance testnet");
         window.ethereum.request({
@@ -218,8 +225,8 @@ function Metamask(callback) {
           },],
         });
       } else {
-        metamask.database = new window.ethers.Contract(database.address, database.abi, metamask.signer);
-        callback();
+        Metamask.database = new window.ethers.Contract(database.address, database.abi, Metamask.signer);
+        callback(Metamask);
       }
     }).catch(error => {
       console.error(error);
@@ -230,102 +237,142 @@ function Metamask(callback) {
     alert("connect account");
   })
 }
-function Map() {
-  map = {};
-  map.collision = (x, y) => {
+function newMap() {
+  let Map = {};
+  Map.collision = (x, y) => {
+    for (let tree of Map.trees) {
+      if (tree.collision(x, y)) return true;
+    }
     return false;
   }
+  Map.entityPosition = (x, y) => {
+    for (let tree of Map.trees) {
+      if (tree.collision(x, y)) return tree;
+    }
+    return false;
+  }
+  Map.draw = () => {
+    for (let land of Map.lands) land.draw();
+    for (let tree of Map.trees) tree.draw();
+  }
+  Map.lands = [];
+  for (let v = 0; v < 10; v++) {
+    for (let h = 0; h < 10; h++) {
+      Map.lands.push(newLand(579, h, v, 10, 10));
+    }
+  }
+  Map.trees = [
+    newTree(1, 1, 10, 20),
+    newTree(2, 1, 10, 20),
+    newTree(3, 1, 10, 20),
+    newTree(4, 1, 10, 20),
+    newTree(1, 2, 10, 20),
+    newTree(2, 2, 10, 20),
+    newTree(3, 2, 10, 20),
+    newTree(4, 2, 10, 20),
+  ];
+  return Map;
 }
-function Player(x, y) {
-  player = {};
-  player.loadImage = callback => {
-    player.parts.loadImage(callback);
-  }
-  player.transform = (x, y, width, height) => {
-    player.x = x;
-    player.y = y;
-    player.width = width;
-    player.height = height;
-    player.parts.transform();
-  }
-  player.draw = () => {
-    player.parts.draw();
-    player.move.draw();
-    player.movementWheel.draw();
-  }
-  player.keyTyped = () => {
-    player.move.keyTyped();
-    player.movementWheel.mouseReleased();
-  }
-  player.keyReleased = () => {
-    player.move.keyReleased();
-    player.movementWheel.mouseReleased();
-  }
-  player.mouseReleased = () => {
-    player.movementWheel.mouseReleased();
-  }
-  PlayerParts();
-  PlayerMove();
-  PlayerMovementWheel();
-  player.transform(x, y, 5, 5);
+function newLand(index, h, v, width, height) {
+  let Land = {};
+  Land.x = h * width;
+  Land.y = v * height;
+  return Land;
 }
-function PlayerParts() {
-  player.parts = {};
-  player.parts.draw = () => {
-    player.parts.armor.draw();
-    player.parts.head.draw();
-    player.parts.weapon.draw();
+function newTree() {
+  let Tree = {};
+  return Tree;
+}
+function newPlayer(x, y) {
+  let Player = {};
+  Player.loadImage = callback => {
+    Player.parts.loadImage(callback);
   }
-  player.parts.loadImage = callback => {
-    player.parts.head.loadImage(() => {
-      player.parts.armor.loadImage(() => {
-        player.parts.weapon.loadImage(() => {
+  Player.transform = (x, y, width, height) => {
+    Player.x = x;
+    Player.y = y;
+    Player.width = width;
+    Player.height = height;
+    Player.parts.transform();
+  }
+  Player.draw = () => {
+    Player.parts.draw();
+    Player.move.draw();
+    Player.movementWheel.draw();
+  }
+  Player.keyTyped = () => {
+    Player.move.keyTyped();
+    Player.movementWheel.mouseReleased();
+  }
+  Player.keyReleased = () => {
+    Player.move.keyReleased();
+    Player.movementWheel.mouseReleased();
+  }
+  Player.mouseReleased = () => {
+    Player.movementWheel.mouseReleased();
+  }
+  Player.parts = newPlayerParts();
+  Player.move = newPlayerMove();
+  Player.movementWheel = newPlayerMovementWheel();
+  Player.transform(x, y, 5, 5);
+  return Player;
+}
+function newPlayerParts() {
+  let Parts = {};
+  Parts.draw = () => {
+    Parts.armor.draw();
+    Parts.head.draw();
+    Parts.weapon.draw();
+  }
+  Parts.loadImage = callback => {
+    Parts.head.loadImage(() => {
+      Parts.armor.loadImage(() => {
+        Parts.weapon.loadImage(() => {
           callback();
         });
       });
     });
   }
-  player.parts.transform = () => {
-    player.parts.head.transform();
-    player.parts.armor.transform();
-    player.parts.weapon.transform();
+  Parts.transform = () => {
+    Parts.head.transform();
+    Parts.armor.transform();
+    Parts.weapon.transform();
   }
-  player.parts.animation = "down";
-  player.parts.sprite = 0;
+  Parts.animation = "down";
+  Parts.sprite = 0;
+  player.parts = Parts;
   PlayerPartsHead();
   PlayerPartsArmor();
   PlayerPartsWeapon();
+  return Parts;
 }
-function PlayerPartsHead() {
-  player.parts.head = {};
-  player.parts.head.loadImage = callback => {
-    window.loadImage(`../img/player/head/${player.statistics.head}.png`, img => {
+function newPlayerPartsHead(index) {
+  let Head = {};
+  Head.loadImage = callback => {
+    window.loadImage(`../img/player/head/${index}.png`, img => {
       let animations = ["down", "right", "left", "up"];
-      player.parts.head.images = [];
+      Head.images = [];
       let width = 17;
       for (let h in animations) {
         let animation = animations[h];
         let x = h * width;
-        player.parts.head.images[animation] = img.get(x, 0, width, 17);
+        Head.images[animation] = img.get(x, 0, width, 17);
       }
       callback();
     });
   }
-  player.parts.head.draw = () => {
-    let x = Percentage(window.width, player.parts.head.x);
-    let y = Percentage(window.height, player.parts.head.y);
-    let width = Percentage(window.width, player.parts.head.width);
-    let height = Percentage(window.height, player.parts.head.height);
-    window.image(player.parts.head.images[player.parts.animation], x, y, width, height);
+  Head.draw = () => {
+    Image(Head.images[player.parts.animation], x, y, width, height);
   }
-  player.parts.head.transform = () => {
-    player.parts.head.width = player.width / 2;
-    player.parts.head.height = player.height / 2;
-    player.parts.head.x = player.x - (player.parts.head.width / 2);
-    player.parts.head.y = player.y - player.parts.head.height;
+  Head.transform = () => {
+    Head.width = player.width / 2;
+    Head.height = player.height / 2;
+    Head.x = player.x - (Head.width / 2);
+    Head.y = player.y - Head.height;
   }
+  return Head;
 }
-function PlayerPartsArmor() {
+function newPlayerPartsArmor() {
   player.parts.armor = {};
   player.parts.armor.loadImage = callback => {
     window.loadImage(`../img/player/armor/${player.statistics.armor}.png`, img => {
@@ -348,18 +395,14 @@ function PlayerPartsArmor() {
     });
   }
   player.parts.armor.draw = () => {
-    let x = Percentage(window.width, player.parts.armor.x);
-    let y = Percentage(window.height, player.parts.armor.y);
-    let width = Percentage(window.width, player.width);
-    let height = Percentage(window.height, player.height);
-    window.image(player.parts.armor.images[player.parts.animation][player.parts.sprite], x, y, width, height);
+    Image(player.parts.armor.images[player.parts.animation][player.parts.sprite], x, y, width, height);
   }
   player.parts.armor.transform = () => {
     player.parts.armor.x = player.x - (player.width / 2);
     player.parts.armor.y = player.y - (player.height / 2);
   }
 }
-function PlayerPartsWeapon() {
+function newPlayerPartsWeapon() {
   player.parts.weapon = {};
   player.parts.weapon.loadImage = callback => {
     window.loadImage(`../img/player/weapon/${player.statistics.weapon}.png`, img => {
@@ -382,18 +425,14 @@ function PlayerPartsWeapon() {
     });
   }
   player.parts.weapon.draw = () => {
-    let x = Percentage(window.width, player.parts.weapon.x);
-    let y = Percentage(window.height, player.parts.weapon.y);
-    let width = Percentage(window.width, player.width);
-    let height = Percentage(window.height, player.height);
-    window.image(player.parts.weapon.images[player.parts.animation][player.parts.sprite], x, y, width, height);
+    Image(player.parts.weapon.images[player.parts.animation][player.parts.sprite], x, y, width, height);
   }
   player.parts.weapon.transform = () => {
     player.parts.weapon.x = player.x - (player.width / 2);
     player.parts.weapon.y = player.y - (player.height / 2);
   }
 }
-function PlayerMove() {
+function newPlayerMove() {
   player.move = {};
   player.move.keyTyped = () => {
     switch (window.key) {
@@ -436,7 +475,7 @@ function PlayerMove() {
   player.move.y = 0;
   player.move.speed = 3;
 }
-function PlayerMovementWheel() {
+function newPlayerMovementWheel() {
   player.movementWheel = {};
   player.movementWheel.mouseReleased = () => {
     switch (player.move.x) {
@@ -500,9 +539,10 @@ function PlayerMovementWheel() {
 function setup() {
   window.createCanvas(852, 480);
   window.frameRate(15);
-  Map();
-  Player(5, 5);
-  Metamask(() => {
+  map = newMap();
+  player = newPlayer(5, 5);
+  newMetamask(Metamask => {
+    metamask = Metamask;
     metamask.database.allAccounts().then(accounts => {
       let user = metamask.account.toUpperCase();
       for (let account of accounts) {
