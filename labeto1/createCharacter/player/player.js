@@ -4,7 +4,7 @@ import head from "./head.js";
 import armor from "./armor.js";
 import weapon from "./weapon.js";
 import touchVerify from "../engine/touchVerify.js";
-import database from "../metamask/database.js";
+import database from "../../js/database.js";
 export default function () {
   window.player = {};
   window.player.x = 70;
