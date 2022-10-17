@@ -2,7 +2,10 @@
 import circle from "../utils/circle.js";
 export default function () {
   window.player.movementWheel = {};
-  window.player.movementWheel.mouseReleased = () => {
+  window.player.movementWheel.keyTyped = () => window.player.movementWheel.updatePosition();
+  window.player.movementWheel.keyReleased = () => window.player.movementWheel.updatePosition();
+  window.player.movementWheel.touchEnded = () => window.player.movementWheel.updatePosition();
+  window.player.movementWheel.updatePosition = () => {
     switch (window.player.move.x) {
       case 0:
         window.player.movementWheel.x = 13;

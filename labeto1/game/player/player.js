@@ -21,14 +21,23 @@ export default function (x, y) {
   }
   window.player.keyTyped = () => {
     window.player.move.keyTyped();
-    window.player.movementWheel.mouseReleased();
+    window.player.movementWheel.keyTyped();
   }
   window.player.keyReleased = () => {
     window.player.move.keyReleased();
-    window.player.movementWheel.mouseReleased();
+    window.player.movementWheel.keyReleased();
   }
-  window.player.mouseReleased = () => {
-    window.player.movementWheel.mouseReleased();
+  window.player.touchStarted = () => {
+    window.player.move.touchStarted();
+    window.player.movementWheel.touchStarted();
+  }
+  window.player.touchMoved = () => {
+    window.player.move.touchMoved();
+    window.player.movementWheel.touchMoved();
+  }
+  window.player.touchEnded = () => {
+    window.player.move.touchEnded();
+    window.player.movementWheel.touchEnded();
   }
   parts();
   move();

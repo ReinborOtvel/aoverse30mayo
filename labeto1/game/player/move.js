@@ -1,6 +1,9 @@
 "use strict";
 export default function () {
   window.player.move = {};
+  window.player.move.touchStarted = () => window.player.move.touchMoved();
+  window.player.move.touchMoved = () => { }
+  window.player.move.touchEnded = () => { }
   window.player.move.keyTyped = () => {
     switch (window.engine.key) {
       case "w": window.player.move.y = -1; break;
