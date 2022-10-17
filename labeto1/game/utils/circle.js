@@ -1,8 +1,8 @@
 "use strict";
-import percentage from "./percentage.js";
+import percentageSet from "./percentage/set.js";
 export default function (x, y, diameter) {
-  x = percentage(window.engine.width, x);
-  y = percentage(window.engine.height, y);
-  diameter = percentage(window.engine.width, diameter);
+  x = percentageSet(window.engine.width, x);
+  y = percentageSet(window.engine.height, y);
+  diameter = percentageSet(window.engine.width, diameter);
   window.engine.circle(x, y, diameter);
 }

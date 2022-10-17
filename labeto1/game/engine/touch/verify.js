@@ -1,6 +1,6 @@
 "use strict";
-import getMouse from "./getMouse.js";
+import mouse from "./mouse.js";
 export default function (xInit, yInit, xEnd, yEnd) {
-  let { x, y } = getMouse();
+  let { x, y } = mouse();
   return x >= xInit && y >= yInit && x <= xEnd && y <= yEnd;
 }

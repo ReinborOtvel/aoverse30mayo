@@ -19,6 +19,29 @@ export default function () {
     for (let land of window.map.lands) land.draw();
     for (let tree of window.map.trees) tree.draw();
   }
+  window.map.loadImageLands = callback => {
+    let i = 0;
+    let nextLand = () => {
+      if (i < window.map.lands.length - 1) {
+        window.map.lands[i].loadImage(() => {
+          nextLand();
+        });
+      } else {
+        window.map.lands[i].loadImage(() => {
+          callback();
+        });
+      }
+      i++;
+    }
+    nextLand();
+  }
+  window.map.loadImage = callback => {
+    window.map.loadImageLands(() => {
+      window.map.loadImageTrees(() => {
+        callback();
+      })
+    });
+  }
   window.map.lands = [];
   for (let v = 0; v < 10; v++) {
     for (let h = 0; h < 10; h++) {

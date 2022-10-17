@@ -1,7 +1,6 @@
 "use strict";
 import parts from "./parts/parts.js";
-import move from "./move.js";
-import movementWheel from "./movementWheel.js";
+import move from "./move/move.js";
 export default function (x, y) {
   window.player = {};
   window.player.loadImage = callback => {
@@ -17,30 +16,28 @@ export default function (x, y) {
   window.player.draw = () => {
     window.player.parts.draw();
     window.player.move.draw();
-    window.player.movementWheel.draw();
   }
   window.player.keyTyped = () => {
     window.player.move.keyTyped();
-    window.player.movementWheel.keyTyped();
+    window.player.parts.keyTyped();
   }
   window.player.keyReleased = () => {
     window.player.move.keyReleased();
-    window.player.movementWheel.keyReleased();
+    window.player.parts.keyReleased();
   }
   window.player.touchStarted = () => {
     window.player.move.touchStarted();
-    window.player.movementWheel.touchStarted();
+    window.player.parts.touchStarted();
   }
   window.player.touchMoved = () => {
     window.player.move.touchMoved();
-    window.player.movementWheel.touchMoved();
+    window.player.parts.touchMoved();
   }
   window.player.touchEnded = () => {
     window.player.move.touchEnded();
-    window.player.movementWheel.touchEnded();
+    window.player.parts.touchEnded();
   }
   parts();
   move();
-  movementWheel();
   window.player.transform(x, y, 5, 5);
 }
