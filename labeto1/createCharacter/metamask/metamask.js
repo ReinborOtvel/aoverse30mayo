@@ -1,7 +1,7 @@
 "use strict";
 export default function () {
-  if (!window.navigator.onLine) return alert("connect to the internet");
-  if (window.ethereum == undefined) return alert("download metamask");
+  if (!window.navigator.onLine) return window.alert("connect to the internet");
+  if (window.ethereum == undefined) return window.alert("download metamask");
   window.ethereum.on('chainChanged', () => {
     window.location.reload();
   });
@@ -12,7 +12,7 @@ export default function () {
     window.metamask.signer = window.metamask.provider.getSigner();
     window.metamask.signer.getChainId().then(chainId => {
       if (chainId != 56) {
-        alert("switch to binance");
+        window.alert("switch to binance");
         window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [{
@@ -33,10 +33,10 @@ export default function () {
       }
     }).catch(error => {
       console.error(error);
-      alert("no chainId");
+      window.alert("no chainId");
     });
   }).catch(error => {
     console.error(error);
-    alert("connect account");
+    window.alert("connect account");
   })
 }

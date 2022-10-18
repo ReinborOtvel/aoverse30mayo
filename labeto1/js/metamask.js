@@ -1,8 +1,13 @@
 "use strict";
 import database from "./database.js";
-export default function () {
-  if (!window.navigator.onLine) return alert("connect to the internet");
-  if (window.ethereum == undefined) return alert("download metamask");
+export default function (callback) {
+  if (!window.navigator.onLine) {
+    window.alert("connect to the internet");
+    return;
+  } if (window.ethereum == undefined) {
+    window.alert("download metamask");
+    return;
+  }
   window.ethereum.on('chainChanged', () => {
     window.location.reload();
   });
@@ -12,7 +17,27 @@ export default function () {
     window.metamask.account = accounts[0];
     window.metamask.signer = window.metamask.provider.getSigner();
     window.metamask.signer.getChainId().then(chainId => {
-      if (chainId != 97) {
+      if (chainId == 97) {
+        if (database.address == "") {
+          callback("database");
+        } else {
+          window.metamask.database = new window.ethers.Contract(database.address, database.abi, window.metamask.signer);
+          window.metamask.database.getAccount(window.metamask.account).then(account => {
+            let owner = account.owner.toUpperCase();
+            let user = window.metamask.account.toUpperCase();
+            if (owner == user) {
+              callback("game");
+            } else {
+              let statistics = window.localStorage.getItem("statistics");
+              if (statistics == null) {
+                callback("createCharacter");
+              } else {
+                callback("selectLeader");
+              }
+            }
+          });
+        }
+      } else {
         alert("switch to binance testnet");
         window.ethereum.request({
           method: 'wallet_addEthereumChain',
@@ -22,29 +47,6 @@ export default function () {
             rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
           },],
         });
-      } else {
-        if (database.address == "") {
-          window.location.href = window.location.href.replace("game", "database");
-        } else {
-          window.metamask.database = new window.ethers.Contract(database.address, database.abi, window.metamask.signer);
-          window.metamask.database.getAccount(window.metamask.account).then(account => {
-            let user = window.metamask.account.toUpperCase();
-            let owner = account.owner.toUpperCase();
-            if (user == owner) {
-              player.statistics = JSON.parse(account.statistics);
-              player.loadImage(() => {
-                canDraw = true;
-              });
-            } else {
-              let statistics = window.localStorage.getItem("statistics");
-              if (statistics == null) {
-                window.location.href = window.location.href.replace("game", "createCharacter");
-              } else {
-                window.location.href = window.location.href.replace("game", "selectLeader");
-              }
-            }
-          });
-        }
       }
     }).catch(error => {
       console.error(error);

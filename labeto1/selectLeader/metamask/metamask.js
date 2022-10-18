@@ -1,8 +1,8 @@
 "use strict";
 import database from "../../js/database.js";
 export default function () {
-  if (!window.navigator.onLine) return alert("connect to the internet");
-  if (window.ethereum == undefined) return alert("download metamask");
+  if (!window.navigator.onLine) return window.alert("connect to the internet");
+  if (window.ethereum == undefined) return window.alert("download metamask");
   window.ethereum.on('chainChanged', () => {
     window.location.reload();
   });
@@ -13,7 +13,7 @@ export default function () {
     window.metamask.signer = window.metamask.provider.getSigner();
     window.metamask.signer.getChainId().then(chainId => {
       if (chainId != 97) {
-        alert("switch to binance testnet");
+        window.alert("switch to binance testnet");
         window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [{
@@ -23,18 +23,30 @@ export default function () {
           },],
         });
       } else {
-        window.metamask.database = new window.ethers.Contract(database.address, database.abi, window.metamask.signer);
-        window.metamask.database.allAccounts().then(accounts => {
-          window.membership.count(accounts);
-          window.leaders.available(accounts);
-        });
+        if (database.address == "") {
+          window.location.href = window.location.href.replace("selectLeader", "database");
+        } else {
+          window.metamask.database = new window.ethers.Contract(database.address, database.abi, window.metamask.signer);
+          window.metamask.database.getAccount(window.metamask.account).then(account => {
+            let owner = account.owner.toUpperCase();
+            let user = window.metamask.account.toUpperCase();
+            if (owner == user) {
+              window.location.href = window.location.href.replace("selectLeader", "game");
+            } else {
+              window.metamask.database.allAccounts().then(accounts => {
+                window.membership.count(accounts);
+                window.leaders.available(accounts);
+              });
+            }
+          });
+        }
       }
     }).catch(error => {
       console.error(error);
-      alert("no chainId");
+      window.alert("no chainId");
     });
   }).catch(error => {
     console.error(error);
-    alert("connect account");
+    window.alert("connect account");
   })
 }
