@@ -1,43 +1,43 @@
 "use strict";
 import parts from "./parts/parts.js";
 import move from "./move/move.js";
-export default function (x, y) {
+export default function (_x, _y) {
   window.player = {};
-  window.player.loadImage = callback => {
-    window.player.parts.loadImage(callback);
-  }
-  window.player.transform = (x, y, width, height) => {
-    window.player.x = x;
-    window.player.y = y;
-    window.player.width = width;
-    window.player.height = height;
-    window.player.parts.transform();
-  }
-  window.player.draw = () => {
-    window.player.parts.draw();
-    window.player.move.draw();
-  }
-  window.player.keyTyped = () => {
-    window.player.move.keyTyped();
-    window.player.parts.keyTyped();
-  }
-  window.player.keyReleased = () => {
-    window.player.move.keyReleased();
-    window.player.parts.keyReleased();
-  }
-  window.player.touchStarted = () => {
-    window.player.move.touchStarted();
-    window.player.parts.touchStarted();
-  }
-  window.player.touchMoved = () => {
-    window.player.move.touchMoved();
-    window.player.parts.touchMoved();
-  }
-  window.player.touchEnded = () => {
-    window.player.move.touchEnded();
-    window.player.parts.touchEnded();
-  }
+  player.loadImage = _callback => {
+    player.parts.loadImage(_callback);
+  };
+  player.transform = (_x, _y, _width, _height) => {
+    player.x = _x;
+    player.y = _y;
+    player.width = _width;
+    player.height = _height;
+    player.parts.transform();
+  };
+  player.draw = () => {
+    player.move.draw();
+    player.parts.draw();
+  };
+  player.keyTyped = () => {
+    player.move.keyTyped();
+    player.parts.keyTyped();
+  };
+  player.keyReleased = () => {
+    player.move.keyReleased();
+    player.parts.keyReleased();
+  };
+  player.touchStarted = () => {
+    player.move.touchStarted();
+    player.parts.touchStarted();
+  };
+  player.touchMoved = () => {
+    player.move.touchMoved();
+    player.parts.touchMoved();
+  };
+  player.touchEnded = () => {
+    player.move.touchEnded();
+    player.parts.touchEnded();
+  };
   parts();
   move();
-  window.player.transform(x, y, 5, 5);
-}
+  player.transform(_x, _y, 5, 5);
+};

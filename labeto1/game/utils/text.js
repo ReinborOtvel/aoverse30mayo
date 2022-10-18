@@ -1,10 +1,10 @@
 "use strict";
 import percentageSet from "./percentage/set.js";
-export default function (x, y, size, text, color) {
-  x = percentageSet(window.engine.width, x);
-  y = percentageSet(window.engine.height, y);
-  size = percentageSet(window.engine.width, size);
-  window.engine.textSize(size);
-  window.engine.fill(color);
-  window.engine.text(text, x, y);
-}
+export default function (_x, _y, _size, _text, _color) {
+  _x = percentageSet(engine.width, _x);
+  _y = percentageSet(engine.height, _y);
+  _size = percentageSet(engine.width, _size);
+  engine.textSize(_size);
+  engine.fill(_color);
+  engine.text(_text, _x, _y);
+};

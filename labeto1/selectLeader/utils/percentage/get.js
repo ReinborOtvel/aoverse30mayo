@@ -1,5 +1,5 @@
 "use strict";
-export default function (size, percentage) {
-  let one = size / 100;
-  return parseInt(percentage / one);
+export default function (_size, _percentage) {
+  const _one = _size / 100;
+  return parseInt(_percentage / _one);
 };

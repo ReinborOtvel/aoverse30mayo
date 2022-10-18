@@ -3,7 +3,6 @@ import image from "../../utils/image.js";
 export default function () {
   window.player.parts.head = {};
   window.player.parts.head.loadImage = callback => {
-    console.log(window.player.statistics.head);
     window.engine.loadImage(`../img/player/head/${window.player.statistics.head}.png`, img => {
       let animations = ["down", "right", "left", "up"];
       window.player.parts.head.images = [];

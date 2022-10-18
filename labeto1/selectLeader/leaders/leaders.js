@@ -2,31 +2,31 @@
 import text from "../utils/text.js";
 export default function () {
   window.leaders = {};
-  window.leaders.available = accounts => {
-    let user = window.metamask.account.toUpperCase();
-    for (let account of accounts) {
-      let owner = account.owner.toUpperCase();
-      if (owner == user) continue;
-      if (window.membership.membership[owner] > 4) continue;
-      window.leaders.leaders.push(account.owner);
-    }
-    window.leader.random();
+  leaders.available = _accounts => {
+    const _user = metamask.account.toUpperCase();
+    for (const _account of _accounts) {
+      const _owner = _account.owner.toUpperCase();
+      if (_owner == _user) continue;
+      if (membership.membership[_owner] > 4) continue;
+      leaders.leaders.push(_account.owner);
+    };
+    leader.random();
   };
-  window.leaders.draw = () => {
-    text(5, 15, 5, `total leaders ${window.leaders.leaders.length}`, "#fff");
+  leaders.draw = () => {
+    text(5, 15, 5, `total leaders ${leaders.leaders.length}`, "#fff");
     text(5, 25, 5, "leaders - members", "#fff");
     text(55, 15, 5, "random leader", "#C548EE");
     text(55, 25, 5, "write leader", "#C548EE");
     text(5, 85, 5, "join group", "#C548EE");
-    let top = 35;
-    for (let i in window.leaders.leaders) {
-      if (i >= 3) break;
-      let address = window.leaders.leaders[i];
-      let space = 10 * i;
-      let y = top + space;
-      let members = window.membership.membership[address.toUpperCase()];
-      text(5, y, 5, `${address.slice(0, 6)} - ${members}`, "#fff");
-    }
+    let _y = 35;
+    for (const _index in leaders.leaders) {
+      if (_index >= 3) break;
+      const _address = leaders.leaders[_index];
+      const _space = 10 * _index;
+      _y += _space;
+      const _members = membership.membership[_address.toUpperCase()];
+      text(5, _y, 5, `${_address.slice(0, 6)} - ${_members}`, "#fff");
+    };
   };
-  window.leaders.leaders = [];
-}
+  leaders.leaders = [];
+};

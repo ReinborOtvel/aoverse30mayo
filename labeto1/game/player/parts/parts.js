@@ -3,25 +3,25 @@ import head from "./head.js";
 import armor from "./armor.js";
 import weapon from "./weapon.js";
 export default function () {
-  window.player.parts = {};
-  window.player.parts.draw = () => {
-    window.player.parts.armor.draw();
-    window.player.parts.head.draw();
-    window.player.parts.weapon.draw();
+  player.parts = {};
+  player.parts.draw = () => {
+    player.parts.armor.draw();
+    player.parts.head.draw();
+    player.parts.weapon.draw();
   };
-  window.player.parts.loadImage = callback => {
-    window.player.parts.head.loadImage(() => {
-      window.player.parts.armor.loadImage(() => {
-        window.player.parts.weapon.loadImage(() => {
-          callback();
+  player.parts.loadImage = _callback => {
+    player.parts.head.loadImage(() => {
+      player.parts.armor.loadImage(() => {
+        player.parts.weapon.loadImage(() => {
+          _callback();
         });
       });
     });
   };
-  window.player.parts.transform = () => {
-    window.player.parts.head.transform();
-    window.player.parts.armor.transform();
-    window.player.parts.weapon.transform();
+  player.parts.transform = () => {
+    player.parts.head.transform();
+    player.parts.armor.transform();
+    player.parts.weapon.transform();
   };
   window.player.parts.keyTyped = () => window.player.parts.updateAnimation();
   window.player.parts.keyReleased = () => window.player.parts.updateAnimation();

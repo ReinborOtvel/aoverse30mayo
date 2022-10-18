@@ -62,13 +62,14 @@ export default function () {
     let speedY = window.player.move.y * window.player.move.speed;
     let x = window.player.x + speedX;
     let y = window.player.y + speedY;
-    if (!map.collision(x, y)) {
+    let { tree } = window.map.collision(x, y);
+    if (!tree) {
       window.player.transform(x, y, window.player.width, window.player.height);
     }
     window.player.move.wheel.draw();
   }
   window.player.move.x = 0;
   window.player.move.y = 0;
-  window.player.move.speed = 3;
+  window.player.move.speed = 1;
   wheel();
 }

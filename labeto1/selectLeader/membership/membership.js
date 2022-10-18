@@ -1,15 +1,15 @@
 "use strict";
 export default function () {
   window.membership = {};
-  window.membership.count = accounts => {
-    for (let account of accounts) {
-      let owner = account.owner.toUpperCase();
-      window.membership.membership[owner] = 0;
-    }
-    for (let account of accounts) {
-      let leader = account.leader.toUpperCase();
-      window.membership.membership[leader]++;
-    }
+  membership.count = _accounts => {
+    for (const _account of _accounts) {
+      const _owner = _account.owner.toUpperCase();
+      membership.membership[_owner] = 0;
+    };
+    for (const _account of _accounts) {
+      const _leader = _account.leader.toUpperCase();
+      membership.membership[_leader]++;
+    };
   };
-  window.membership.membership = {};
+  membership.membership = {};
 };

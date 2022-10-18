@@ -1,5 +1,5 @@
 "use strict";
-export default function (size, number) {
-  let one = size / 100;
-  return one * number;
-}
+export default function (_size, _number) {
+  const _one = _size / 100;
+  return _one * _number;
+};

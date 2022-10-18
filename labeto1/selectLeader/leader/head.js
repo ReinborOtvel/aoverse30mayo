@@ -1,19 +1,19 @@
 "use strict";
-import Image from "../utils/image.js";
+import image from "../utils/image.js";
 export default function () {
-  window.leader.head = {};
-  window.leader.head.loadImage = callback => {
-    window.engine.loadImage(`../img/player/head/${window.leader.statistics.head}.png`, img => {
-      window.leader.head.image = img.get(0, 0, 17, 17);
-      callback();
+  leader.head = {};
+  const _head = leader.head;
+  _head.loadImage = _callback => {
+    engine.loadImage(`../img/player/head/${leader.statistics.head}.png`, _image => {
+      _head.image = _image.get(0, 0, 17, 17);
+      _callback();
     });
   };
-  window.leader.head.draw = () => {
-    let { image, x, y, width, height } = window.leader.head;
-    Image(image, x, y, width, height);
+  _head.draw = () => {
+    image(_head.image, _head.x, _head.y, _head.width, _head.height);
   };
-  window.leader.head.width = window.leader.width / 2;
-  window.leader.head.height = window.leader.height / 2;
-  window.leader.head.x = window.leader.x - (window.leader.head.width / 2);
-  window.leader.head.y = window.leader.y - window.leader.head.height;
-}
+  _head.width = leader.width / 2;
+  _head.height = leader.height / 2;
+  _head.x = leader.x - (_head.width / 2);
+  _head.y = leader.y - _head.height;
+};

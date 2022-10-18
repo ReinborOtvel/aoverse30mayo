@@ -1,5 +1,5 @@
 "use strict";
 import metamask from "./metamask.js";
-metamask(page => {
-  window.location.href = `/${page}/index.html`;
+metamask(_page => {
+  location.href = `/${_page}/index.html`;
 });

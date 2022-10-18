@@ -1,32 +1,33 @@
 "use strict";
 import image from "../../utils/image.js";
 export default function () {
-  window.player.parts.armor = {};
-  window.player.parts.armor.loadImage = callback => {
-    window.engine.loadImage(`../img/player/armor/${window.player.statistics.armor}.png`, img => {
-      window.player.parts.armor.images = {};
-      let animations = ["down", "up", "left", "right"];
-      let lengths = [6, 6, 5, 5];
-      let width = 25;
-      let height = 45;
-      for (let v in animations) {
-        let animation = animations[v];
-        window.player.parts.armor.images[animation] = [];
-        let length = lengths[v];
-        let y = v * height;
-        for (let h = 0; h < length; h++) {
-          let x = h * width;
-          window.player.parts.armor.images[animation][h] = img.get(x, y, width, height);
-        }
-      }
-      callback();
+  player.parts.armor = {};
+  const _armor = player.parts.armor;
+  _armor.loadImage = _callback => {
+    engine.loadImage(`../img/player/armor/${player.statistics.armor}.png`, _image => {
+      _armor.images = {};
+      const _animations = ["down", "up", "left", "right"];
+      const _lengths = [6, 6, 5, 5];
+      const _width = 25;
+      const _height = 45;
+      for (const _vertical in _animations) {
+        const _animation = _animations[_vertical];
+        _armor.images[_animation] = [];
+        const _length = _lengths[_vertical];
+        const _y = _vertical * _height;
+        for (let _horizontal = 0; _horizontal < _length; _horizontal++) {
+          const _x = _horizontal * _width;
+          _armor.images[_animation][_horizontal] = _image.get(_x, _y, _width, _height);
+        };
+      };
+      _callback();
     });
-  }
-  window.player.parts.armor.draw = () => {
-    image(window.player.parts.armor.images[window.player.parts.animation][window.player.parts.sprite], window.player.parts.armor.x, window.player.parts.armor.y, window.player.width, window.player.height);
-  }
-  window.player.parts.armor.transform = () => {
-    window.player.parts.armor.x = window.player.x - (window.player.width / 2);
-    window.player.parts.armor.y = window.player.y - (window.player.height / 2);
-  }
-}
+  };
+  _armor.draw = () => {
+    image(_armor.images[player.parts.animation][player.parts.sprite], _armor.x, _armor.y, player.width, player.height);
+  };
+  _armor.transform = () => {
+    _armor.x = player.x - (player.width / 2);
+    _armor.y = player.y - (player.height / 2);
+  };
+};

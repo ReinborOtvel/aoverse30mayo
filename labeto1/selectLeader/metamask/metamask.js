@@ -1,52 +1,57 @@
 "use strict";
 import database from "../../js/database.js";
 export default function () {
-  if (!window.navigator.onLine) return window.alert("connect to the internet");
-  if (window.ethereum == undefined) return window.alert("download metamask");
-  window.ethereum.on('chainChanged', () => {
-    window.location.reload();
+  if (!navigator.onLine) {
+    alert("connect to the internet");
+    return;
+  }; if (window.ethereum == undefined) {
+    alert("download metamask");
+    return;
+  };
+  ethereum.on('chainChanged', () => {
+    location.reload();
   });
   window.metamask = {};
-  window.metamask.provider = new window.ethers.providers.Web3Provider(window.ethereum);
-  window.metamask.provider.send("eth_requestAccounts", []).then(accounts => {
-    window.metamask.account = accounts[0];
-    window.metamask.signer = window.metamask.provider.getSigner();
-    window.metamask.signer.getChainId().then(chainId => {
-      if (chainId != 97) {
-        window.alert("switch to binance testnet");
-        window.ethereum.request({
+  metamask.provider = new ethers.providers.Web3Provider(ethereum);
+  metamask.provider.send("eth_requestAccounts", []).then(_accounts => {
+    metamask.account = _accounts[0];
+    metamask.signer = metamask.provider.getSigner();
+    metamask.signer.getChainId().then(_chainId => {
+      if (_chainId != 97) {
+        alert("switch to binance testnet");
+        ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [{
-            chainId: window.ethers.utils.hexValue(97),
+            chainId: ethers.utils.hexValue(97),
             chainName: "binance testnet",
             rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
           },],
         });
       } else {
         if (database.address == "") {
-          window.location.href = window.location.href.replace("selectLeader", "database");
+          location.href = location.href.replace("selectLeader", "database");
         } else {
-          window.metamask.database = new window.ethers.Contract(database.address, database.abi, window.metamask.signer);
-          window.metamask.database.getAccount(window.metamask.account).then(account => {
-            let owner = account.owner.toUpperCase();
-            let user = window.metamask.account.toUpperCase();
-            if (owner == user) {
-              window.location.href = window.location.href.replace("selectLeader", "game");
+          metamask.database = new ethers.Contract(database.address, database.abi, metamask.signer);
+          metamask.database.getAccount(metamask.account).then(_account => {
+            const _owner = _account.owner.toUpperCase();
+            const _user = metamask.account.toUpperCase();
+            if (_owner == _user) {
+              location.href = location.href.replace("selectLeader", "game");
             } else {
-              window.metamask.database.allAccounts().then(accounts => {
-                window.membership.count(accounts);
-                window.leaders.available(accounts);
+              metamask.database.allAccounts().then(_accounts => {
+                membership.count(_accounts);
+                leaders.available(_accounts);
               });
-            }
+            };
           });
-        }
-      }
-    }).catch(error => {
-      console.error(error);
-      window.alert("no chainId");
+        };
+      };
+    }).catch(_error => {
+      console.error(_error);
+      alert("no chainId");
     });
-  }).catch(error => {
-    console.error(error);
-    window.alert("connect account");
-  })
-}
+  }).catch(_error => {
+    console.error(_error);
+    alert("connect account");
+  });
+};

@@ -1,7 +1,7 @@
 "use strict";
 import percentageGet from "../utils/percentage/get.js";
-export default function (xInit, yInit, xEnd, yEnd) {
-  let x = percentageGet(window.engine.width, window.engine.mouseX);
-  let y = percentageGet(window.engine.height, window.engine.mouseY);
-  return x >= xInit && y >= yInit && x <= xEnd && y <= yEnd;
-}
+export default function (_xInit, _yInit, _xEnd, _yEnd) {
+  const _x = percentageGet(engine.width, engine.mouseX);
+  const _y = percentageGet(engine.height, engine.mouseY);
+  return _x >= _xInit && _y >= _yInit && _x <= _xEnd && _y <= _yEnd;
+};

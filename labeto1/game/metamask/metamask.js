@@ -1,5 +1,5 @@
 "use strict";
-import database from "./database.js";
+import database from "../../js/database.js";
 export default function () {
   if (!window.navigator.onLine) return alert("connect to the internet");
   if (window.ethereum == undefined) return alert("download metamask");
@@ -31,9 +31,11 @@ export default function () {
             let user = window.metamask.account.toUpperCase();
             let owner = account.owner.toUpperCase();
             if (user == owner) {
-              player.statistics = JSON.parse(account.statistics);
-              player.loadImage(() => {
-                canDraw = true;
+              window.player.statistics = JSON.parse(account.statistics);
+              window.player.loadImage(() => {
+                window.map.loadImage(() => {
+                  window.canDraw = true;
+                });
               });
             } else {
               let statistics = window.localStorage.getItem("statistics");
