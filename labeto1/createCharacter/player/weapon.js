@@ -5,7 +5,7 @@ export default function () {
   window.player.weapon.x = window.player.x - (window.player.width / 2);
   window.player.weapon.y = window.player.y - (window.player.height / 2);
   window.player.weapon.loadImage = callback => {
-    window.loadImage(`../img/player/weapon/${window.player.statistics.weapon}.png`, img => {
+    window.engine.loadImage(`../img/player/weapon/${window.player.statistics.weapon}.png`, img => {
       window.player.weapon.image = img.get(0, 0, 25, 45);
       callback();
     });

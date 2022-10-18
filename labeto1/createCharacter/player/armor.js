@@ -5,7 +5,7 @@ export default function () {
   window.player.armor.x = window.player.x - (window.player.width / 2);
   window.player.armor.y = window.player.y - (window.player.height / 2);
   window.player.armor.loadImage = callback => {
-    window.loadImage(`../img/player/armor/${window.player.statistics.armor}.png`, img => {
+    window.engine.loadImage(`../img/player/armor/${window.player.statistics.armor}.png`, img => {
       window.player.armor.image = img.get(0, 0, 25, 45);
       callback();
     });

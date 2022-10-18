@@ -5,5 +5,5 @@ export default function (image, x, y, width, height) {
   y = percentageSet(window.engine.height, y);
   width = percentageSet(window.engine.width, width);
   height = percentageSet(window.engine.height, height);
-  image(image, x, y, width, height);
+  window.engine.image(image, x, y, width, height);
 }

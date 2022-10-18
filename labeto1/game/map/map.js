@@ -1,6 +1,6 @@
 "use strict";
-import land from "./land.js";
-import tree from "./tree.js";
+import land from "./lands/lands.js";
+import tree from "./trees/trees.js";
 export default function () {
   window.map = {};
   window.map.collision = (x, y) => {
