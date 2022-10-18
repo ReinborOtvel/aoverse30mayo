@@ -16,7 +16,7 @@ export default function () {
     return false;
   }
   window.map.draw = () => {
-    for (let land of window.map.lands) land.draw();
+    window.map.lands.draw();
     for (let tree of window.map.trees) tree.draw();
   }
   window.map.loadImageLands = callback => {
@@ -41,12 +41,6 @@ export default function () {
         callback();
       })
     });
-  }
-  window.map.lands = [];
-  for (let v = 0; v < 10; v++) {
-    for (let h = 0; h < 10; h++) {
-      land(579, h, v, 10, 10);
-    }
   }
   window.map.trees = [];
   tree(1, 1, 10, 20);
