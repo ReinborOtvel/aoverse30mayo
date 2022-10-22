@@ -1,64 +1,73 @@
 "use strict";
-import statistics from "./statistics.js";
-import head from "./head.js";
-import armor from "./armor.js";
-import weapon from "./weapon.js";
-import touchVerify from "../engine/touchVerify.js";
-import database from "../../js/database.js";
+import Head from "./head.js";
+import Armor from "./armor.js";
+import Weapon from "./weapon.js";
 export default function () {
-  window.player = {};
-  window.player.x = 70;
-  window.player.y = 50;
-  window.player.width = 40;
-  window.player.height = 80;
-  window.player.statistics = statistics();
-  window.player.loadImage = callback => {
-    window.player.head.loadImage(() => {
-      window.player.armor.loadImage(() => {
-        window.player.weapon.loadImage(() => {
+  sketch.player = {};
+  sketch.player.x = 70;
+  sketch.player.y = 50;
+  sketch.player.width = 40;
+  sketch.player.height = 80;
+  sketch.player.setStatistics = () => {
+    sketch.player.statistics = {
+      name: sketch.utils.randomName(),
+      head: Math.round(sketch.engine.random(1, 236)),
+      armor: Math.round(sketch.engine.random(1, 350)),
+      weapon: Math.round(sketch.engine.random(1, 89)),
+      strength: Math.round(sketch.engine.random(20, 100)),
+      endurance: Math.round(sketch.engine.random(20, 100)),
+      health: Math.round(sketch.engine.random(20, 100)),
+      speed: Math.round(sketch.engine.random(20, 100)),
+    };
+  };
+  sketch.player.setStatistics();
+  sketch.player.loadImage = callback => {
+    sketch.player.head.loadImage(() => {
+      sketch.player.armor.loadImage(() => {
+        sketch.player.weapon.loadImage(() => {
           callback();
         });
       });
     });
   };
-  window.player.draw = () => {
-    window.player.armor.draw();
-    window.player.head.draw();
-    window.player.weapon.draw();
+  sketch.player.draw = () => {
+    sketch.player.armor.draw();
+    sketch.player.head.draw();
+    sketch.player.weapon.draw();
   };
-  window.player.newPlayer = () => {
-    window.canDraw = false;
-    window.player.statistics = statistics();
-    window.player.loadImage(() => {
-      window.canDraw = true;
+  sketch.player.newPlayer = () => {
+    sketch.canDraw = false;
+    sketch.player.setStatistics();
+    sketch.player.loadImage(() => {
+      sketch.canDraw = true;
     });
   };
-  window.player.create = () => {
-    if (!window.canDraw) return;
-    window.canDraw = false;
-    window.ethereum.request({
+  sketch.player.create = () => {
+    if (!sketch.canDraw) return;
+    sketch.canDraw = false;
+    ethereum.request({
       method: 'eth_sendTransaction',
       params: [{
-        from: window.metamask.account,
-        to: database.creator,
-        value: window.ethers.utils.parseEther(database.ticket)._hex,
-        chainId: window.ethers.utils.hexValue(56),
+        from: sketch.metamask.account,
+        to: sketch.database.creator,
+        value: ethers.utils.parseEther(sketch.database.ticket)._hex,
+        chainId: ethers.utils.hexValue(56),
       }],
     }).then(() => {
-      window.localStorage.setItem("statistics", JSON.stringify(window.player.statistics));
-      window.location.reload();
+      localStorage.setItem("statistics", JSON.stringify(sketch.player.statistics));
+      location.reload();
     }).catch(() => {
-      window.canDraw = true;
+      sketch.canDraw = true;
     });
   };
-  window.player.touchEnded = () => {
-    if (touchVerify(5, 73, 36, 80)) {
-      window.player.newPlayer();
-    } else if (touchVerify(5, 83, 41, 89)) {
-      window.player.create();
-    }
+  sketch.player.touchEnded = () => {
+    if (sketch.touch.verify(5, 73, 36, 80)) {
+      sketch.player.newPlayer();
+    } else if (sketch.touch.verify(5, 83, 41, 89)) {
+      sketch.player.create();
+    };
   };
-  head();
-  armor();
-  weapon();
+  Head();
+  Armor();
+  Weapon();
 }

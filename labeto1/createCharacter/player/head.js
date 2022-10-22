@@ -1,19 +1,18 @@
 "use strict";
 import Image from "../utils/image.js";
 export default function () {
-  window.player.head = {};
-  window.player.head.width = window.player.width / 2;
-  window.player.head.height = window.player.height / 2;
-  window.player.head.x = window.player.x - (window.player.head.width / 2);
-  window.player.head.y = window.player.y - window.player.head.height;
-  window.player.head.loadImage = callback => {
-    window.engine.loadImage(`../img/player/head/${window.player.statistics.head}.png`, img => {
-      window.player.head.image = img.get(0, 0, 17, 17);
+  sketch.player.head = {};
+  sketch.player.head.width = sketch.player.width / 2;
+  sketch.player.head.height = sketch.player.height / 2;
+  sketch.player.head.x = sketch.player.x - (sketch.player.head.width / 2);
+  sketch.player.head.y = sketch.player.y - sketch.player.head.height;
+  sketch.player.head.loadImage = callback => {
+    sketch.engine.loadImage(`../img/player/head/${sketch.player.statistics.head}.png`, image => {
+      sketch.player.head.image = image.get(0, 0, 17, 17);
       callback();
     });
-  }
-  window.player.head.draw = () => {
-    let { image, x, y, width, height } = window.player.head;
-    Image(image, x, y, width, height);
-  }
-}
+  };
+  sketch.player.head.draw = () => {
+    sketch.utils.image(sketch.player.head.image, sketch.player.head.x, sketch.player.head.y, sketch.player.head.width, sketch.player.head.height);
+  };
+};
