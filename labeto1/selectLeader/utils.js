@@ -33,15 +33,4 @@ export default function () {
     height = sketch.utils.percentage.set(sketch.engine.height, height);
     sketch.engine.image(image, x, y, width, height);
   };
-  sketch.utils.randomName = () => {
-    let name = "";
-    for (let index = 0; index <= 5; index++) {
-      let characters = "aeiou";
-      if (index % 2 == 0) {
-        characters = "qwrtypsdfghjklzxcvbnm";
-      };
-      name += sketch.engine.random([...characters]);
-    }
-    return name;
-  }
 };

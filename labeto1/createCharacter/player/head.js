@@ -1,5 +1,4 @@
 "use strict";
-import Image from "../utils/image.js";
 export default function () {
   sketch.player.head = {};
   sketch.player.head.width = sketch.player.width / 2;

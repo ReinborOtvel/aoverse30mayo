@@ -3,9 +3,11 @@ import Utils from "./utils.js";
 import Touch from "./touch.js";
 import Player from "./player/player.js";
 import Metamask from "./metamask.js";
+import database from "../js/database.js";
 new p5(engine => {
   window.sketch = {};
   sketch.engine = engine;
+  sketch.database = database;
   Utils();
   Touch();
   sketch.engine.setup = () => {
@@ -25,7 +27,7 @@ new p5(engine => {
     sketch.utils.text(5, 90, 5, "create character", "#C548EE");
     sketch.utils.text(5, 25, 5, `name ${sketch.player.statistics.name}`, "#fff");
     sketch.utils.text(5, 35, 5, `strength ${sketch.player.statistics.strength}`, "#fff");
-    sketch.utils.text(5, 45, 5, `endurance ${psketch.layer.statistics.endurance}`, "#fff");
+    sketch.utils.text(5, 45, 5, `endurance ${sketch.player.statistics.endurance}`, "#fff");
     sketch.utils.text(5, 55, 5, `health ${sketch.player.statistics.health}`, "#fff");
     sketch.utils.text(5, 65, 5, `speed ${sketch.player.statistics.speed}`, "#fff");
   };

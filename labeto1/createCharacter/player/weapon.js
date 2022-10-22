@@ -1,18 +1,15 @@
 "use strict";
-import Image from "../utils/image.js";
 export default function () {
-  window.player.weapon = {};
-  window.player.weapon.x = window.player.x - (window.player.width / 2);
-  window.player.weapon.y = window.player.y - (window.player.height / 2);
-  window.player.weapon.loadImage = callback => {
-    window.engine.loadImage(`../img/player/weapon/${window.player.statistics.weapon}.png`, img => {
-      window.player.weapon.image = img.get(0, 0, 25, 45);
+  sketch.player.weapon = {};
+  sketch.player.weapon.x = sketch.player.x - (sketch.player.width / 2);
+  sketch.player.weapon.y = sketch.player.y - (sketch.player.height / 2);
+  sketch.player.weapon.loadImage = callback => {
+    sketch.engine.loadImage(`../img/player/weapon/${sketch.player.statistics.weapon}.png`, image => {
+      sketch.player.weapon.image = image.get(0, 0, 25, 45);
       callback();
     });
   };
-  window.player.weapon.draw = () => {
-    let { image, x, y } = window.player.weapon;
-    let { width, height } = window.player;
-    Image(image, x, y, width, height);
+  sketch.player.weapon.draw = () => {
+    sketch.utils.image(sketch.player.weapon.image, sketch.player.weapon.x, sketch.player.weapon.y, sketch.player.width, sketch.player.height);
   };
-}
+};
