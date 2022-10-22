@@ -1,29 +1,29 @@
 "use strict";
-import lands from "./lands/lands.js";
-import trees from "./trees/trees.js";
+import _lands from "./lands/lands.js";
+import _trees from "./trees/trees.js";
 export default function () {
   window.map = {};
-  window.map.collision = (x, y) => {
-    let land = window.map.lands.collision(x, y);
-    let tree = window.map.trees.collision(x, y);
+  map.collision = (_x, _y) => {
+    let land = map.lands.collision(_x, _y);
+    let tree = map.trees.collision(_x, _y);
     return { land, tree };
   };
-  window.map.entitiesPosition = (x, y) => {
-    let land = window.map.lands.position(x, y);
-    let tree = window.map.trees.position(x, y);
+  map.position = (_x, _y) => {
+    let land = map.lands.position(_x, _y);
+    let tree = map.trees.position(_x, _y);
     return { land, tree };
   };
-  window.map.draw = () => {
-    window.map.lands.draw();
-    window.map.trees.draw();
+  map.draw = () => {
+    map.lands.draw();
+    map.trees.draw();
   };
-  window.map.loadImage = callback => {
-    window.map.lands.loadImage(() => {
-      window.map.trees.loadImage(() => {
-        callback();
+  map.loadImage = _callback => {
+    map.lands.loadImage(() => {
+      map.trees.loadImage(() => {
+        _callback();
       });
     });
   };
-  lands();
-  trees();
+  _lands();
+  _trees();
 }

@@ -1,6 +1,6 @@
 "use strict";
-import parts from "./parts/parts.js";
-import move from "./move/move.js";
+import _parts from "./parts/parts.js";
+import _move from "./move/move.js";
 export default function (_x, _y) {
   window.player = {};
   player.loadImage = _callback => {
@@ -36,8 +36,10 @@ export default function (_x, _y) {
   player.touchEnded = () => {
     player.move.touchEnded();
     player.parts.touchEnded();
+    player.interaction.touchEnded();
   };
-  parts();
-  move();
+  _parts();
+  _move();
+  player.inventory = ["axe"];
   player.transform(_x, _y, 5, 5);
 };

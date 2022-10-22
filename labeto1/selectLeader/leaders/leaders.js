@@ -1,5 +1,5 @@
 "use strict";
-import text from "../utils/text.js";
+import _text from "../utils/text.js";
 export default function () {
   window.leaders = {};
   leaders.available = _accounts => {
@@ -13,11 +13,11 @@ export default function () {
     leader.random();
   };
   leaders.draw = () => {
-    text(5, 15, 5, `total leaders ${leaders.leaders.length}`, "#fff");
-    text(5, 25, 5, "leaders - members", "#fff");
-    text(55, 15, 5, "random leader", "#C548EE");
-    text(55, 25, 5, "write leader", "#C548EE");
-    text(5, 85, 5, "join group", "#C548EE");
+    _text(5, 15, 5, `total leaders ${leaders.leaders.length}`, "#fff");
+    _text(5, 25, 5, "leaders - members", "#fff");
+    _text(55, 15, 5, "random leader", "#C548EE");
+    _text(55, 25, 5, "write leader", "#C548EE");
+    _text(5, 85, 5, "join group", "#C548EE");
     let _y = 35;
     for (const _index in leaders.leaders) {
       if (_index >= 3) break;

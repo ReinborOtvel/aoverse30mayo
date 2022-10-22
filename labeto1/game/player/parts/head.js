@@ -1,27 +1,29 @@
 "use strict";
 import image from "../../utils/image.js";
 export default function () {
-  window.player.parts.head = {};
-  window.player.parts.head.loadImage = callback => {
-    window.engine.loadImage(`../img/player/head/${window.player.statistics.head}.png`, img => {
-      let animations = ["down", "right", "left", "up"];
-      window.player.parts.head.images = [];
-      let width = 17;
-      for (let h in animations) {
-        let animation = animations[h];
-        let x = h * width;
-        window.player.parts.head.images[animation] = img.get(x, 0, width, 17);
-      }
-      callback();
+  const _parts = player.parts;
+  _parts.head = {};
+  const _head = _parts.head;
+  _head.loadImage = _callback => {
+    engine.loadImage(`../img/player/head/${player.statistics.head}.png`, _image => {
+      _head.images = [];
+      const _animations = ["down", "right", "left", "up"];
+      const _width = 17;
+      for (const _horizontal in _animations) {
+        const _animation = _animations[_horizontal];
+        const _x = _horizontal * _width;
+        _head.images[_animation] = _image.get(_x, 0, _width, 17);
+      };
+      _callback();
     });
+  };
+  _head.draw = () => {
+    image(_head.images[_parts.animation], _head.x, _head.y, _head.width, _head.height);
   }
-  window.player.parts.head.draw = () => {
-    image(window.player.parts.head.images[window.player.parts.animation], window.player.parts.head.x, window.player.parts.head.y, window.player.parts.head.width, window.player.parts.head.height);
-  }
-  window.player.parts.head.transform = () => {
-    window.player.parts.head.width = window.player.width / 2;
-    window.player.parts.head.height = window.player.height / 2;
-    window.player.parts.head.x = window.player.x - (window.player.parts.head.width / 2);
-    window.player.parts.head.y = window.player.y - window.player.parts.head.height;
+  _head.transform = () => {
+    _head.width = player.width / 2;
+    _head.height = player.height / 2;
+    _head.x = player.x - (_head.width / 2);
+    _head.y = player.y - _head.height;
   }
 }

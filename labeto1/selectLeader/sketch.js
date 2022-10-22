@@ -1,10 +1,10 @@
 "use strict";
-import setup from "./engine/setup.js";
-import draw from "./engine/draw.js";
-import touchEnded from "./engine/touchEnded.js";
+import _setup from "./engine/setup.js";
+import _draw from "./engine/draw.js";
+import _touchEnded from "./engine/touchEnded.js";
 new p5(_engine => {
   window.engine = _engine;
-  engine.setup = () => setup();
-  engine.draw = () => draw();
-  engine.touchEnded = () => touchEnded();
+  engine.setup = () => _setup();
+  engine.draw = () => _draw();
+  engine.touchEnded = () => _touchEnded();
 });

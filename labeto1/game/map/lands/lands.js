@@ -1,8 +1,8 @@
 "use strict";
 import land from "./land.js";
 export default function () {
-  window.map.lands = {};
-  let lands = window.map.lands;
+  map.lands = {};
+  let lands = map.lands;
   lands.collision = (x, y) => {
     for (let land of lands.lands) {
       if (land.collision(x, y)) return true;

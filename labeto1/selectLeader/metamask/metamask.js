@@ -1,5 +1,5 @@
 "use strict";
-import database from "../../js/database.js";
+import _database from "../../js/database.js";
 export default function () {
   if (!navigator.onLine) {
     alert("connect to the internet");
@@ -28,10 +28,10 @@ export default function () {
           },],
         });
       } else {
-        if (database.address == "") {
+        if (_database.address == "") {
           location.href = location.href.replace("selectLeader", "database");
         } else {
-          metamask.database = new ethers.Contract(database.address, database.abi, metamask.signer);
+          metamask.database = new ethers.Contract(_database.address, _database.abi, metamask.signer);
           metamask.database.getAccount(metamask.account).then(_account => {
             const _owner = _account.owner.toUpperCase();
             const _user = metamask.account.toUpperCase();

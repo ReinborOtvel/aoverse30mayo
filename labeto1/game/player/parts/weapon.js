@@ -11,9 +11,9 @@ export default function () {
       const _width = 25;
       const _height = 45;
       for (const _vertical in _animations) {
-        const _animation = _animations[v];
+        const _animation = _animations[_vertical];
         _weapon.images[_animation] = [];
-        const _length = _lengths[v];
+        const _length = _lengths[_vertical];
         const _y = _vertical * _height;
         for (let _horizontal = 0; _horizontal < _length; _horizontal++) {
           const _x = _horizontal * _width;
