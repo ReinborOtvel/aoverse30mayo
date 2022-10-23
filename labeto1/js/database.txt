@@ -1,0 +1,29 @@
+// SPDX-License-Identifier:null
+pragma solidity 0.8.7;
+contract database {
+    struct Account {
+        address owner;
+        address leader;
+        string statistics;
+    }
+    Account[] public accounts;
+    mapping(address => uint256) public accountIndex;
+    constructor(address _creator, string memory _statistics){
+        accounts.push(
+            Account(_creator,_creator, _statistics)
+        );
+    }
+    function createAccount(address _leader, string memory _statistics) public {
+        accountIndex[msg.sender]=accounts.length;
+        accounts.push(
+            Account(msg.sender,_leader, _statistics)
+        );
+    }
+    function allAccounts() public view returns(Account[] memory) {
+        return accounts;
+    }
+    function getAccount(address _account) public view returns(Account memory account) {
+        uint256 index = accountIndex[_account];
+        account = accounts[index];
+    }
+}
